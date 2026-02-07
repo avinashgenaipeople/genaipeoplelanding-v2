@@ -29,6 +29,7 @@ export function StickyMobileBar() {
           Free 28-min Roadmap
         </span>
         <button
+          type="button"
           onClick={openFormModal}
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-full shadow-lg"
         >

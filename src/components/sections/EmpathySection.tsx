@@ -37,7 +37,7 @@ export function EmpathySection() {
               }`}
               style={{ transitionDelay: `${index * 150}ms` }}
             >
-              <p className="text-lg sm:text-xl text-muted-foreground italic mb-3">
+              <p className="text-xl sm:text-2xl text-muted-foreground italic mb-3">
                 "{item.quote}"
               </p>
               <p className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
@@ -48,7 +48,7 @@ export function EmpathySection() {
         </div>
 
         {/* Body text */}
-        <p className="text-muted-foreground text-lg sm:text-xl leading-relaxed">
+        <p className="text-muted-foreground text-xl sm:text-2xl leading-relaxed">
           We've sat across from developers earning 20–35L who felt stuck. Experienced. Skilled. 
           But watching the ground shift under them. We know that feeling. And we know the way through 
           — because we've walked other developers through it already.

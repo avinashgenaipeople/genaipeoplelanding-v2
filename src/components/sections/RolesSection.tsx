@@ -84,13 +84,13 @@ export function RolesSection() {
               }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <h3 className="font-display text-lg sm:text-xl font-semibold text-foreground mb-3">
+              <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground mb-3">
                 {role.role}
               </h3>
               <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-3">
                 <AnimatedCTC ctc={role.ctc} isVisible={isVisible} />
               </p>
-              <span className="inline-block text-sm px-3 py-1.5 rounded-full bg-primary/10 text-primary font-medium">
+              <span className="inline-block text-base px-3 py-1.5 rounded-full bg-primary/10 text-primary font-medium">
                 {role.tag}
               </span>
             </div>
@@ -98,7 +98,7 @@ export function RolesSection() {
         </div>
 
         {/* Source text */}
-        <p className="text-base text-muted-foreground/70 text-center">
+        <p className="text-lg text-muted-foreground/70 text-center">
           Source: LinkedIn, Naukri, and direct company postings. Most list Java/backend experience as a core requirement.
         </p>
       </div>

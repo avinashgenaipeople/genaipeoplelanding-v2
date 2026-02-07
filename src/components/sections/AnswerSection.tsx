@@ -30,7 +30,7 @@ export function AnswerSection() {
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
           Watch the Free Roadmap Video.
         </h2>
-        <p className="text-xl sm:text-2xl text-muted-foreground mb-12">
+        <p className="text-2xl sm:text-3xl text-muted-foreground mb-12">
           In 28 minutes, you'll see three things:
         </p>
 
@@ -50,10 +50,10 @@ export function AnswerSection() {
                 </span>
               </div>
               <div>
-                <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground mb-2">
+                <h3 className="font-display text-2xl sm:text-3xl font-semibold text-foreground mb-2">
                   {point.title}
                 </h3>
-                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
                   {point.text}
                 </p>
               </div>

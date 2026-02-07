@@ -20,7 +20,11 @@ const comparisons = [
   {
     label: "Compensation",
     before: "20–35L",
-    after: "40–70L",
+    after: [
+      "AI/ML Engineering Manager: 50–80L",
+      "AI Solutions Architect: 40–70L",
+      "ML Platform Engineer: 30–45L",
+    ],
   },
 ];
 
@@ -66,11 +70,20 @@ export function TransformationSection() {
                   {row.before}
                 </div>
                 <div className="p-4 text-center text-foreground font-medium bg-success/5">
-                  {row.after}
+                  {Array.isArray(row.after) ? (
+                    <div className="space-y-1 text-sm">
+                      {row.after.map((line, i) => (
+                        <p key={i}>{line}</p>
+                      ))}
+                    </div>
+                  ) : (
+                    row.after
+                  )}
                 </div>
               </div>
             ))}
           </div>
+          <p className="text-xs text-muted-foreground mt-2 text-right">* Compensation data updated in Feb 2026</p>
         </div>
 
         {/* Mobile cards */}
@@ -110,15 +123,24 @@ export function TransformationSection() {
                   <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
                     {row.label}
                   </p>
-                  <p className="text-foreground font-medium">{row.after}</p>
+                  {Array.isArray(row.after) ? (
+                    <div className="space-y-1 text-sm">
+                      {row.after.map((line, i) => (
+                        <p key={i} className="text-foreground font-medium">{line}</p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-foreground font-medium">{row.after}</p>
+                  )}
                 </div>
               ))}
             </div>
+            <p className="text-xs text-muted-foreground mt-3">* Compensation data updated in Feb 2026</p>
           </div>
         </div>
 
         {/* Bottom text */}
-        <p className="font-display text-xl sm:text-2xl font-semibold text-foreground text-center">
+        <p className="font-display text-2xl sm:text-3xl font-semibold text-foreground text-center">
           That's not a side step. That's a transformation.
         </p>
       </div>

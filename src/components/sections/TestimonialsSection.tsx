@@ -55,7 +55,7 @@ export function TestimonialsSection() {
               </div>
 
               {/* Quote */}
-              <p className="text-foreground leading-relaxed mb-6">
+              <p className="text-lg sm:text-xl text-foreground leading-relaxed mb-6">
                 "{testimonial.quote}"
               </p>
 
@@ -64,7 +64,7 @@ export function TestimonialsSection() {
                 <p className="font-semibold text-foreground">
                   {testimonial.name}
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-base text-muted-foreground">
                   {testimonial.detail}
                 </p>
               </div>

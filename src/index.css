@@ -78,6 +78,15 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 19px;
+      line-height: 1.75;
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {

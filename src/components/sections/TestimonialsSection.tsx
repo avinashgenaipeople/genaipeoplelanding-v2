@@ -27,7 +27,7 @@ export function TestimonialsSection() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section className="py-20 sm:py-28 px-4" ref={ref}>
+    <section className="py-12 sm:py-16 px-4" ref={ref}>
       <div className="container">
         <SectionLabel>Success Stories</SectionLabel>
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-12">

@@ -16,7 +16,7 @@ const points = [
   {
     number: "3",
     title: "The path is clear.",
-    text: "Not a generic course. A step-by-step roadmap from where you are to where you need to be. 30 minutes a day.",
+    text: "Not a generic course. A step-by-step roadmap from where you are to where you need to be. 1-2 hours a day.",
   },
 ];
 

@@ -22,7 +22,7 @@ export function FinalCTASection() {
             We help Senior Java Developers with this every day.
           </p>
           <p className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
-            Watch the free Roadmap video.
+            Watch the Free Roadmap Video.
           </p>
           <p className="text-xl sm:text-2xl text-muted-foreground">
             Go from writing code to designing the systems AI runs on.

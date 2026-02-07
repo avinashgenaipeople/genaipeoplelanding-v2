@@ -10,17 +10,17 @@ const roles = [
   },
   {
     role: "ML Platform Engineer",
-    ctc: "25–35L",
+    ctc: "30–45L",
     tag: "Distributed systems experience",
   },
   {
     role: "AI Solutions Architect",
-    ctc: "30–45L",
+    ctc: "40–70L",
     tag: "System design + AI integration",
   },
   {
     role: "AI/ML Engineering Manager",
-    ctc: "35–50L+",
+    ctc: "50–80L",
     tag: "Backend architecture leadership",
   },
 ];

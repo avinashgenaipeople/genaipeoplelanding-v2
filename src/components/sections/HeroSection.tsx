@@ -15,12 +15,12 @@ export function HeroSection() {
         </h1>
 
         {/* Subheadline */}
-        <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-medium mb-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
+        <p className="text-2xl sm:text-3xl md:text-4xl text-muted-foreground font-medium mb-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
           Architect the Agents, or Compete Against Them.
         </p>
 
         {/* Body */}
-        <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up" style={{ animationDelay: "0.3s" }}>
+        <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up" style={{ animationDelay: "0.3s" }}>
           AI agents write 4% of all GitHub commits today. That number doubles every few months. 
           You can compete against them — or become the person who architects them.
         </p>
@@ -33,8 +33,8 @@ export function HeroSection() {
         </div>
 
         {/* Below CTA */}
-        <p className="text-sm text-muted-foreground/70 mt-6 animate-fade-up" style={{ animationDelay: "0.5s" }}>
-          No email required. Takes 22 minutes.
+        <p className="text-base text-muted-foreground/70 mt-6 animate-fade-up" style={{ animationDelay: "0.5s" }}>
+          No email required. Takes 28 minutes.
         </p>
       </div>
     </section>

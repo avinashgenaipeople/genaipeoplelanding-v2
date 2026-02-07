@@ -23,8 +23,8 @@ export function StickyMobileBar() {
       }`}
     >
       <div className="bg-card/95 backdrop-blur-lg border-t border-border px-4 py-3 flex items-center justify-between">
-        <span className="text-sm font-medium text-foreground">
-          Free 22-min Roadmap
+        <span className="text-base font-medium text-foreground">
+          Free 28-min Roadmap
         </span>
         <a
           href="#watch-roadmap"

@@ -44,10 +44,10 @@ export function ProblemSection() {
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
                 <problem.icon className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+              <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground mb-3">
                 {problem.title}
               </h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                 {problem.text}
               </p>
             </div>
@@ -59,7 +59,7 @@ export function ProblemSection() {
           <p className="font-display text-xl sm:text-2xl font-semibold text-foreground mb-4">
             Worried AI will replace your Java career? You should be. But not for the reason you think.
           </p>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-muted-foreground text-lg sm:text-xl leading-relaxed">
             The threat isn't that AI can do everything you do. The threat is staying in a role that shrinks while a bigger role goes unfilled.
           </p>
         </div>

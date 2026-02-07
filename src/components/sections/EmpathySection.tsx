@@ -20,10 +20,10 @@ export function EmpathySection() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section className="py-12 sm:py-16 px-4 bg-section-alt" ref={ref}>
+    <section className="py-8 sm:py-10 px-4 bg-section-alt" ref={ref}>
       <div className="container max-w-4xl">
         <SectionLabel>You're Not Alone</SectionLabel>
-        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-12">
+        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-8">
           We Help Senior Java Developers With This Every Day.
         </h2>
 

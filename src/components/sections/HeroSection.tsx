@@ -34,7 +34,7 @@ export function HeroSection() {
 
         {/* Below CTA */}
         <p className="text-lg text-muted-foreground/70 mt-6 animate-fade-up" style={{ animationDelay: "0.5s" }}>
-          No email required. Takes 28 minutes.
+          28 Minute Exclusive Roadmap for Senior Java Developers
         </p>
       </div>
     </section>

@@ -29,10 +29,10 @@ export function HowItWorksSection() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section className="py-12 sm:py-16 px-4 bg-section-alt" ref={ref}>
+    <section className="py-8 sm:py-10 px-4 bg-section-alt" ref={ref}>
       <div className="container">
         <SectionLabel>How It Works</SectionLabel>
-        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-12">
+        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-8">
           This Isn't a Course. It's Mentoring Built Around Your Career.
         </h2>
 

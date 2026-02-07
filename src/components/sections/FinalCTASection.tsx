@@ -6,7 +6,7 @@ export function FinalCTASection() {
 
   return (
     <section
-      className="py-12 sm:py-16 px-4 bg-gradient-to-b from-primary/10 via-primary/5 to-background border-t border-primary/20"
+      className="py-8 sm:py-10 px-4 bg-gradient-to-b from-primary/10 via-primary/5 to-background border-t border-primary/20"
       ref={ref}
     >
       <div className="container max-w-3xl text-center">
@@ -50,7 +50,7 @@ export function FinalCTASection() {
           }`}
           style={{ transitionDelay: "500ms" }}
         >
-          No email required. No sales pitch. Just the plan.
+          28 Minute Exclusive Roadmap for Senior Java Developers
         </p>
       </div>
     </section>

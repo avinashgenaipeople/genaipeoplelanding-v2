@@ -32,10 +32,10 @@ export function TransformationSection() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section className="py-12 sm:py-16 px-4" ref={ref}>
+    <section className="py-8 sm:py-10 px-4" ref={ref}>
       <div className="container max-w-4xl">
         <SectionLabel>The Shift</SectionLabel>
-        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-12">
+        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-8">
           Go From Writing Code to Designing the Systems AI Runs On.
         </h2>
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useFormModal } from "@/contexts/FormModalContext";
 
 export function StickyMobileBar() {
   const [isVisible, setIsVisible] = useState(false);
-  const navigate = useNavigate();
+  const { openFormModal } = useFormModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +30,7 @@ export function StickyMobileBar() {
         </span>
         <button
           type="button"
-          onClick={() => navigate("/watch")}
+          onClick={openFormModal}
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-full shadow-lg"
         >
           Watch Now

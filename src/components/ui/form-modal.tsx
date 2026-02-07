@@ -1,5 +1,4 @@
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface FormModalProps {
   open: boolean;
@@ -9,13 +8,14 @@ interface FormModalProps {
 export function FormModal({ open, onOpenChange }: FormModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg w-full p-0 overflow-hidden bg-white rounded-xl">
-        <VisuallyHidden>
-          <DialogTitle>Sign Up Form</DialogTitle>
-        </VisuallyHidden>
+      <DialogContent className="max-w-lg w-full p-0 overflow-hidden bg-white rounded-xl max-h-[90vh] flex flex-col">
+        <DialogTitle className="text-xl font-bold text-center py-4 px-6 border-b border-gray-100 shrink-0">
+          Share Details to Watch Video
+        </DialogTitle>
+        <div className="overflow-y-auto flex-1">
         <iframe
           src="https://share.synamate.com/widget/form/pk1gcKtubozhKvH14wUZ"
-          className="w-full border-none rounded-lg"
+          className="w-full border-none"
           style={{ height: "944px" }}
           id="inline-pk1gcKtubozhKvH14wUZ"
           data-layout="{'id':'INLINE'}"
@@ -31,6 +31,7 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
           data-form-id="pk1gcKtubozhKvH14wUZ"
           title="LFMVP Optin -Improved"
         />
+        </div>
       </DialogContent>
     </Dialog>
   );

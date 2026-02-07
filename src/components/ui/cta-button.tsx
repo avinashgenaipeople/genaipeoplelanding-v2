@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
+import { useFormModal } from "@/contexts/FormModalContext";
 
 interface CTAButtonProps {
   children: React.ReactNode;
@@ -9,6 +10,8 @@ interface CTAButtonProps {
 }
 
 export function CTAButton({ children, className, size = "default", variant = "primary" }: CTAButtonProps) {
+  const { openFormModal } = useFormModal();
+  
   const sizeClasses = {
     small: "px-4 py-2.5 text-sm",
     default: "px-6 py-3.5 text-base",
@@ -16,8 +19,8 @@ export function CTAButton({ children, className, size = "default", variant = "pr
   };
 
   return (
-    <a
-      href="#watch-roadmap"
+    <button
+      onClick={openFormModal}
       className={cn(
         "inline-flex items-center gap-2 font-semibold rounded-full transition-all duration-300",
         "bg-primary text-primary-foreground hover:bg-primary/90",
@@ -29,6 +32,6 @@ export function CTAButton({ children, className, size = "default", variant = "pr
     >
       {children}
       <ArrowRight className="w-4 h-4" />
-    </a>
+    </button>
   );
 }

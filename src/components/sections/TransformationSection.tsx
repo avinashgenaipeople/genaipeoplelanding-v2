@@ -19,8 +19,8 @@ const comparisons = [
   },
   {
     label: "Compensation",
-    before: "15–20L",
-    after: "25–50L",
+    before: "20–35L",
+    after: "40–70L",
   },
 ];
 

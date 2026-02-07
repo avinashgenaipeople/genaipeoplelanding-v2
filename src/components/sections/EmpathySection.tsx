@@ -49,7 +49,7 @@ export function EmpathySection() {
 
         {/* Body text */}
         <p className="text-muted-foreground text-lg leading-relaxed">
-          We've sat across from developers earning 15–20L who felt stuck. Experienced. Skilled. 
+          We've sat across from developers earning 20–35L who felt stuck. Experienced. Skilled. 
           But watching the ground shift under them. We know that feeling. And we know the way through 
           — because we've walked other developers through it already.
         </p>

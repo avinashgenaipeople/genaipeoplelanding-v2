@@ -6,7 +6,7 @@ export function HeroSection() {
       <div className="container max-w-4xl text-center">
         {/* Eyebrow */}
         <p className="text-xs sm:text-sm font-semibold uppercase tracking-widest text-primary mb-6 animate-fade-up">
-          For Senior Java Developers Earning 15L+
+          For Senior Java Developers Earning 20L+
         </p>
 
         {/* Headline */}

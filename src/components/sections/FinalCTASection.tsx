@@ -6,7 +6,7 @@ export function FinalCTASection() {
 
   return (
     <section
-      className="py-20 sm:py-28 px-4 bg-gradient-to-b from-primary/10 via-primary/5 to-background border-t border-primary/20"
+      className="py-12 sm:py-16 px-4 bg-gradient-to-b from-primary/10 via-primary/5 to-background border-t border-primary/20"
       ref={ref}
     >
       <div className="container max-w-3xl text-center">

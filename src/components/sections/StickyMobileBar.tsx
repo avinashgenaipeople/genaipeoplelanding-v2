@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { useFormModal } from "@/contexts/FormModalContext";
 
 export function StickyMobileBar() {
   const [isVisible, setIsVisible] = useState(false);
+  const { openFormModal } = useFormModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,13 +28,13 @@ export function StickyMobileBar() {
         <span className="text-base font-medium text-foreground">
           Free 28-min Roadmap
         </span>
-        <a
-          href="#watch-roadmap"
+        <button
+          onClick={openFormModal}
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-full shadow-lg"
         >
           Watch Now
           <ArrowRight className="w-3.5 h-3.5" />
-        </a>
+        </button>
       </div>
     </div>
   );

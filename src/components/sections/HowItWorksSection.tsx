@@ -15,8 +15,8 @@ const features = [
   },
   {
     icon: Clock,
-    title: "30 Minutes a Day.",
-    text: "Built for working professionals. No need to quit your job or take a sabbatical.",
+    title: "10-15 Hours Per Week.",
+    text: "Planned at your convenience. Built for working professionals. No need to quit your job or take a sabbatical.",
   },
   {
     icon: Route,

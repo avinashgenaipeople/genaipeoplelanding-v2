@@ -5,21 +5,21 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const testimonials = [
   {
     quote:
-      "I was mass-applying to AI roles with zero callbacks. After 8 weeks, I understood exactly where my Java skills fit. Landed an AI Platform Engineer role — 28L CTC.",
-    name: "Rahul S.",
-    detail: "Ex-Senior Java Developer, 9 years experience",
+      "In my company, an AI team was formed and someone from management noticed my LinkedIn posts. I was invited to join the AI team and got a good salary hike — all thanks to the steps I took through this program.",
+    name: "Punyakeerthi BL",
+    detail: "Senior Software Engineer → Now on AI Team (with salary hike)",
   },
   {
     quote:
-      "I thought I'd need to learn Python from scratch and get a master's. Turns out my Spring Boot + Kafka experience was exactly what AI teams needed.",
-    name: "Priya M.",
-    detail: "Now AI Backend Engineer at a Series B Startup",
+      "The GenAI Mentorship Program transformed my career — helping me move to a Senior Associate role at Standard Chartered. The structured curriculum, hands-on projects, and weekly mentor check-ins equipped me with real-world GenAI skills and accelerated my growth.",
+    name: "Sureshkumar Mani",
+    detail: "Senior Developer → Senior Associate at Standard Chartered",
   },
   {
     quote:
-      "The 1-on-1 mentoring made all the difference. No generic advice — just a clear plan for my specific situation.",
-    name: "Vikram K.",
-    detail: "Now ML Platform Architect, 32L CTC",
+      "They don't just teach you step by step — they provide an end goal and guide you through the process. I feel very confident about achieving my goals. The structure, resources, and collaborative environment have built my confidence.",
+    name: "Sunil Vijendra",
+    detail: "Director of Engineering",
   },
 ];
 

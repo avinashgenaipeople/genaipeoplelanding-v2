@@ -15,19 +15,19 @@ export function FinalCTASection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg sm:text-xl text-muted-foreground">
             Worried AI will replace your Java career?
           </p>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg sm:text-xl text-muted-foreground">
             We help Senior Java Developers with this every day.
           </p>
           <p className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
             Watch the free Roadmap video.
           </p>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg sm:text-xl text-muted-foreground">
             Go from writing code to designing the systems AI runs on.
           </p>
-          <p className="font-display text-xl sm:text-2xl font-bold text-primary">
+          <p className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-primary">
             Never worry about being replaced again.
           </p>
         </div>
@@ -45,7 +45,7 @@ export function FinalCTASection() {
         </div>
 
         <p
-          className={`text-sm text-muted-foreground/70 mt-6 transition-all duration-500 ${
+          className={`text-base text-muted-foreground/70 mt-6 transition-all duration-500 ${
             isVisible ? "opacity-100" : "opacity-0"
           }`}
           style={{ transitionDelay: "500ms" }}

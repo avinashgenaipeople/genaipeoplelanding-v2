@@ -29,9 +29,9 @@ export function VisionSection() {
               style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-success/20 flex items-center justify-center mt-0.5">
-                <Check className="w-5 h-5 text-success-foreground" />
+                <Check className="w-5 h-5 text-success" />
               </div>
-              <p className="text-lg text-foreground leading-relaxed">
+              <p className="text-lg sm:text-xl text-foreground leading-relaxed">
                 {statement}
               </p>
             </div>

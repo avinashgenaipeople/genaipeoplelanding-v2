@@ -6,6 +6,7 @@ import { TransformationSection } from "@/components/sections/TransformationSecti
 import { VisionSection } from "@/components/sections/VisionSection";
 import { RolesSection } from "@/components/sections/RolesSection";
 import { HowItWorksSection } from "@/components/sections/HowItWorksSection";
+import { MentorSection } from "@/components/sections/MentorSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { FinalCTASection } from "@/components/sections/FinalCTASection";
 import { StickyMobileBar } from "@/components/sections/StickyMobileBar";
@@ -21,6 +22,7 @@ const Index = () => {
       <RolesSection />
       <VisionSection />
       <HowItWorksSection />
+      <MentorSection />
       <AnswerSection />
       <TestimonialsSection />
       <FinalCTASection />

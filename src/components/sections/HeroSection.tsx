@@ -2,12 +2,12 @@ import { CTAButton } from "@/components/ui/cta-button";
 
 export function HeroSection() {
   return (
-    <section className="min-h-screen flex items-center justify-center bg-hero-pattern px-4 py-20">
+    <section className="min-h-screen flex items-center justify-center bg-hero-pattern px-4 pt-8 pb-20">
       <div className="container max-w-4xl text-center">
         {/* Eyebrow */}
-        <p className="text-sm sm:text-base font-semibold uppercase tracking-widest text-primary mb-6 animate-fade-up">
-          For Senior Java Developers Earning 20L+
-        </p>
+        <span className="inline-block text-sm sm:text-base font-semibold uppercase tracking-widest text-primary bg-primary/10 border border-primary/20 rounded-full px-5 py-2 mb-6 animate-fade-up">
+          For Senior Java Developers Earning 15L+
+        </span>
 
         {/* Headline */}
         <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-foreground mb-6 leading-tight animate-fade-up" style={{ animationDelay: "0.1s" }}>

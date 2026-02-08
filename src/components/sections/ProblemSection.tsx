@@ -10,12 +10,12 @@ const problems = [
   },
   {
     icon: Bot,
-    title: "Agents Write Code Now",
+    title: "Agents Write Code",
     text: "AI handles the boilerplate, the CRUD, the standard integrations — the work that used to justify your salary.",
   },
   {
     icon: Clock,
-    title: "The Window Is Closing",
+    title: "Window Is Closing",
     text: "Claude Code went from zero to 4% of all GitHub commits in under a year. Developers who wait will compete. Developers who move now will lead.",
   },
 ];

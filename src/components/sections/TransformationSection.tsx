@@ -52,7 +52,7 @@ export function TransformationSection() {
               <div className="p-4 font-semibold text-center text-destructive/80 bg-destructive/5">
                 TODAY
               </div>
-              <div className="p-4 font-semibold text-center text-success-foreground bg-success/5">
+              <div className="p-4 font-semibold text-center text-foreground bg-success/10">
                 AFTER THE SHIFT
               </div>
             </div>
@@ -114,7 +114,7 @@ export function TransformationSection() {
             }`}
             style={{ transitionDelay: "150ms" }}
           >
-            <h3 className="font-display text-lg font-semibold text-success-foreground mb-4 uppercase tracking-wide">
+            <h3 className="font-display text-lg font-semibold text-foreground mb-4 uppercase tracking-wide">
               After the Shift
             </h3>
             <div className="space-y-4">

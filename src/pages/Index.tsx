@@ -17,11 +17,11 @@ const Index = () => {
       <HeroSection />
       <ProblemSection />
       <EmpathySection />
-      <AnswerSection />
       <TransformationSection />
-      <VisionSection />
       <RolesSection />
+      <VisionSection />
       <HowItWorksSection />
+      <AnswerSection />
       <TestimonialsSection />
       <FinalCTASection />
       <Footer />

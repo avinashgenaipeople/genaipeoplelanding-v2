@@ -10,7 +10,7 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg w-full p-0 overflow-hidden bg-white rounded-xl max-h-[90vh] flex flex-col">
         <DialogTitle className="text-xl font-bold text-center py-4 px-6 border-b border-gray-100 shrink-0">
-          Share Details to Watch Video
+          Enter Your Details to Watch the Free Roadmap Video
         </DialogTitle>
         <div className="overflow-y-auto flex-1">
         <iframe

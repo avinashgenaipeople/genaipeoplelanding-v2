@@ -8,10 +8,15 @@ interface FormModalProps {
 export function FormModal({ open, onOpenChange }: FormModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg w-full p-0 overflow-hidden bg-white rounded-xl max-h-[90vh] flex flex-col">
-        <DialogTitle className="text-xl font-bold text-center py-4 px-6 border-b border-gray-100 shrink-0">
-          Enter Your Details to Watch the Free Roadmap Video
-        </DialogTitle>
+      <DialogContent className="max-w-lg w-full p-0 overflow-hidden rounded-xl max-h-[90vh] flex flex-col border-2 border-primary/30 shadow-[0_0_30px_rgba(99,102,241,0.2)] bg-white">
+        <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-5 shrink-0">
+          <DialogTitle className="text-xl font-bold text-center text-white">
+            Enter Your Details to Watch the Free Roadmap Video
+          </DialogTitle>
+          <p className="text-sm text-white/80 text-center mt-1">
+            Join 500+ Java developers already on the AI Architect path
+          </p>
+        </div>
         <div className="overflow-y-auto flex-1">
         <iframe
           src="https://share.synamate.com/widget/form/pk1gcKtubozhKvH14wUZ"

@@ -10,7 +10,7 @@ export function HeroSection() {
         </span>
 
         {/* Headline */}
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-foreground mb-6 leading-tight animate-fade-up" style={{ animationDelay: "0.1s" }}>
+        <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground mb-6 leading-tight animate-fade-up" style={{ animationDelay: "0.1s" }}>
           Go From Senior Java Developer to AI Architect in 120 Days
         </h1>
 

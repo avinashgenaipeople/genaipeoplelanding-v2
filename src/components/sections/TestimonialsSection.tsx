@@ -75,7 +75,7 @@ export function TestimonialsSection() {
 
         {/* CTA */}
         <div className="mt-8 text-center">
-          <CTAButton size="large">Join 500+ Developers — Watch Free Roadmap</CTAButton>
+          <CTAButton size="large">Join 150+ Developers — Watch Free Roadmap</CTAButton>
         </div>
       </div>
     </section>

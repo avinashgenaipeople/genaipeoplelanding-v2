@@ -25,7 +25,7 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
             Enter Your Details to Watch the Free Roadmap Video
           </DialogTitle>
           <p className="text-sm text-white/80 text-center mt-1">
-            Join 500+ Java developers already on the AI Architect path
+            Join 150+ Java developers already on the AI Architect path
           </p>
         </div>
         <div className="overflow-y-auto flex-1">

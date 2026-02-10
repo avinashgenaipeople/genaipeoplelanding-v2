@@ -6,23 +6,23 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const features = [
   {
     icon: Target,
-    title: "Your Stack. Your Goals.",
-    text: "A roadmap built around your Java stack, your experience level, and your target role.",
+    title: "Your Stack, Your Goals",
+    text: "Personalized to your experience and target role.",
   },
   {
     icon: Video,
-    title: "1-on-1 Guidance.",
-    text: "Not 200 hours of pre-recorded video. Real mentoring with real feedback.",
+    title: "1-on-1 Guidance",
+    text: "Real mentorship, not pre-recorded lectures.",
   },
   {
     icon: Clock,
-    title: "10-15 Hours Per Week.",
-    text: "Planned at your convenience. Built for working professionals. No need to quit your job or take a sabbatical.",
+    title: "10–15 Hours/Week",
+    text: "Designed for working professionals.",
   },
   {
     icon: Route,
-    title: "Shortest Path Only.",
-    text: "No generic curriculum. Just the specific skills that close the gap between where you are and where you need to be.",
+    title: "Shortest Path Only",
+    text: "No filler — only what moves you forward.",
   },
 ];
 

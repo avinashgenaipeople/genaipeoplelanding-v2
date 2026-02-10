@@ -8,10 +8,6 @@ const quotes = [
     response: "You don't need one.",
   },
   {
-    quote: "I'd have to learn Python from scratch.",
-    response: "You don't.",
-  },
-  {
     quote: "I'm too senior to start over.",
     response: "You're not starting over. You're stepping up.",
   },
@@ -50,9 +46,7 @@ export function EmpathySection() {
 
         {/* Body text */}
         <p className="text-muted-foreground text-xl sm:text-2xl leading-relaxed">
-          We've sat across from developers earning 20–35L who felt stuck. Experienced. Skilled.
-          But watching the ground shift under them. We know that feeling. And we know the way through
-          — because we've walked other developers through it already.
+          We've helped hundreds of senior Java developers make this exact transition — with a structured, no-fluff approach built around your career.
         </p>
 
         {/* CTA */}

@@ -40,13 +40,7 @@ export function MentorSection() {
 
               <div className="space-y-4 text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 <p>
-                  20+ years in software development. Director of Engineering at an AI company — before ChatGPT even existed.
-                </p>
-                <p>
-                  When ChatGPT dropped, Jerry saw what most missed: this wasn't just another tool. It was a turning point for every software developer's career. That's why he started GenAI People — to help experienced developers make the shift before the window closes.
-                </p>
-                <p className="font-display text-xl sm:text-2xl font-semibold text-foreground">
-                  He's not teaching theory. He's walked this path and now guides others through it.
+                  Jerry has helped hundreds of senior Java developers make the transition to AI architecture roles — with a structured, no-fluff mentoring approach built around your career.
                 </p>
               </div>
 

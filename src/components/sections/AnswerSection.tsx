@@ -6,17 +6,17 @@ const points = [
   {
     number: "1",
     title: "The gap is small.",
-    text: "Every AI system needs backend architecture, APIs, data pipelines, and production reliability. That's your current job. The missing 20% is learnable in weeks.",
+    text: "",
   },
   {
     number: "2",
     title: "The roles are real.",
-    text: 'AI Backend Engineer. ML Platform Architect. AI Solutions Lead. Open on LinkedIn and Naukri right now. Most require "strong Java/backend experience."',
+    text: "",
   },
   {
     number: "3",
     title: "The path is clear.",
-    text: "Not a generic course. A step-by-step roadmap from where you are to where you need to be. 1-2 hours a day.",
+    text: "",
   },
 ];
 
@@ -31,7 +31,7 @@ export function AnswerSection() {
           Watch the Free Roadmap Video.
         </h2>
         <p className="text-2xl sm:text-3xl text-muted-foreground mb-12">
-          In 28 minutes, you'll see three things:
+          In 27 minutes, you'll see exactly how to make the shift.
         </p>
 
         {/* Numbered points */}
@@ -50,12 +50,14 @@ export function AnswerSection() {
                 </span>
               </div>
               <div>
-                <h3 className="font-display text-2xl sm:text-3xl font-semibold text-foreground mb-2">
+                <h3 className="font-display text-2xl sm:text-3xl font-semibold text-foreground">
                   {point.title}
                 </h3>
-                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                  {point.text}
-                </p>
+                {point.text && (
+                  <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mt-2">
+                    {point.text}
+                  </p>
+                )}
               </div>
             </div>
           ))}

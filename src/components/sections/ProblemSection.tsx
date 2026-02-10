@@ -5,18 +5,18 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const problems = [
   {
     icon: Briefcase,
-    title: "Job Posts Changed",
-    text: 'Roles that said "Senior Java Developer" last year now say "AI/ML experience required."',
+    title: "No Posts Changed",
+    text: "Job listings still say \"Java\" — but the work inside has transformed.",
   },
   {
     icon: Bot,
     title: "Agents Write Code",
-    text: "AI handles the boilerplate, the CRUD, the standard integrations — the work that used to justify your salary.",
+    text: "AI is generating the code you used to write by hand.",
   },
   {
     icon: Clock,
-    title: "Window Is Closing",
-    text: "Claude Code went from zero to 4% of all GitHub commits in under a year. Developers who wait will compete. Developers who move now will lead.",
+    title: "Window's Closing",
+    text: "Early movers are locking in architect-level roles right now.",
   },
 ];
 
@@ -56,11 +56,8 @@ export function ProblemSection() {
 
         {/* Bottom text */}
         <div className="max-w-3xl mx-auto text-center">
-          <p className="font-display text-2xl sm:text-3xl font-semibold text-foreground mb-4">
+          <p className="font-display text-2xl sm:text-3xl font-semibold text-foreground">
             Worried AI will replace your Java career? You should be. But not for the reason you think.
-          </p>
-          <p className="text-muted-foreground text-xl sm:text-2xl leading-relaxed">
-            The threat isn't that AI can do everything you do. The threat is staying in a role that shrinks while a bigger role goes unfilled.
           </p>
         </div>
       </div>

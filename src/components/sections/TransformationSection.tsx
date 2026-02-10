@@ -4,27 +4,18 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const comparisons = [
   {
     label: "Role",
-    before: "You write code",
-    after: "You design systems where agents write code",
+    before: "Dev writing CRUD",
+    after: "Designing system architectures",
   },
   {
-    label: "Relationship with AI",
-    before: "You compete with AI tools",
-    after: "You orchestrate AI tools",
+    label: "AI Relationship",
+    before: "Building with AI tools",
+    after: "Building AI-powered products",
   },
   {
-    label: "How companies see you",
-    before: "A senior coder",
-    after: "An AI architect",
-  },
-  {
-    label: "Compensation",
-    before: "20–35L",
-    after: [
-      "AI/ML Engineering Manager: 50–80L",
-      "AI Solutions Architect: 40–70L",
-      "ML Platform Engineer: 30–45L",
-    ],
+    label: "Impact",
+    before: "IC contributor",
+    after: "Architecture-level decisions",
   },
 ];
 
@@ -50,10 +41,10 @@ export function TransformationSection() {
             <div className="grid grid-cols-3 bg-card">
               <div className="p-4 font-semibold text-muted-foreground"></div>
               <div className="p-4 font-semibold text-center text-destructive/80 bg-destructive/5">
-                TODAY
+                NOW
               </div>
               <div className="p-4 font-semibold text-center text-foreground bg-success/10">
-                AFTER THE SHIFT
+                120 DAYS
               </div>
             </div>
 
@@ -70,20 +61,11 @@ export function TransformationSection() {
                   {row.before}
                 </div>
                 <div className="p-4 text-center text-foreground font-medium bg-success/5">
-                  {Array.isArray(row.after) ? (
-                    <div className="space-y-1 text-sm">
-                      {row.after.map((line, i) => (
-                        <p key={i}>{line}</p>
-                      ))}
-                    </div>
-                  ) : (
-                    row.after
-                  )}
+                  {row.after}
                 </div>
               </div>
             ))}
           </div>
-          <p className="text-xs text-muted-foreground mt-2 text-right">* Compensation data updated in Feb 2026</p>
         </div>
 
         {/* Mobile cards */}
@@ -94,7 +76,7 @@ export function TransformationSection() {
             }`}
           >
             <h3 className="font-display text-lg font-semibold text-destructive/80 mb-4 uppercase tracking-wide">
-              Today
+              Now
             </h3>
             <div className="space-y-4">
               {comparisons.map((row) => (
@@ -115,7 +97,7 @@ export function TransformationSection() {
             style={{ transitionDelay: "150ms" }}
           >
             <h3 className="font-display text-lg font-semibold text-foreground mb-4 uppercase tracking-wide">
-              After the Shift
+              120 Days
             </h3>
             <div className="space-y-4">
               {comparisons.map((row) => (
@@ -123,19 +105,10 @@ export function TransformationSection() {
                   <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
                     {row.label}
                   </p>
-                  {Array.isArray(row.after) ? (
-                    <div className="space-y-1 text-sm">
-                      {row.after.map((line, i) => (
-                        <p key={i} className="text-foreground font-medium">{line}</p>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-foreground font-medium">{row.after}</p>
-                  )}
+                  <p className="text-foreground font-medium">{row.after}</p>
                 </div>
               ))}
             </div>
-            <p className="text-xs text-muted-foreground mt-3">* Compensation data updated in Feb 2026</p>
           </div>
         </div>
 

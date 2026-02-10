@@ -15,20 +15,11 @@ export function FinalCTASection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
+            Never Worry About Being <span className="text-primary">Replaced</span> Again.
+          </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            Worried AI will replace your Java career?
-          </p>
-          <p className="text-xl sm:text-2xl text-muted-foreground">
-            We help Senior Java Developers with this every day.
-          </p>
-          <p className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
-            Watch the Free Roadmap Video.
-          </p>
-          <p className="text-xl sm:text-2xl text-muted-foreground">
-            Go from writing code to designing the systems AI runs on.
-          </p>
-          <p className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-primary">
-            Never worry about being replaced again.
+            Be the one deciding how AI gets built — not the one it replaces.
           </p>
         </div>
 

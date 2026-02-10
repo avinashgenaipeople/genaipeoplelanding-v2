@@ -1,4 +1,5 @@
 import { SectionLabel } from "@/components/ui/section-label";
+import { CTAButton } from "@/components/ui/cta-button";
 import { Target, Video, Clock, Route } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -57,6 +58,12 @@ export function HowItWorksSection() {
               </p>
             </div>
           ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-8 text-center">
+          <CTAButton size="default">Start Your Shift Now</CTAButton>
+          <p className="text-base text-muted-foreground mt-3">Watch the free 28-minute roadmap built for Java developers.</p>
         </div>
       </div>
     </section>

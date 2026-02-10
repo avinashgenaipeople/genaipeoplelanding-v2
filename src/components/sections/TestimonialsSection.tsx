@@ -1,4 +1,5 @@
 import { SectionLabel } from "@/components/ui/section-label";
+import { CTAButton } from "@/components/ui/cta-button";
 import { Star } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -70,6 +71,11 @@ export function TestimonialsSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-8 text-center">
+          <CTAButton size="large">Join 500+ Developers — Watch Free Roadmap</CTAButton>
         </div>
       </div>
     </section>

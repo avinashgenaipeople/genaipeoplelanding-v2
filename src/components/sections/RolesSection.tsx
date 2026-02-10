@@ -1,4 +1,5 @@
 import { SectionLabel } from "@/components/ui/section-label";
+import { CTAButton } from "@/components/ui/cta-button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useEffect, useState } from "react";
 
@@ -101,6 +102,12 @@ export function RolesSection() {
         <p className="text-lg text-muted-foreground/70 text-center">
           Source: LinkedIn, Naukri, and direct company postings. Most list Java/backend experience as a core requirement.
         </p>
+
+        {/* CTA */}
+        <div className="mt-8 text-center">
+          <CTAButton size="default">Get Your Personalized Roadmap</CTAButton>
+          <p className="text-base text-muted-foreground mt-3">Free. No credit card. Just 28 minutes of your time.</p>
+        </div>
       </div>
     </section>
   );

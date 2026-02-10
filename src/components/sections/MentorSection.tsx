@@ -1,4 +1,5 @@
 import { SectionLabel } from "@/components/ui/section-label";
+import { CTAButton } from "@/components/ui/cta-button";
 import { Linkedin } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -49,16 +50,19 @@ export function MentorSection() {
                 </p>
               </div>
 
-              {/* LinkedIn */}
-              <a
-                href="https://www.linkedin.com/in/jerryk/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-6 text-primary hover:text-primary/80 font-medium transition-colors"
-              >
-                <Linkedin className="w-5 h-5" />
-                <span>Connect on LinkedIn</span>
-              </a>
+              {/* CTA + LinkedIn */}
+              <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 mt-6">
+                <CTAButton size="default">Watch the Free Roadmap</CTAButton>
+                <a
+                  href="https://www.linkedin.com/in/jerryk/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors"
+                >
+                  <Linkedin className="w-5 h-5" />
+                  <span>Connect on LinkedIn</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

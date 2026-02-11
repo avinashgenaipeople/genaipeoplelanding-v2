@@ -70,12 +70,12 @@ export function RolesSection() {
   return (
     <section className="py-8 sm:py-10 px-4" ref={ref}>
       <div className="container">
-        <SectionLabel>Real Roles. Open Today.</SectionLabel>
+        <SectionLabel>Real Jobs. Open Now.</SectionLabel>
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-          These Are Real Career Paths
+          These High-Paying AI Jobs Want Java Developers
         </h2>
         <p className="text-lg sm:text-xl text-muted-foreground mb-8">
-          Salaries based on current market data. Your Java experience is a core requirement.
+          Real salaries from current job listings. Your Java experience is a core requirement for all of them.
         </p>
 
         {/* Role cards */}

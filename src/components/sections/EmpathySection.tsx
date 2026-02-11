@@ -18,9 +18,9 @@ export function EmpathySection() {
   return (
     <section className="py-8 sm:py-10 px-4 bg-section-alt" ref={ref}>
       <div className="container max-w-4xl">
-        <SectionLabel>You're Not Alone</SectionLabel>
+        <SectionLabel>You're Closer Than You Think</SectionLabel>
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-8">
-          We Help Senior Java Developers With This Every Day.
+          You Already Have 80% of What's Needed. Here's the Rest.
         </h2>
 
         {/* Quote blocks */}

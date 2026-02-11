@@ -20,7 +20,7 @@ export function AnswerSection() {
           Watch the Free Roadmap Video.
         </h2>
         <p className="text-2xl sm:text-3xl text-muted-foreground mb-12">
-          In 27 minutes, you'll see exactly how to make the shift.
+          In 27 minutes, see exactly how to land a high-paying AI job.
         </p>
 
         {/* Check points */}

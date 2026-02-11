@@ -16,10 +16,10 @@ export function FinalCTASection() {
           }`}
         >
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-            Never Worry About Being <span className="text-primary">Replaced</span> Again.
+            Your Next Job Should Pay You What You're <span className="text-primary">Really Worth</span>.
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            Be the one deciding how AI gets built — not the one it replaces.
+            Senior Java developers with AI skills are landing ₹40–72L+ roles. You're next.
           </p>
         </div>
 

@@ -27,10 +27,10 @@ export function TransformationSection() {
       <div className="container max-w-4xl">
         <SectionLabel>The Shift</SectionLabel>
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-          From Writing Code to Designing the Systems AI Runs On
+          From Java Developer to High-Paying AI Role in 120 Days
         </h2>
         <p className="text-lg sm:text-xl text-muted-foreground mb-8">
-          That's not a side step. That's a transformation.
+          Same domain expertise. Much higher compensation.
         </p>
 
         {/* Desktop table */}
@@ -117,7 +117,7 @@ export function TransformationSection() {
 
         {/* Bottom text */}
         <p className="font-display text-2xl sm:text-3xl font-semibold text-foreground text-center">
-          Same domain expertise. Entirely new career trajectory.
+          Same Java skills. 2–3x the compensation.
         </p>
       </div>
     </section>

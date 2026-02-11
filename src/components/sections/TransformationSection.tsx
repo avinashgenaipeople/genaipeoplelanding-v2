@@ -4,18 +4,18 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const comparisons = [
   {
     label: "Role",
-    before: "Dev writing CRUD",
-    after: "Designing system architectures",
+    before: "Java Developer",
+    after: "AI/ML Architect",
   },
   {
-    label: "AI Relationship",
-    before: "Building with AI tools",
-    after: "Building AI-powered products",
+    label: "Focus",
+    before: "Building all features",
+    after: "Designing system architecture",
   },
   {
     label: "Impact",
     before: "IC contributor",
-    after: "Architecture-level decisions",
+    after: "Architecture lead",
   },
 ];
 
@@ -26,9 +26,12 @@ export function TransformationSection() {
     <section className="py-8 sm:py-10 px-4" ref={ref}>
       <div className="container max-w-4xl">
         <SectionLabel>The Shift</SectionLabel>
-        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-8">
-          Go From Writing Code to Designing the Systems AI Runs On.
+        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
+          From Writing Code to Designing the Systems AI Runs On
         </h2>
+        <p className="text-lg sm:text-xl text-muted-foreground mb-8">
+          That's not a side step. That's a transformation.
+        </p>
 
         {/* Desktop table */}
         <div className="hidden md:block mb-12">
@@ -114,7 +117,7 @@ export function TransformationSection() {
 
         {/* Bottom text */}
         <p className="font-display text-2xl sm:text-3xl font-semibold text-foreground text-center">
-          That's not a side step. That's a transformation.
+          Same domain expertise. Entirely new career trajectory.
         </p>
       </div>
     </section>

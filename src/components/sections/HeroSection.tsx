@@ -21,8 +21,7 @@ export function HeroSection() {
 
         {/* Body */}
         <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up" style={{ animationDelay: "0.3s" }}>
-          AI architects earn 40–80L and companies are hiring now. Watch our free 28-minute roadmap
-          to see the exact path from where you are to where you need to be.
+          AI Architects earn ₹40–60L+, and companies are hiring now. Watch our free 28-minute roadmap to see the exact path.
         </p>
 
         {/* CTA */}

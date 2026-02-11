@@ -7,22 +7,22 @@ const features = [
   {
     icon: Target,
     title: "Your Stack, Your Goals",
-    text: "Personalized to your experience and target role.",
+    text: "Personalized path based on your experience and target role.",
   },
   {
     icon: Video,
     title: "1-on-1 Guidance",
-    text: "Real mentorship, not pre-recorded lectures.",
+    text: "Real mentorship, not pre-recorded tutorials. Get answers when you need them.",
   },
   {
     icon: Clock,
     title: "10–15 Hours/Week",
-    text: "Designed for working professionals.",
+    text: "Designed for working professionals. No need to quit your job.",
   },
   {
     icon: Route,
     title: "Shortest Path Only",
-    text: "No filler — only what moves you forward.",
+    text: "No filler — only what moves you forward toward your target role.",
   },
 ];
 
@@ -60,11 +60,6 @@ export function HowItWorksSection() {
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="mt-8 text-center">
-          <CTAButton size="default">Start Your Shift Now</CTAButton>
-          <p className="text-base text-muted-foreground mt-3">Watch the free 28-minute roadmap built for Java developers.</p>
-        </div>
       </div>
     </section>
   );

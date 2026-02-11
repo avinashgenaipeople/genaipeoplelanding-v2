@@ -6,23 +6,23 @@ import { useEffect, useState } from "react";
 const roles = [
   {
     role: "AI Backend Engineer",
-    ctc: "20–30L",
-    tag: "Java/Spring Boot preferred",
+    ctc: "18–27L",
+    tag: "Java + APIs",
   },
   {
     role: "ML Platform Engineer",
-    ctc: "30–45L",
-    tag: "Distributed systems experience",
+    ctc: "27–41L",
+    tag: "Infrastructure",
   },
   {
     role: "AI Solutions Architect",
-    ctc: "40–70L",
-    tag: "System design + AI integration",
+    ctc: "36–63L",
+    tag: "Architecture",
   },
   {
     role: "AI/ML Engineering Manager",
-    ctc: "50–80L",
-    tag: "Backend architecture leadership",
+    ctc: "45–72L",
+    tag: "Leadership",
   },
 ];
 
@@ -70,10 +70,13 @@ export function RolesSection() {
   return (
     <section className="py-8 sm:py-10 px-4" ref={ref}>
       <div className="container">
-        <SectionLabel>Roles Hiring Now</SectionLabel>
-        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-8">
-          These Are Real Roles. Open Today.
+        <SectionLabel>Real Roles. Open Today.</SectionLabel>
+        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
+          These Are Real Career Paths
         </h2>
+        <p className="text-lg sm:text-xl text-muted-foreground mb-8">
+          Salaries based on current market data. Your Java experience is a core requirement.
+        </p>
 
         {/* Role cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -98,15 +101,9 @@ export function RolesSection() {
           ))}
         </div>
 
-        {/* Source text */}
-        <p className="text-lg text-muted-foreground/70 text-center">
-          Source: LinkedIn, Naukri, and direct company postings. Most list Java/backend experience as a core requirement.
-        </p>
-
         {/* CTA */}
         <div className="mt-8 text-center">
-          <CTAButton size="default">Get Your Personalized Roadmap</CTAButton>
-          <p className="text-base text-muted-foreground mt-3">Free. No credit card. Just 28 minutes of your time.</p>
+          <CTAButton size="default">Get Your Personalized Roadmap →</CTAButton>
         </div>
       </div>
     </section>

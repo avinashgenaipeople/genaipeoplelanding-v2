@@ -6,21 +6,21 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const testimonials = [
   {
     quote:
-      "In my company, an AI team was formed and someone from management noticed my LinkedIn posts. I was invited to join the AI team and got a good salary hike — all thanks to the steps I took through this program.",
-    name: "Punyakeerthi BL",
-    detail: "Senior Software Engineer → Now on AI Team (with salary hike)",
+      "I'm a corporate Java developer with 8 years experience. After this mentoring program, I landed a 24 LPA role. I was getting just 15. What an amazing transformation!",
+    name: "Pradeep M.",
+    detail: "Pune, India",
   },
   {
     quote:
-      "The GenAI Mentorship Program transformed my career — helping me move to a Senior Associate role at Standard Chartered. The structured curriculum, hands-on projects, and weekly mentor check-ins equipped me with real-world GenAI skills and accelerated my growth.",
-    name: "Sureshkumar Mani",
-    detail: "Senior Developer → Senior Associate at Standard Chartered",
+      "The GenAI Mentoring Program redirected my career. Moving from a Senior Java role to AI Solutions Architect, the structured curriculum and 1-on-1 mentorship made all the difference.",
+    name: "Ravi Sharma",
+    detail: "Bangalore, India",
   },
   {
     quote:
-      "They don't just teach you step by step — they provide an end goal and guide you through the process. I feel very confident about achieving my goals. The structure, resources, and collaborative environment have built my confidence.",
-    name: "Sunil Vijendra",
-    detail: "Director of Engineering",
+      "They told me 'just learn Python.' That's terrible advice — they didn't tell me the real path. Jerry's program showed me how to use what I already knew. Got an AI architecture role in 4 months.",
+    name: "Rahul Narvekar",
+    detail: "Mumbai, India",
   },
 ];
 

@@ -1,5 +1,4 @@
 import { SectionLabel } from "@/components/ui/section-label";
-import { CTAButton } from "@/components/ui/cta-button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const quotes = [
@@ -8,7 +7,7 @@ const quotes = [
     response: "You don't need one.",
   },
   {
-    quote: "I'm too senior to start over.",
+    quote: "It's too late to start over.",
     response: "You're not starting over. You're stepping up.",
   },
 ];
@@ -44,16 +43,6 @@ export function EmpathySection() {
           ))}
         </div>
 
-        {/* Body text */}
-        <p className="text-muted-foreground text-xl sm:text-2xl leading-relaxed">
-          We've helped hundreds of senior Java developers make this exact transition — with a structured, no-fluff approach built around your career.
-        </p>
-
-        {/* CTA */}
-        <div className="mt-8 text-center">
-          <CTAButton size="default">See How We Can Help — Free</CTAButton>
-          <p className="text-base text-muted-foreground mt-3">No commitment. Just a 28-minute roadmap.</p>
-        </div>
       </div>
     </section>
   );

@@ -35,12 +35,12 @@ export function MentorSection() {
                 Jerry Kurian
               </h3>
               <p className="text-lg text-primary font-medium mb-4">
-                Founder & Chief Mentor, GenAI People
+                Founder of GenAIPeople • Chief Mentor
               </p>
 
               <div className="space-y-4 text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 <p>
-                  Jerry has helped hundreds of senior Java developers make the transition to AI architecture roles — with a structured, no-fluff mentoring approach built around your career.
+                  Jerry has helped hundreds of senior Java developers make the transition to AI architecture roles — with a structured, no-fluff approach built around your existing skills and career goals.
                 </p>
               </div>
 

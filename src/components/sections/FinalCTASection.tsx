@@ -16,10 +16,10 @@ export function FinalCTASection() {
           }`}
         >
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-            Your Next Job Should Pay You What You're <span className="text-primary">Really Worth</span>.
+            Watch the video, then let's build your <span className="text-primary">AI transition plan</span>.
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            Senior Java developers with AI skills are landing ₹40–72L+ roles. You're next.
+            Book an appointment with Jerry after the free training and get a practical path tailored to your profile.
           </p>
         </div>
 
@@ -31,7 +31,7 @@ export function FinalCTASection() {
           style={{ transitionDelay: "300ms" }}
         >
           <CTAButton size="large" className="text-lg px-10 py-5">
-            Watch the Free Roadmap Video
+            Watch Free Video & Book a Call
           </CTAButton>
         </div>
 
@@ -41,7 +41,7 @@ export function FinalCTASection() {
           }`}
           style={{ transitionDelay: "500ms" }}
         >
-          28 Minute Exclusive Roadmap for Senior Java Developers
+          28-minute free training for senior Java developers
         </p>
       </div>
     </section>

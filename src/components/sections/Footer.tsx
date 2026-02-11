@@ -7,14 +7,14 @@ export function Footer() {
         </p>
         <div className="flex items-center justify-center gap-4 mt-3">
           <a
-            href="#"
+            href="/privacy"
             className="text-sm text-muted-foreground/70 hover:text-muted-foreground transition-colors"
           >
             Privacy Policy
           </a>
           <span className="text-muted-foreground/30">|</span>
           <a
-            href="#"
+            href="/terms"
             className="text-sm text-muted-foreground/70 hover:text-muted-foreground transition-colors"
           >
             Terms

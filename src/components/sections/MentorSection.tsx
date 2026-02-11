@@ -40,13 +40,18 @@ export function MentorSection() {
 
               <div className="space-y-4 text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 <p>
-                  Jerry has helped hundreds of senior Java developers make the transition to AI architecture roles — with a structured, no-fluff approach built around your existing skills and career goals.
+                  We run a focused 6-month Java-to-GenAI transformation track. Jerry helps senior Java developers add
+                  the exact AI skills needed to move into architecture and AI leadership roles.
+                </p>
+                <p>
+                  You don't start from zero. Your enterprise architecture experience is the base. We build on it with
+                  practical AI implementation, agent orchestration, and leadership-level execution.
                 </p>
               </div>
 
               {/* CTA + LinkedIn */}
               <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 mt-6">
-                <CTAButton size="default">Watch the Free Roadmap</CTAButton>
+                <CTAButton size="default">Watch Video, Then Book a Call</CTAButton>
                 <a
                   href="https://www.linkedin.com/in/jerryk/"
                   target="_blank"

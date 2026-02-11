@@ -1,22 +1,22 @@
 import { SectionLabel } from "@/components/ui/section-label";
-import { Briefcase, Bot, Clock } from "lucide-react";
+import { CTAButton } from "@/components/ui/cta-button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
-const problems = [
+const secrets = [
   {
-    icon: Briefcase,
-    title: "No Posts Changed",
-    text: "The top-paying roles now require AI skills. Same companies, same teams — but much higher compensation.",
+    title: "Secret #1",
+    subtitle: "Enterprise AI is already here.",
+    text: "Infosys has partnered with Cognition to deploy Devin, the AI software engineer. This shift is no longer theoretical.",
   },
   {
-    icon: Bot,
-    title: "AI Skills = Higher Pay",
-    text: "Developers who can build with AI earn ₹40–72L+. Those who can't are stuck at ₹15–25L.",
+    title: "Secret #2",
+    subtitle: "This is not the end of your career.",
+    text: "Your Java and enterprise architecture background is exactly what companies need to run AI safely at scale.",
   },
   {
-    icon: Clock,
-    title: "Window's Open Now",
-    text: "Companies need Java developers who understand AI. The demand is high and supply is low — for now.",
+    title: "Secret #3",
+    subtitle: "Lead agents, don't compete with them.",
+    text: "The premium roles now go to senior leaders who can direct AI agents, design systems, and own outcomes.",
   },
 ];
 
@@ -24,39 +24,40 @@ export function ProblemSection() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section className="py-8 sm:py-10 px-4" ref={ref}>
-      <div className="container">
-        <SectionLabel>The Reality</SectionLabel>
-        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-          The Highest Paying Jobs Now Require AI Skills
-        </h2>
-        <p className="text-lg sm:text-xl text-muted-foreground mb-8">
-          Your Java expertise is valuable — but the best-paying roles have moved. Here's what's happening.
-        </p>
+    <section className="py-8 sm:py-12 px-4" ref={ref}>
+      <div className="container max-w-5xl text-center">
+        <div className="border-t border-border pt-8">
+          <SectionLabel>Video Highlights</SectionLabel>
+          <p className="text-base sm:text-lg font-semibold text-foreground/85 mb-4">
+            Watch the 3 shifts that move you from coding-only to AI leadership.
+          </p>
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+            How to move from <span className="text-primary">Senior Java Developer</span> to{" "}
+            <span className="text-primary">AI Architect</span> without taking a pay cut.
+          </h2>
+          <CTAButton size="default">Watch the Free Video</CTAButton>
+        </div>
 
-        {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          {problems.map((problem, index) => (
+        <div className="grid md:grid-cols-3 gap-6 mt-10 mb-10">
+          {secrets.map((secret, index) => (
             <div
-              key={problem.title}
-              className={`glass-card p-6 sm:p-8 transition-all duration-500 ${
+              key={secret.title}
+              className={`bg-card border border-border rounded-2xl p-6 sm:p-7 transition-all duration-500 shadow-sm ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
-                <problem.icon className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-display text-2xl sm:text-3xl font-semibold text-foreground mb-3">
-                {problem.title}
-              </h3>
-              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                {problem.text}
-              </p>
+              <h3 className="text-primary text-3xl font-display font-bold underline mb-4">{secret.title}</h3>
+              <p className="text-2xl font-semibold text-foreground mb-5 leading-snug">{secret.subtitle}</p>
+              <p className="text-lg text-muted-foreground leading-relaxed">{secret.text}</p>
             </div>
           ))}
         </div>
 
+        <p className="text-2xl sm:text-3xl text-foreground mb-6">
+          Watch the <span className="text-primary font-semibold">free training video</span> now and see your transition plan
+        </p>
+        <CTAButton size="default">Watch the Free Video</CTAButton>
       </div>
     </section>
   );

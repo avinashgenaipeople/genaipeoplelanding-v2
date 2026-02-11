@@ -4,9 +4,9 @@ import { Check } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const points = [
-  "The gap is small.",
-  "The roles are real.",
-  "The path is clear.",
+  "Why this market shift is happening now.",
+  "Your 6-month Java to GenAI roadmap.",
+  "How to book a 1:1 plan call with Jerry.",
 ];
 
 export function AnswerSection() {
@@ -17,10 +17,10 @@ export function AnswerSection() {
       <div className="container max-w-4xl text-center">
         <SectionLabel>Free Video</SectionLabel>
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-          Watch the Free Roadmap Video.
+          Watch the Free Training Video.
         </h2>
         <p className="text-2xl sm:text-3xl text-muted-foreground mb-12">
-          In 27 minutes, see exactly how to land a high-paying AI job.
+          In 28 minutes, see exactly how to move from Java to AI leadership.
         </p>
 
         {/* Check points */}
@@ -45,7 +45,7 @@ export function AnswerSection() {
 
         {/* CTA */}
         <CTAButton size="large">
-          Watch the Free Roadmap Video →
+          Watch the Free Video →
         </CTAButton>
       </div>
     </section>

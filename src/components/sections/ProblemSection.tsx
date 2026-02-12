@@ -32,8 +32,8 @@ export function ProblemSection() {
             3 reasons senior Java devs are shipping 10x faster with AI.
           </p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            How to use <span className="text-primary">AI agents</span> to{" "}
-            <span className="text-primary">ship 10x faster</span> without starting from scratch.
+            How senior Java devs are landing <span className="text-primary">AI Architect roles</span> paying{" "}
+            <span className="text-primary">50L+ per year</span>.
           </h2>
           <CTAButton size="default">Watch the Free Video</CTAButton>
         </div>

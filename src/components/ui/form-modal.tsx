@@ -22,7 +22,7 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
       <DialogContent className="max-w-xl w-full p-0 overflow-hidden rounded-xl max-h-[90vh] flex flex-col border-2 border-primary/30 shadow-[0_0_30px_rgba(99,102,241,0.2)] bg-white">
         <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-5 shrink-0">
           <DialogTitle className="text-xl font-bold text-center text-white">
-            Watch the Free Video & Book Your Call
+            Watch Free Video
           </DialogTitle>
           <p className="text-sm text-white/90 text-center mt-2">
             28-min free training for senior Java devs ready to ship 10x faster.

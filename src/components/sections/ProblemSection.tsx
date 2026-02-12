@@ -5,18 +5,18 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const secrets = [
   {
     title: "Secret #1",
-    subtitle: "Enterprise AI is already here.",
-    text: "Infosys has partnered with Cognition to deploy Devin, the AI software engineer. This shift is no longer theoretical.",
+    subtitle: "AI multiplies senior engineers.",
+    text: "The developers shipping fastest aren't juniors — they're experienced engineers who know what to build and use AI to build it 10x faster.",
   },
   {
     title: "Secret #2",
-    subtitle: "This is not the end of your career.",
-    text: "Your Java and enterprise architecture background is exactly what companies need to run AI safely at scale.",
+    subtitle: "Your Java skills are the foundation.",
+    text: "Enterprise architecture, system design, production debugging — AI amplifies all of it. You're not starting over, you're levelling up.",
   },
   {
     title: "Secret #3",
-    subtitle: "Lead agents, don't compete with them.",
-    text: "The premium roles now go to senior leaders who can direct AI agents, design systems, and own outcomes.",
+    subtitle: "Speed is the new seniority.",
+    text: "The engineers getting promoted now ship in days what used to take weeks. AI is their multiplier, not their replacement.",
   },
 ];
 
@@ -29,11 +29,11 @@ export function ProblemSection() {
         <div className="border-t border-border pt-8">
           <SectionLabel>Video Highlights</SectionLabel>
           <p className="text-base sm:text-lg font-semibold text-foreground/85 mb-4">
-            Watch the 3 shifts that move you from coding-only to AI leadership.
+            3 reasons senior Java devs are shipping 10x faster with AI.
           </p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            How to move from <span className="text-primary">Senior Java Developer</span> to{" "}
-            <span className="text-primary">AI Architect</span> without taking a pay cut.
+            How to use <span className="text-primary">AI agents</span> to{" "}
+            <span className="text-primary">ship 10x faster</span> without starting from scratch.
           </h2>
           <CTAButton size="default">Watch the Free Video</CTAButton>
         </div>
@@ -55,7 +55,7 @@ export function ProblemSection() {
         </div>
 
         <p className="text-2xl sm:text-3xl text-foreground mb-6">
-          Watch the <span className="text-primary font-semibold">free training video</span> now and see your transition plan
+          Watch the <span className="text-primary font-semibold">free training video</span> and see how to 10x your output
         </p>
         <CTAButton size="default">Watch the Free Video</CTAButton>
       </div>

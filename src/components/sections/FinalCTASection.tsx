@@ -16,10 +16,10 @@ export function FinalCTASection() {
           }`}
         >
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-            Watch the video, then let's build your <span className="text-primary">AI transition plan</span>.
+            Ready to <span className="text-primary">ship 10x faster</span>? Watch the video, then let's build your plan.
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            Book an appointment with Jerry after the free training and get a practical path tailored to your profile.
+            Book a call with Jerry after the free training and get a practical plan to 10x your shipping speed.
           </p>
         </div>
 
@@ -41,7 +41,7 @@ export function FinalCTASection() {
           }`}
           style={{ transitionDelay: "500ms" }}
         >
-          28-minute free training for senior Java developers
+          28-minute free training — learn the AI workflow that 10x's your output
         </p>
       </div>
     </section>

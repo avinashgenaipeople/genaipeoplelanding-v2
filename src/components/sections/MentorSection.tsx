@@ -40,12 +40,12 @@ export function MentorSection() {
 
               <div className="space-y-4 text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 <p>
-                  We run a focused 6-month Java-to-GenAI transformation track. Jerry helps senior Java developers add
-                  the exact AI skills needed to move into architecture and AI leadership roles.
+                  We run a focused 6-month program that turns senior Java developers into engineers who ship 10x faster
+                  using AI agents, copilots, and automation.
                 </p>
                 <p>
-                  You don't start from zero. Your enterprise architecture experience is the base. We build on it with
-                  practical AI implementation, agent orchestration, and leadership-level execution.
+                  You don't start from zero. Your enterprise experience is the base. We layer on AI-powered workflows,
+                  agent orchestration, and the speed techniques top engineers are using right now.
                 </p>
               </div>
 

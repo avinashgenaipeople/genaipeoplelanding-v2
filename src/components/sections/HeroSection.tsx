@@ -26,9 +26,8 @@ export function HeroSection() {
           </p>
 
           <h1 className="mt-7 font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
-            Senior <span className="text-primary">Java Developers</span>, the era of pure coding is ending.
-            <br />
-            The next winners are those who can <span className="text-primary">lead AI agents</span>.
+            Go from Senior <span className="text-primary">Java coder</span> to the engineer who ships{" "}
+            <span className="text-primary">10x faster with AI</span>.
           </h1>
 
           <div className="mt-8 glass-card max-w-4xl mx-auto overflow-hidden">
@@ -46,8 +45,8 @@ export function HeroSection() {
               <div className="hidden sm:block absolute inset-0">
                 <div className="absolute inset-y-0 left-0 w-[62%] px-8 md:px-10 py-7 flex items-end">
                   <div>
-                    <p className="font-display text-4xl md:text-5xl font-black text-purple-900 leading-tight">From Java</p>
-                    <p className="font-display text-5xl md:text-6xl font-black text-purple-900 leading-tight">to AI Architect</p>
+                    <p className="font-display text-4xl md:text-5xl font-black text-purple-900 leading-tight">Ship 10x</p>
+                    <p className="font-display text-5xl md:text-6xl font-black text-purple-900 leading-tight">Faster with AI</p>
                     <p className="font-display text-5xl md:text-6xl font-black text-purple-900 leading-tight">in 6 Months</p>
                   </div>
                 </div>
@@ -68,7 +67,7 @@ export function HeroSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/20" />
                 <div className="absolute left-4 right-4 bottom-14">
-                  <p className="font-display text-3xl font-black text-white leading-tight">From Java to AI Architect</p>
+                  <p className="font-display text-3xl font-black text-white leading-tight">Ship 10x Faster with AI</p>
                   <p className="font-display text-3xl font-black text-white leading-tight">in 6 Months</p>
                 </div>
               </div>
@@ -105,8 +104,8 @@ export function HeroSection() {
           </div>
 
           <p className="mt-9 text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-            This is not just a threat, it's your biggest opportunity. Companies no longer want only coders, they want
-            senior engineers who can manage, build, and lead AI-powered delivery.
+            The engineers getting promoted and paid more aren't writing more code — they're using AI to
+            deliver faster, lead smarter, and ship what used to take entire teams.
           </p>
 
           <div className="mt-9">

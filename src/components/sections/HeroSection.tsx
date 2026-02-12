@@ -8,13 +8,14 @@ export function HeroSection() {
   return (
     <section className="px-4 pt-6 pb-14 md:pt-8 md:pb-20 bg-background">
       <div className="container max-w-5xl">
-        <div className="flex items-center justify-between gap-4 border-b border-border pb-4 mb-8">
+        <div className="flex items-center justify-between gap-2 sm:gap-4 border-b border-border pb-4 mb-8">
           <div className="inline-flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-500 to-blue-700 shadow-md" />
-            <p className="font-display text-2xl font-semibold tracking-tight">GenAIPeople</p>
+            <p className="font-display text-xl sm:text-2xl font-semibold tracking-tight">GenAIPeople</p>
           </div>
-          <CTAButton size="small" className="text-sm sm:text-base px-4 sm:px-6 py-2.5 sm:py-3">
-            Watch FREE training video
+          <CTAButton size="small" className="text-xs sm:text-base px-3 sm:px-6 py-2 sm:py-3 whitespace-nowrap shrink-0">
+            <span className="sm:hidden">Watch Video</span>
+            <span className="hidden sm:inline">Watch FREE training video</span>
           </CTAButton>
         </div>
 

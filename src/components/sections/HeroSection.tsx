@@ -21,7 +21,7 @@ export function HeroSection() {
         <div className="text-center">
           <p className="inline-flex items-center gap-2 rounded-full bg-rose-50 text-foreground/90 border border-rose-100 px-5 py-3 text-base sm:text-lg font-medium">
             <Sparkles className="w-4 h-4 text-primary" />
-            Video Training for Senior Developers earning at least 15 Lakhs Per Annum
+            Video Training for Senior Devs Earning &gt;15 LPA
           </p>
 
           <h1 className="mt-7 font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground leading-tight max-w-5xl mx-auto">

@@ -35,31 +35,43 @@ export function HeroSection() {
             <button
               type="button"
               onClick={openFormModal}
-              className="group relative w-full bg-gradient-to-r from-amber-100 via-fuchsia-100 to-violet-300 min-h-[260px] sm:min-h-[340px] flex items-end justify-between p-6 sm:p-8 text-left cursor-pointer"
+              className="group relative w-full aspect-[4/3] overflow-hidden bg-gradient-to-r from-amber-100 via-fuchsia-100 to-violet-300 text-left cursor-pointer"
               aria-label="Open free training popup"
             >
-              <div className="absolute top-4 left-4 z-20 inline-flex items-center gap-2 rounded-md bg-red-600 px-2.5 py-1 text-white text-xs font-bold tracking-wide shadow-md">
+              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20 inline-flex items-center gap-2 rounded-md bg-red-600 px-2.5 py-1 text-white text-xs font-bold tracking-wide shadow-md">
                 <Play className="w-3 h-3 fill-white" />
                 YouTube
               </div>
 
-              <div className="text-left max-w-[58%]">
-                <p className="font-display text-2xl sm:text-4xl md:text-5xl font-black text-purple-900 leading-tight">
-                  From Java
-                </p>
-                <p className="font-display text-3xl sm:text-5xl font-black text-purple-900 leading-tight">
-                  to AI Architect
-                </p>
-                <p className="font-display text-3xl sm:text-5xl font-black text-purple-900 leading-tight">
-                  in 6 Months
-                </p>
+              <div className="hidden sm:block absolute inset-0">
+                <div className="absolute inset-y-0 left-0 w-[62%] px-8 md:px-10 py-7 flex items-end">
+                  <div>
+                    <p className="font-display text-4xl md:text-5xl font-black text-purple-900 leading-tight">From Java</p>
+                    <p className="font-display text-5xl md:text-6xl font-black text-purple-900 leading-tight">to AI Architect</p>
+                    <p className="font-display text-5xl md:text-6xl font-black text-purple-900 leading-tight">in 6 Months</p>
+                  </div>
+                </div>
+                <div className="absolute inset-y-0 right-0 w-[38%] rounded-tl-3xl overflow-hidden bg-white/30">
+                  <img
+                    src="/jerry-kurian.jpeg"
+                    alt="Jerry Kurian presenting the AI roadmap"
+                    className="h-full w-full object-cover object-center"
+                  />
+                </div>
               </div>
 
-              <img
-                src="/jerry-kurian.jpeg"
-                alt="Jerry Kurian presenting the AI roadmap"
-                className="absolute right-0 bottom-0 h-[94%] w-auto object-cover rounded-tl-3xl"
-              />
+              <div className="sm:hidden absolute inset-0">
+                <img
+                  src="/jerry-kurian.jpeg"
+                  alt="Jerry Kurian presenting the AI roadmap"
+                  className="h-full w-full object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/20" />
+                <div className="absolute left-4 right-4 bottom-14">
+                  <p className="font-display text-3xl font-black text-white leading-tight">From Java to AI Architect</p>
+                  <p className="font-display text-3xl font-black text-white leading-tight">in 6 Months</p>
+                </div>
+              </div>
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-black/25" />
 
@@ -69,7 +81,7 @@ export function HeroSection() {
                 </div>
               </div>
 
-              <div className="absolute bottom-14 right-4 z-20 rounded bg-black/85 px-2 py-1 text-xs font-semibold text-white">
+              <div className="absolute bottom-14 right-3 sm:right-4 z-20 rounded bg-black/85 px-2 py-1 text-xs font-semibold text-white">
                 28:12
               </div>
 

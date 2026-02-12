@@ -25,7 +25,7 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
             Watch the Free Video & Book Your Call
           </DialogTitle>
           <p className="text-sm text-white/90 text-center mt-2">
-            Takes 28 minutes. Built for senior Java developers moving to AI leadership.
+            28-min free training for senior Java devs ready to ship 10x faster.
           </p>
         </div>
         <div className="overflow-y-auto flex-1">

@@ -1,5 +1,5 @@
 import { CTAButton } from "@/components/ui/cta-button";
-import { Maximize, Play, Settings, Sparkles, Volume2 } from "lucide-react";
+import { Play, Sparkles } from "lucide-react";
 import { useFormModal } from "@/contexts/FormModalContext";
 
 export function HeroSection() {
@@ -28,12 +28,12 @@ export function HeroSection() {
               aria-label="Open free training popup"
             >
 
+              {/* Desktop thumbnail */}
               <div className="hidden sm:block absolute inset-0">
-                <div className="absolute inset-y-0 left-0 w-[62%] px-8 md:px-10 py-7 flex items-end">
+                <div className="absolute inset-y-0 left-0 w-[62%] px-8 md:px-10 py-8 flex items-end">
                   <div>
-                    <p className="font-display text-4xl md:text-5xl font-black text-purple-900 leading-tight">Ship 10x</p>
-                    <p className="font-display text-5xl md:text-6xl font-black text-purple-900 leading-tight">Faster with AI</p>
-                    <p className="font-display text-5xl md:text-6xl font-black text-purple-900 leading-tight">in 6 Months</p>
+                    <p className="font-display text-3xl md:text-4xl font-extrabold text-purple-900/90 leading-snug drop-shadow-sm">Ship 10x Faster</p>
+                    <p className="font-display text-3xl md:text-4xl font-extrabold text-purple-900/90 leading-snug drop-shadow-sm">with AI in 6 Months</p>
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 w-[38%] rounded-tl-3xl overflow-hidden bg-white/30">
@@ -45,45 +45,26 @@ export function HeroSection() {
                 </div>
               </div>
 
+              {/* Mobile thumbnail */}
               <div className="sm:hidden absolute inset-0">
                 <img
                   src="/jerry-kurian.jpeg"
                   alt="Jerry Kurian presenting the AI roadmap"
                   className="h-full w-full object-cover object-top"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/20" />
-                <div className="absolute left-4 right-4 bottom-14">
-                  <p className="font-display text-3xl font-black text-white leading-tight">Ship 10x Faster with AI</p>
-                  <p className="font-display text-3xl font-black text-white leading-tight">in 6 Months</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                <div className="absolute left-4 right-4 bottom-6">
+                  <p className="font-display text-2xl font-extrabold text-white leading-snug drop-shadow-md">Ship 10x Faster with AI</p>
+                  <p className="font-display text-2xl font-extrabold text-white leading-snug drop-shadow-md">in 6 Months</p>
                 </div>
               </div>
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-black/25" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
 
+              {/* Wistia-style play button */}
               <div className="absolute inset-0 flex items-center justify-center z-10">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-red-600/95 flex items-center justify-center shadow-xl group-hover:scale-105 transition-transform">
-                  <Play className="w-8 h-8 sm:w-10 sm:h-10 text-white fill-white ml-1" />
-                </div>
-              </div>
-
-              <div className="absolute bottom-14 right-3 sm:right-4 z-20 rounded bg-black/85 px-2 py-1 text-xs font-semibold text-white">
-                28:12
-              </div>
-
-              <div className="absolute bottom-0 left-0 right-0 z-20 bg-black/85 px-4 py-3">
-                <div className="h-1 w-full rounded-full bg-white/30">
-                  <div className="h-1 w-[34%] rounded-full bg-red-600" />
-                </div>
-                <div className="mt-2 flex items-center justify-between text-white/90">
-                  <div className="flex items-center gap-2 text-xs sm:text-sm font-medium">
-                    <Play className="w-3.5 h-3.5 fill-white" />
-                    <span>0:34 / 28:12</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Volume2 className="w-4 h-4" />
-                    <Settings className="w-4 h-4" />
-                    <Maximize className="w-4 h-4" />
-                  </div>
+                <div className="w-20 h-14 sm:w-24 sm:h-16 rounded-2xl bg-[#54bbff] flex items-center justify-center shadow-lg group-hover:bg-[#3ea8f0] group-hover:scale-105 transition-all">
+                  <Play className="w-7 h-7 sm:w-8 sm:h-8 text-white fill-white ml-0.5" />
                 </div>
               </div>
             </button>

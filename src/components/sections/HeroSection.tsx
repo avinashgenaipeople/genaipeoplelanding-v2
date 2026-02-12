@@ -15,7 +15,7 @@ export function HeroSection() {
             Video Training for Senior Devs Earning &gt;15 LPA
           </p>
 
-          <h1 className="mt-7 font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
+          <h1 className="mt-7 font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
             Go from Senior <span className="text-primary">Java coder</span> to the engineer who ships{" "}
             <span className="text-primary">10x faster with AI</span>.
           </h1>
@@ -27,10 +27,6 @@ export function HeroSection() {
               className="group relative w-full aspect-[4/3] overflow-hidden bg-gradient-to-r from-amber-100 via-fuchsia-100 to-violet-300 text-left cursor-pointer"
               aria-label="Open free training popup"
             >
-              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20 inline-flex items-center gap-2 rounded-md bg-red-600 px-2.5 py-1 text-white text-xs font-bold tracking-wide shadow-md">
-                <Play className="w-3 h-3 fill-white" />
-                YouTube
-              </div>
 
               <div className="hidden sm:block absolute inset-0">
                 <div className="absolute inset-y-0 left-0 w-[62%] px-8 md:px-10 py-7 flex items-end">

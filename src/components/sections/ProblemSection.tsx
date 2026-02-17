@@ -29,7 +29,7 @@ export function ProblemSection() {
         <div className="border-t border-border pt-8">
           <SectionLabel>Video Highlights</SectionLabel>
           <p className="text-base sm:text-lg font-semibold text-foreground/85 mb-4">
-            3 reasons senior Java devs are shipping 10x faster with AI.
+            Why senior Java devs have an unfair advantage in the AI shift.
           </p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
             How senior Java devs are landing <span className="text-primary">AI Architect roles</span> paying{" "}

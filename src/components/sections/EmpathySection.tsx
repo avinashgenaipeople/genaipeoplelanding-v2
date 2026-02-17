@@ -20,7 +20,7 @@ export function EmpathySection() {
       <div className="container max-w-4xl">
         <SectionLabel>You're Closer Than You Think</SectionLabel>
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-8">
-          You Already Have 80% of What's Needed. Here's the Rest.
+          Your Java Experience Is the Foundation. We Add the AI Layer.
         </h2>
 
         {/* Quote blocks */}
@@ -50,9 +50,12 @@ export function EmpathySection() {
           }`}
           style={{ transitionDelay: "300ms" }}
         >
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 mb-4">
-            {/* 80% segment */}
-            <div className="sm:w-[80%] relative">
+          <p className="text-base sm:text-lg text-muted-foreground mb-5">
+            What you bring vs. what we teach:
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-1 mb-4">
+            {/* Your foundation */}
+            <div className="sm:w-[60%] relative">
               <div className="h-14 sm:h-16 rounded-lg sm:rounded-r-none bg-primary/15 overflow-hidden">
                 <div
                   className="h-full bg-primary/25 origin-left transition-transform duration-1000 ease-out"
@@ -62,12 +65,12 @@ export function EmpathySection() {
                 />
               </div>
               <p className="mt-2 text-sm sm:text-base font-semibold text-primary">
-                80% — Your Java Expertise
+                Your Foundation — Java, Architecture, System Design
               </p>
             </div>
 
-            {/* 20% segment */}
-            <div className="sm:w-[20%] relative">
+            {/* What we add */}
+            <div className="sm:w-[40%] relative">
               <div className="h-14 sm:h-16 rounded-lg sm:rounded-l-none bg-success/15 overflow-hidden">
                 <div
                   className="h-full bg-success/25 origin-left transition-transform duration-1000 ease-out"
@@ -78,13 +81,13 @@ export function EmpathySection() {
                 />
               </div>
               <p className="mt-2 text-sm sm:text-base font-semibold text-success">
-                20% — AI Skills
+                What We Add — AI Agents, LLMs, MLOps, Career Strategy
               </p>
             </div>
           </div>
 
           <p className="text-center font-display text-lg sm:text-xl font-bold text-foreground mt-4">
-            = 100% Career Transformation
+            Together = AI Architect Ready
           </p>
         </div>
 

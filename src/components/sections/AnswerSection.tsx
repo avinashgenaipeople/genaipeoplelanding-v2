@@ -5,7 +5,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const points = [
   "Why AI makes senior devs faster, not redundant.",
-  "The exact workflow to ship 10x faster in 6 months.",
+  "The exact workflow to ship 10x faster in 120 days.",
   "How to book a 1:1 plan call with Jerry.",
 ];
 
@@ -45,7 +45,7 @@ export function AnswerSection() {
 
         {/* CTA */}
         <CTAButton size="large">
-          Get Instant Access
+          Watch the Free Video
         </CTAButton>
       </div>
     </section>

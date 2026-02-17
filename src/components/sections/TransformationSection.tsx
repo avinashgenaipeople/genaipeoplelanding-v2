@@ -1,32 +1,32 @@
 import { SectionLabel } from "@/components/ui/section-label";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { CheckCircle, XCircle } from "lucide-react";
+import { CheckCircle, ArrowRight } from "lucide-react";
 
 const comparisons = [
   {
     label: "Role",
-    before: "Java Developer",
+    before: "Senior Java Developer",
     after: "AI/ML Architect",
   },
   {
     label: "Focus",
-    before: "Building all features",
-    after: "Designing system architecture",
+    before: "Building microservices & APIs",
+    after: "Designing AI-powered systems",
   },
   {
     label: "Impact",
-    before: "IC contributor",
-    after: "Architecture lead",
+    before: "Delivering features for one team",
+    after: "Shaping technical direction across teams",
   },
   {
-    label: "Future Proofing",
-    before: "Vulnerable to AI disruption",
-    after: "Leading AI adoption",
+    label: "AI Leverage",
+    before: "Using Copilot for code completion",
+    after: "Orchestrating AI agents & workflows",
   },
   {
-    label: "Work Autonomy",
-    before: "Ticket-driven execution",
-    after: "Defining technical direction",
+    label: "Career Ceiling",
+    before: "Staff / Principal Engineer track",
+    after: "AI Architect / Engineering Leader",
   },
 ];
 
@@ -54,11 +54,11 @@ export function TransformationSection() {
             {/* Header */}
             <div className="grid grid-cols-3 bg-card">
               <div className="p-4 font-semibold text-muted-foreground"></div>
-              <div className="p-4 font-semibold text-center text-destructive/80 bg-destructive/5">
-                NOW
+              <div className="p-4 font-semibold text-center text-muted-foreground bg-muted/50">
+                TODAY
               </div>
               <div className="p-4 font-semibold text-center text-foreground bg-success/10">
-                120 DAYS
+                AFTER THE PROGRAM
               </div>
             </div>
 
@@ -71,11 +71,8 @@ export function TransformationSection() {
                 <div className="p-4 font-medium text-foreground bg-card/50">
                   {row.label}
                 </div>
-                <div className="p-4 text-center text-muted-foreground bg-destructive/5">
-                  <span className="flex items-center justify-center gap-2">
-                    <XCircle className="w-4 h-4 text-destructive/60 flex-shrink-0" />
-                    {row.before}
-                  </span>
+                <div className="p-4 text-center text-muted-foreground bg-muted/30">
+                  {row.before}
                 </div>
                 <div className="p-4 text-center text-foreground font-medium bg-success/5">
                   <span className="flex items-center justify-center gap-2">
@@ -91,12 +88,12 @@ export function TransformationSection() {
         {/* Mobile cards */}
         <div className="md:hidden space-y-6 mb-12">
           <div
-            className={`glass-card before-tint p-6 transition-all duration-500 ${
+            className={`glass-card p-6 transition-all duration-500 ${
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
             }`}
           >
-            <h3 className="font-display text-lg font-semibold text-destructive/80 mb-4 uppercase tracking-wide">
-              Now
+            <h3 className="font-display text-lg font-semibold text-muted-foreground mb-4 uppercase tracking-wide">
+              Today
             </h3>
             <div className="space-y-4">
               {comparisons.map((row) => (
@@ -104,8 +101,7 @@ export function TransformationSection() {
                   <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
                     {row.label}
                   </p>
-                  <p className="text-foreground flex items-center gap-2">
-                    <XCircle className="w-4 h-4 text-destructive/60 flex-shrink-0" />
+                  <p className="text-foreground">
                     {row.before}
                   </p>
                 </div>
@@ -120,7 +116,7 @@ export function TransformationSection() {
             style={{ transitionDelay: "150ms" }}
           >
             <h3 className="font-display text-lg font-semibold text-foreground mb-4 uppercase tracking-wide">
-              120 Days
+              After the Program
             </h3>
             <div className="space-y-4">
               {comparisons.map((row) => (

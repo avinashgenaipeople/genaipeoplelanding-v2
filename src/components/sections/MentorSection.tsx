@@ -40,7 +40,7 @@ export function MentorSection() {
 
               <div className="space-y-4 text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 <p>
-                  We run a focused 6-month program that turns senior Java developers into engineers who ship 10x faster
+                  We run a focused 120-day program that turns senior Java developers into engineers who ship 10x faster
                   using AI agents, copilots, and automation.
                 </p>
                 <p>

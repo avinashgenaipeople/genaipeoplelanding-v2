@@ -6,22 +6,22 @@ import { useEffect, useState } from "react";
 const roles = [
   {
     role: "AI Backend Engineer",
-    ctc: "18–27L",
+    ctc: "20–30L",
     tag: "Java + APIs",
   },
   {
     role: "ML Platform Engineer",
-    ctc: "27–41L",
+    ctc: "25–40L",
     tag: "Infrastructure",
   },
   {
     role: "AI Solutions Architect",
-    ctc: "36–63L",
+    ctc: "35–60L",
     tag: "Architecture",
   },
   {
     role: "AI/ML Engineering Manager",
-    ctc: "45–72L",
+    ctc: "40–70L",
     tag: "Leadership",
   },
 ];
@@ -103,7 +103,7 @@ export function RolesSection() {
 
         {/* CTA */}
         <div className="mt-8 text-center">
-          <CTAButton size="default">Get Instant Access</CTAButton>
+          <CTAButton size="default">See the Full Roadmap</CTAButton>
         </div>
       </div>
     </section>

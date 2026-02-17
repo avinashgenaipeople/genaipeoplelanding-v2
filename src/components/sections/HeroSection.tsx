@@ -1,21 +1,24 @@
 import { CTAButton } from "@/components/ui/cta-button";
-import { Play, Sparkles } from "lucide-react";
+import { Play } from "lucide-react";
 import { useFormModal } from "@/contexts/FormModalContext";
 
 export function HeroSection() {
   const { openFormModal } = useFormModal();
 
   return (
-    <section className="px-4 pt-6 pb-14 md:pt-8 md:pb-20 bg-background">
-      <div className="container max-w-5xl">
+    <>
+      {/* Sumo bar */}
+      <div className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center">
+        <p className="text-sm sm:text-base font-semibold">
+          Free Video for Senior Java Developers with 7+ Years of Exp
+        </p>
+      </div>
 
-        <div className="text-center">
-          <p className="inline-flex items-center gap-2 rounded-full bg-rose-50 text-foreground/90 border border-rose-100 px-5 py-3 text-base sm:text-lg font-medium">
-            <Sparkles className="w-4 h-4 text-primary" />
-            Free Training for Senior Java Devs Earning &gt;15 LPA
-          </p>
+      <section className="px-4 pt-6 pb-14 md:pt-8 md:pb-20 bg-background">
+        <div className="container max-w-5xl">
 
-          <h1 className="mt-7 font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
+          <div className="text-center">
+            <h1 className="mt-7 font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
             Senior Java Developers — Upgrade Your Career to{" "}
             <span className="text-primary">AI Architect</span> in 120 Days
           </h1>
@@ -78,7 +81,8 @@ export function HeroSection() {
             <CTAButton size="default">Get Instant Access</CTAButton>
           </div>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 }

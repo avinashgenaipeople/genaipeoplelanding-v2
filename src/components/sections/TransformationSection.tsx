@@ -38,7 +38,7 @@ export function TransformationSection() {
       <div className="container max-w-4xl">
         <SectionLabel>The Shift</SectionLabel>
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-          From Java Developer to High-Paying AI Role in 120 Days
+          From Senior Java Developer to AI Architect in 120 Days
         </h2>
         <p className="text-lg sm:text-xl text-muted-foreground mb-8">
           Same domain expertise. Much higher compensation.

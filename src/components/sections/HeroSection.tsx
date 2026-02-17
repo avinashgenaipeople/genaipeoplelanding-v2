@@ -12,11 +12,11 @@ export function HeroSection() {
         <div className="text-center">
           <p className="inline-flex items-center gap-2 rounded-full bg-rose-50 text-foreground/90 border border-rose-100 px-5 py-3 text-base sm:text-lg font-medium">
             <Sparkles className="w-4 h-4 text-primary" />
-            Video Training for Senior Devs Earning &gt;15 LPA
+            Free Training for Senior Java Devs Earning &gt;15 LPA
           </p>
 
           <h1 className="mt-7 font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
-            Upgrade Your <span className="text-primary">Java Career</span> to{" "}
+            Senior Java Developers — Upgrade Your Career to{" "}
             <span className="text-primary">AI Architect</span> in 120 Days
           </h1>
 
@@ -71,7 +71,7 @@ export function HeroSection() {
           </div>
 
           <p className="mt-9 text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-            Senior Java developers are transitioning to AI Architect roles in 120 days — landing 50L+ salaries by combining their enterprise experience with AI-powered workflows.
+            150+ senior Java developers have already made the switch to AI Architect roles — landing 50L+ salaries by combining their enterprise experience with AI-powered workflows.
           </p>
 
           <div className="mt-9">

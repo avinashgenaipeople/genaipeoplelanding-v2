@@ -18,8 +18,9 @@ export function HeroSection() {
         <div className="container max-w-5xl">
 
           <div className="text-center">
-            <h1 className="mt-7 font-display text-2xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
-            Java Dev to <span className="text-primary">AI Architect</span> in 120 Days
+            <h1 className="mt-7 font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
+            Senior Java Developers — Upgrade Your Career to{" "}
+            <span className="text-primary">AI Architect</span> in 120 Days
           </h1>
 
           <div className="mt-8 glass-card max-w-4xl mx-auto overflow-hidden">

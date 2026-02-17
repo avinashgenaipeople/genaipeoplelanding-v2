@@ -71,7 +71,7 @@ export function HeroSection() {
           </div>
 
           <p className="mt-9 text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-            150+ senior Java developers have already made the switch to AI Architect roles — landing 50L+ salaries by combining their enterprise experience with AI-powered workflows.
+            Join 150+ senior Java developers already in the program — building AI skills, gaining confidence, and working towards their next career breakthrough.
           </p>
 
           <div className="mt-9">

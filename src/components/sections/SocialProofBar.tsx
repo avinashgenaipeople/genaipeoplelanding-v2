@@ -3,7 +3,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const metrics = [
   { value: "15L → 24L", label: "Avg. salary jump" },
   { value: "120 Days", label: "Avg. transition time" },
-  { value: "150+", label: "Developers enrolled" },
+  { value: "150+", label: "Developers in the program" },
 ];
 
 export function SocialProofBar() {

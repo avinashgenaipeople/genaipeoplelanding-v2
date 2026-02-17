@@ -8,9 +8,10 @@ interface CTAButtonProps {
   className?: string;
   size?: "default" | "large" | "small";
   variant?: "primary" | "sticky";
+  showSubtext?: boolean;
 }
 
-export function CTAButton({ children, className, size = "default", variant = "primary" }: CTAButtonProps) {
+export function CTAButton({ children, className, size = "default", variant = "primary", showSubtext = true }: CTAButtonProps) {
   const { openFormModal } = useFormModal();
   const ctaLabel = typeof children === "string" ? children : "cta";
 
@@ -21,28 +22,35 @@ export function CTAButton({ children, className, size = "default", variant = "pr
   };
 
   return (
-    <button
-      type="button"
-      onClick={() => {
-        trackEvent("cta_click", {
-          cta_label: ctaLabel,
-          cta_variant: variant,
-          cta_size: size,
-          page_path: window.location.pathname,
-        });
-        openFormModal();
-      }}
-      className={cn(
-        "inline-flex items-center gap-2 font-semibold rounded-full transition-all duration-300 cursor-pointer",
-        "bg-primary text-primary-foreground hover:bg-primary/90",
-        "animate-pulse-glow hover:scale-105",
-        sizeClasses[size],
-        variant === "sticky" && "animate-none shadow-lg",
-        className
+    <div className="inline-flex flex-col items-center">
+      <button
+        type="button"
+        onClick={() => {
+          trackEvent("cta_click", {
+            cta_label: ctaLabel,
+            cta_variant: variant,
+            cta_size: size,
+            page_path: window.location.pathname,
+          });
+          openFormModal();
+        }}
+        className={cn(
+          "inline-flex items-center gap-2 font-semibold rounded-full transition-all duration-300 cursor-pointer",
+          "bg-primary text-primary-foreground hover:bg-primary/90",
+          "animate-pulse-glow hover:scale-105",
+          sizeClasses[size],
+          variant === "sticky" && "animate-none shadow-lg",
+          className
+        )}
+      >
+        {children}
+        <ArrowRight className="w-4 h-4" />
+      </button>
+      {showSubtext && (
+        <p className="mt-2 text-xs sm:text-sm text-muted-foreground">
+          28 min Java to GenAI Architect Roadmap
+        </p>
       )}
-    >
-      {children}
-      <ArrowRight className="w-4 h-4" />
-    </button>
+    </div>
   );
 }

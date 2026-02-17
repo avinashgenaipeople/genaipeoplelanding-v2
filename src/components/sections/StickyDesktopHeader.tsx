@@ -29,7 +29,7 @@ export function StickyDesktopHeader() {
           <span className="text-sm text-muted-foreground">
             Senior Java Dev → AI Architect in 120 Days
           </span>
-          <CTAButton size="small">Get Instant Access</CTAButton>
+          <CTAButton size="small" showSubtext={false}>Get Instant Access</CTAButton>
         </div>
       </div>
     </div>

@@ -33,7 +33,7 @@ export function StickyMobileBar() {
           onClick={openFormModal}
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-full shadow-lg"
         >
-          Watch Now
+          Get Instant Access
           <ArrowRight className="w-3.5 h-3.5" />
         </button>
       </div>

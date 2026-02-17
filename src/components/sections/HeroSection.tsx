@@ -16,8 +16,8 @@ export function HeroSection() {
           </p>
 
           <h1 className="mt-7 font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
-            Go from Senior <span className="text-primary">Java coder</span> to the engineer who ships{" "}
-            <span className="text-primary">10x faster with AI</span>.
+            Upgrade Your <span className="text-primary">Java Career</span> to{" "}
+            <span className="text-primary">AI Architect</span> in 120 Days
           </h1>
 
           <div className="mt-8 glass-card max-w-4xl mx-auto overflow-hidden">
@@ -63,20 +63,19 @@ export function HeroSection() {
 
               {/* Wistia-style play button */}
               <div className="absolute inset-0 flex items-center justify-center z-10">
-                <div className="w-20 h-14 sm:w-24 sm:h-16 rounded-2xl bg-[#54bbff] flex items-center justify-center shadow-lg group-hover:bg-[#3ea8f0] group-hover:scale-105 transition-all">
-                  <Play className="w-7 h-7 sm:w-8 sm:h-8 text-white fill-white ml-0.5" />
+                <div className="w-24 h-16 sm:w-32 sm:h-20 rounded-2xl bg-primary flex items-center justify-center shadow-lg group-hover:bg-primary/90 group-hover:scale-105 transition-all">
+                  <Play className="w-9 h-9 sm:w-10 sm:h-10 text-white fill-white ml-0.5" />
                 </div>
               </div>
             </button>
           </div>
 
           <p className="mt-9 text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-            The engineers getting promoted and paid more aren't writing more code — they're using AI to
-            deliver faster, lead smarter, and ship what used to take entire teams.
+            Senior Java developers are transitioning to AI Architect roles in 120 days — landing 50L+ salaries by combining their enterprise experience with AI-powered workflows.
           </p>
 
           <div className="mt-9">
-            <CTAButton size="default">Watch the Free Video</CTAButton>
+            <CTAButton size="default">Get Instant Access</CTAButton>
           </div>
         </div>
       </div>

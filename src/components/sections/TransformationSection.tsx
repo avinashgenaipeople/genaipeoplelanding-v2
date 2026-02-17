@@ -1,5 +1,6 @@
 import { SectionLabel } from "@/components/ui/section-label";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { CheckCircle, XCircle } from "lucide-react";
 
 const comparisons = [
   {
@@ -16,6 +17,16 @@ const comparisons = [
     label: "Impact",
     before: "IC contributor",
     after: "Architecture lead",
+  },
+  {
+    label: "Future Proofing",
+    before: "Vulnerable to AI disruption",
+    after: "Leading AI adoption",
+  },
+  {
+    label: "Work Autonomy",
+    before: "Ticket-driven execution",
+    after: "Defining technical direction",
   },
 ];
 
@@ -52,7 +63,7 @@ export function TransformationSection() {
             </div>
 
             {/* Rows */}
-            {comparisons.map((row, index) => (
+            {comparisons.map((row) => (
               <div
                 key={row.label}
                 className="grid grid-cols-3 border-t border-border"
@@ -61,10 +72,16 @@ export function TransformationSection() {
                   {row.label}
                 </div>
                 <div className="p-4 text-center text-muted-foreground bg-destructive/5">
-                  {row.before}
+                  <span className="flex items-center justify-center gap-2">
+                    <XCircle className="w-4 h-4 text-destructive/60 flex-shrink-0" />
+                    {row.before}
+                  </span>
                 </div>
                 <div className="p-4 text-center text-foreground font-medium bg-success/5">
-                  {row.after}
+                  <span className="flex items-center justify-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    {row.after}
+                  </span>
                 </div>
               </div>
             ))}
@@ -87,7 +104,10 @@ export function TransformationSection() {
                   <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
                     {row.label}
                   </p>
-                  <p className="text-foreground">{row.before}</p>
+                  <p className="text-foreground flex items-center gap-2">
+                    <XCircle className="w-4 h-4 text-destructive/60 flex-shrink-0" />
+                    {row.before}
+                  </p>
                 </div>
               ))}
             </div>
@@ -108,7 +128,10 @@ export function TransformationSection() {
                   <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
                     {row.label}
                   </p>
-                  <p className="text-foreground font-medium">{row.after}</p>
+                  <p className="text-foreground font-medium flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    {row.after}
+                  </p>
                 </div>
               ))}
             </div>

@@ -31,7 +31,7 @@ export function FinalCTASection() {
           style={{ transitionDelay: "300ms" }}
         >
           <CTAButton size="large" className="text-lg px-10 py-5">
-            Watch Free Video & Book a Call
+            Get Instant Access
           </CTAButton>
         </div>
 

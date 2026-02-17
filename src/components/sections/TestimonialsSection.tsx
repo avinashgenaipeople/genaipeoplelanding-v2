@@ -5,20 +5,33 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const testimonials = [
   {
-    quote:
-      "I'm a corporate Java developer with 8 years experience. After this mentoring program, I landed a 24 LPA role. I was getting just 15. What an amazing transformation!",
+    quote: (
+      <>
+        I'm a corporate Java developer with 8 years experience. After this mentoring program, I landed a{" "}
+        <strong className="text-foreground font-bold">24 LPA role</strong>. I was getting just{" "}
+        <strong className="text-foreground font-bold">15</strong>. What an amazing transformation!
+      </>
+    ),
     name: "Pradeep M.",
     detail: "Pune, India",
   },
   {
-    quote:
-      "The GenAI Mentoring Program redirected my career. Moving from a Senior Java role to AI Solutions Architect, the structured curriculum and 1-on-1 mentorship made all the difference.",
+    quote: (
+      <>
+        The GenAI Mentoring Program redirected my career. Moving from a Senior Java role to{" "}
+        <strong className="text-foreground font-bold">AI Solutions Architect</strong>, the structured curriculum and 1-on-1 mentorship made all the difference.
+      </>
+    ),
     name: "Ravi Sharma",
     detail: "Bangalore, India",
   },
   {
-    quote:
-      "They told me 'just learn Python.' That's terrible advice — they didn't tell me the real path. Jerry's program showed me how to use what I already knew. Got an AI architecture role in 4 months.",
+    quote: (
+      <>
+        They told me &ldquo;just learn Python.&rdquo; That's terrible advice — they didn't tell me the real path. Jerry's program showed me how to use what I already knew. Got an AI architecture role in{" "}
+        <strong className="text-foreground font-bold">4 months</strong>.
+      </>
+    ),
     name: "Rahul Narvekar",
     detail: "Mumbai, India",
   },
@@ -57,7 +70,7 @@ export function TestimonialsSection() {
 
               {/* Quote */}
               <p className="text-lg sm:text-xl text-foreground leading-relaxed mb-6">
-                "{testimonial.quote}"
+                &ldquo;{testimonial.quote}&rdquo;
               </p>
 
               {/* Author */}
@@ -75,7 +88,7 @@ export function TestimonialsSection() {
 
         {/* CTA */}
         <div className="mt-8 text-center">
-          <CTAButton size="large">Join 150+ Developers — Watch Free Roadmap</CTAButton>
+          <CTAButton size="large">Get Instant Access</CTAButton>
         </div>
       </div>
     </section>

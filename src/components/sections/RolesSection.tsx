@@ -103,7 +103,7 @@ export function RolesSection() {
 
         {/* CTA */}
         <div className="mt-8 text-center">
-          <CTAButton size="default">Get Your Personalized Roadmap →</CTAButton>
+          <CTAButton size="default">Get Instant Access</CTAButton>
         </div>
       </div>
     </section>

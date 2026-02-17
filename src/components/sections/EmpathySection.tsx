@@ -43,6 +43,51 @@ export function EmpathySection() {
           ))}
         </div>
 
+        {/* 80/20 Visual Bar */}
+        <div
+          className={`glass-card p-6 sm:p-8 transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+          style={{ transitionDelay: "300ms" }}
+        >
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 mb-4">
+            {/* 80% segment */}
+            <div className="sm:w-[80%] relative">
+              <div className="h-14 sm:h-16 rounded-lg sm:rounded-r-none bg-primary/15 overflow-hidden">
+                <div
+                  className="h-full bg-primary/25 origin-left transition-transform duration-1000 ease-out"
+                  style={{
+                    transform: isVisible ? "scaleX(1)" : "scaleX(0)",
+                  }}
+                />
+              </div>
+              <p className="mt-2 text-sm sm:text-base font-semibold text-primary">
+                80% — Your Java Expertise
+              </p>
+            </div>
+
+            {/* 20% segment */}
+            <div className="sm:w-[20%] relative">
+              <div className="h-14 sm:h-16 rounded-lg sm:rounded-l-none bg-success/15 overflow-hidden">
+                <div
+                  className="h-full bg-success/25 origin-left transition-transform duration-1000 ease-out"
+                  style={{
+                    transform: isVisible ? "scaleX(1)" : "scaleX(0)",
+                    transitionDelay: "500ms",
+                  }}
+                />
+              </div>
+              <p className="mt-2 text-sm sm:text-base font-semibold text-success">
+                20% — AI Skills
+              </p>
+            </div>
+          </div>
+
+          <p className="text-center font-display text-lg sm:text-xl font-bold text-foreground mt-4">
+            = 100% Career Transformation
+          </p>
+        </div>
+
       </div>
     </section>
   );

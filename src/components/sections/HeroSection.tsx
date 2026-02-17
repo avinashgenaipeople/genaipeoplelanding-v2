@@ -10,7 +10,7 @@ export function HeroSection() {
       {/* Sumo bar */}
       <div className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center">
         <p className="text-sm sm:text-base font-semibold">
-          Free Video for Senior Java Developers with 7+ Years of Exp
+          Free Video: The 120-Day Path from Java Developer to AI Architect
         </p>
       </div>
 

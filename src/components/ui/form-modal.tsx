@@ -20,20 +20,26 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
   const formUrl = useMemo(() => buildFormUrl(), []);
   const [iframeLoaded, setIframeLoaded] = useState(false);
 
-  // Preconnect to Synamate as soon as this component mounts
+  // Warm the Synamate connection as soon as this component mounts.
+  // Using link hints only — no hidden iframe — so Radix Dialog's
+  // focus restoration and scroll-lock cleanup are not affected.
   useEffect(() => {
-    const preconnect = document.createElement("link");
-    preconnect.rel = "preconnect";
-    preconnect.href = SYNAMATE_ORIGIN;
-    const dnsPrefetch = document.createElement("link");
-    dnsPrefetch.rel = "dns-prefetch";
-    dnsPrefetch.href = SYNAMATE_ORIGIN;
-    document.head.appendChild(preconnect);
-    document.head.appendChild(dnsPrefetch);
-    return () => {
-      document.head.removeChild(preconnect);
-      document.head.removeChild(dnsPrefetch);
+    const hints: HTMLLinkElement[] = [];
+
+    const addHint = (rel: string, href: string, as?: string) => {
+      const link = document.createElement("link");
+      link.rel = rel;
+      link.href = href;
+      if (as) link.setAttribute("as", as);
+      document.head.appendChild(link);
+      hints.push(link);
     };
+
+    addHint("preconnect", SYNAMATE_ORIGIN);
+    addHint("dns-prefetch", SYNAMATE_ORIGIN);
+    addHint("prefetch", FORM_BASE_URL, "document");
+
+    return () => hints.forEach((l) => document.head.removeChild(l));
   }, []);
 
   // Reset loaded state when modal closes so spinner shows correctly on re-open
@@ -79,22 +85,6 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
 
   return (
     <>
-      {/* Hidden preload iframe — starts loading Synamate resources immediately
-          so the modal iframe is fast when the user clicks CTA */}
-      <iframe
-        src={formUrl}
-        aria-hidden="true"
-        tabIndex={-1}
-        style={{
-          position: "fixed",
-          width: 0,
-          height: 0,
-          opacity: 0,
-          pointerEvents: "none",
-          border: "none",
-        }}
-      />
-
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-xl w-full p-0 overflow-hidden rounded-xl max-h-[90vh] flex flex-col border-2 border-primary/30 shadow-[0_0_30px_rgba(99,102,241,0.2)] bg-white">
 

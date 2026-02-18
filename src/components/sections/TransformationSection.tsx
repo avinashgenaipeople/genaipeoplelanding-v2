@@ -136,7 +136,7 @@ export function TransformationSection() {
 
         {/* Bottom text */}
         <p className="font-display text-2xl sm:text-3xl font-semibold text-foreground text-center">
-          Same Java skills. 2–3x the compensation.
+          Same Java skills. Up to 2–3x the compensation.
         </p>
       </div>
     </section>

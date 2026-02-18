@@ -87,7 +87,7 @@ export function HeroSection() {
           </div>
 
           <p className="mt-9 text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-            150+ senior Java developers are already using this system to ship faster, get noticed by AI teams, and land roles paying 2–3x their current salary.
+            150+ senior Java developers are already using this system to ship faster, get noticed by AI teams, and land roles paying up to 2–3x their current salary.
           </p>
 
           <div className="mt-9">

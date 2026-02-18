@@ -169,7 +169,7 @@ export function TestimonialsSection() {
 
         {/* CTA */}
         <div className="mt-8 text-center">
-          <CTAButton size="large">Get Instant Access</CTAButton>
+          <CTAButton size="large" section="testimonials">Get Instant Access</CTAButton>
         </div>
       </div>
     </section>

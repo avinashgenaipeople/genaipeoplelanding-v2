@@ -44,7 +44,7 @@ export function AnswerSection() {
         </div>
 
         {/* CTA */}
-        <CTAButton size="large">
+        <CTAButton size="large" section="answer">
           Watch the Free Video
         </CTAButton>
       </div>

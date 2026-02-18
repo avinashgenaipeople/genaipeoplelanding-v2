@@ -57,7 +57,7 @@ export function FAQSection() {
         </div>
 
         <div className="text-center">
-          <CTAButton size="default">Watch the Free Video</CTAButton>
+          <CTAButton size="default" section="faq">Watch the Free Video</CTAButton>
         </div>
       </div>
     </section>

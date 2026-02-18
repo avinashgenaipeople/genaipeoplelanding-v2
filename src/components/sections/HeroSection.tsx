@@ -1,6 +1,7 @@
 import { CTAButton } from "@/components/ui/cta-button";
 import { Play } from "lucide-react";
 import { useFormModal } from "@/contexts/FormModalContext";
+import { trackEvent } from "@/lib/analytics";
 
 export function HeroSection() {
   const { openFormModal } = useFormModal();
@@ -26,7 +27,18 @@ export function HeroSection() {
           <div className="mt-8 glass-card max-w-4xl mx-auto overflow-hidden">
             <button
               type="button"
-              onClick={openFormModal}
+              onClick={() => {
+                trackEvent("cta_click", {
+                  cta_label: "hero_video_thumbnail",
+                  cta_section: "hero_video",
+                  page_path: window.location.pathname,
+                });
+                trackEvent("cta_click_hero_video", {
+                  cta_label: "hero_video_thumbnail",
+                  page_path: window.location.pathname,
+                });
+                openFormModal();
+              }}
               className="group relative w-full aspect-[4/3] overflow-hidden bg-gradient-to-r from-amber-100 via-fuchsia-100 to-violet-300 text-left cursor-pointer"
               aria-label="Open free training popup"
             >
@@ -78,7 +90,7 @@ export function HeroSection() {
           </p>
 
           <div className="mt-9">
-            <CTAButton size="default">Get Instant Access</CTAButton>
+            <CTAButton size="default" section="hero">Get Instant Access</CTAButton>
           </div>
         </div>
         </div>

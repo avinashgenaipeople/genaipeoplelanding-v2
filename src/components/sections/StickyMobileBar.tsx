@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { useFormModal } from "@/contexts/FormModalContext";
+import { trackEvent } from "@/lib/analytics";
 
 export function StickyMobileBar() {
   const [isVisible, setIsVisible] = useState(false);
@@ -30,7 +31,18 @@ export function StickyMobileBar() {
         </span>
         <button
           type="button"
-          onClick={openFormModal}
+          onClick={() => {
+            trackEvent("cta_click", {
+              cta_label: "Get Instant Access",
+              cta_section: "sticky_mobile",
+              page_path: window.location.pathname,
+            });
+            trackEvent("cta_click_sticky_mobile", {
+              cta_label: "Get Instant Access",
+              page_path: window.location.pathname,
+            });
+            openFormModal();
+          }}
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-full shadow-lg"
         >
           Get Instant Access

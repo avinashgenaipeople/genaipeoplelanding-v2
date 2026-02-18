@@ -30,7 +30,7 @@ export function FinalCTASection() {
           }`}
           style={{ transitionDelay: "300ms" }}
         >
-          <CTAButton size="large" className="text-lg px-10 py-5">
+          <CTAButton size="large" section="final_cta" className="text-lg px-10 py-5">
             Start Your Transformation
           </CTAButton>
         </div>

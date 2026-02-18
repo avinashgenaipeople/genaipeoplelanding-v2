@@ -9,9 +9,10 @@ interface CTAButtonProps {
   size?: "default" | "large" | "small";
   variant?: "primary" | "sticky";
   showSubtext?: boolean;
+  section?: string;
 }
 
-export function CTAButton({ children, className, size = "default", variant = "primary", showSubtext = true }: CTAButtonProps) {
+export function CTAButton({ children, className, size = "default", variant = "primary", showSubtext = true, section }: CTAButtonProps) {
   const { openFormModal } = useFormModal();
   const ctaLabel = typeof children === "string" ? children : "cta";
 
@@ -30,8 +31,15 @@ export function CTAButton({ children, className, size = "default", variant = "pr
             cta_label: ctaLabel,
             cta_variant: variant,
             cta_size: size,
+            cta_section: section || "unknown",
             page_path: window.location.pathname,
           });
+          if (section) {
+            trackEvent(`cta_click_${section}`, {
+              cta_label: ctaLabel,
+              page_path: window.location.pathname,
+            });
+          }
           openFormModal();
         }}
         className={cn(

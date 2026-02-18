@@ -1,5 +1,6 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { trackEvent } from "@/lib/analytics";
 
 const FORM_BASE_URL = "https://share.synamate.com/widget/form/TW7vEwm553MbqKYmfMPP";
 
@@ -16,6 +17,45 @@ interface FormModalProps {
 
 export function FormModal({ open, onOpenChange }: FormModalProps) {
   const formUrl = useMemo(() => buildFormUrl(), []);
+
+  // Listen for Synamate form submission via postMessage
+  useEffect(() => {
+    if (!open) return;
+
+    const handleMessage = (event: MessageEvent) => {
+      // Synamate sends messages from its domain on form events
+      if (
+        typeof event.data === "object" &&
+        event.data !== null &&
+        (event.data.type === "form:submit" ||
+          event.data.type === "form_submitted" ||
+          event.data.event === "form_submit" ||
+          event.data.action === "submit")
+      ) {
+        trackEvent("lead_form_submit", {
+          form_id: "TW7vEwm553MbqKYmfMPP",
+          form_name: "LFMVP Optin -Improved",
+          page_path: window.location.pathname,
+        });
+        // Also fire GA4 standard generate_lead event for conversion tracking
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "generate_lead", {
+            currency: "INR",
+            value: 1,
+          });
+        }
+        // Fire FB Pixel standard Lead event
+        if (typeof window.fbq === "function") {
+          window.fbq("track", "Lead", {
+            content_name: "LFMVP Optin -Improved",
+          });
+        }
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

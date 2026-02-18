@@ -40,39 +40,17 @@ export function HeroSection() {
                 });
                 openFormModal();
               }}
-              className="group relative w-full aspect-[4/3] overflow-hidden bg-gradient-to-r from-amber-100 via-fuchsia-100 to-violet-300 text-left cursor-pointer"
+              className="group relative w-full aspect-[4/3] overflow-hidden bg-black text-left cursor-pointer"
               aria-label="Open free training popup"
             >
 
-              {/* Desktop thumbnail */}
-              <div className="hidden sm:block absolute inset-0">
-                <div className="absolute inset-y-0 left-0 w-[62%] px-8 md:px-10 py-8 flex items-end">
-                  <div>
-                    <p className="font-display text-3xl md:text-4xl font-extrabold text-purple-900/90 leading-snug drop-shadow-sm">Land AI Architect Roles</p>
-                    <p className="font-display text-3xl md:text-4xl font-extrabold text-purple-900/90 leading-snug drop-shadow-sm">Paying 30–70L+</p>
-                  </div>
-                </div>
-                <div className="absolute inset-y-0 right-0 w-[38%] rounded-tl-3xl overflow-hidden bg-white/30">
-                  <img
-                    src="/jerry-kurian.jpeg"
-                    alt="Jerry Kurian — Founder &amp; Chief Mentor"
-                    className="h-full w-full object-cover object-center"
-                  />
-                </div>
-              </div>
-
-              {/* Mobile thumbnail */}
-              <div className="sm:hidden absolute inset-0">
+              {/* Thumbnail image */}
+              <div className="absolute inset-0">
                 <img
-                  src="/jerry-kurian.jpeg"
-                  alt="Jerry Kurian presenting the AI roadmap"
-                  className="h-full w-full object-cover object-top"
+                  src="/hero-thumbnail.png"
+                  alt="From Java to AI Architect in 6 Months — Jerry Kurian"
+                  className="h-full w-full object-cover object-center"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                <div className="absolute left-4 right-4 bottom-6">
-                  <p className="font-display text-2xl font-extrabold text-white leading-snug drop-shadow-md">Land AI Architect Roles</p>
-                  <p className="font-display text-2xl font-extrabold text-white leading-snug drop-shadow-md">Paying 30–70L+</p>
-                </div>
               </div>
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />

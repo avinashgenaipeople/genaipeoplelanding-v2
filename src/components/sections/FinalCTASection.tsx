@@ -31,7 +31,7 @@ export function FinalCTASection() {
           style={{ transitionDelay: "300ms" }}
         >
           <CTAButton size="large" section="final_cta" className="text-lg px-10 py-5">
-            Start Your Transformation
+            Watch the Free Training (28 min)
           </CTAButton>
         </div>
 
@@ -41,7 +41,7 @@ export function FinalCTASection() {
           }`}
           style={{ transitionDelay: "500ms" }}
         >
-          28-minute free training — learn the AI workflow that 10x's your output
+          Free 28-min training. No credit card. No strings. And if you join the program and do the work — we stay with you until you get the results.
         </p>
       </div>
     </section>

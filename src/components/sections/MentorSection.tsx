@@ -51,7 +51,7 @@ export function MentorSection() {
 
               {/* CTA + LinkedIn */}
               <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 mt-6">
-                <CTAButton size="default" section="mentor">Watch Video, Then Book a Call</CTAButton>
+                <CTAButton size="default" section="mentor">Watch the Free Training → Book Your Call</CTAButton>
                 <a
                   href="https://www.linkedin.com/in/jerryk/"
                   target="_blank"

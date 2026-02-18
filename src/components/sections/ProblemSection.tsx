@@ -35,7 +35,7 @@ export function ProblemSection() {
             How senior Java devs are landing <span className="text-primary">AI Architect roles</span> paying{" "}
             <span className="text-primary">30–70L per year</span>.
           </h2>
-          <CTAButton size="default" section="problem_top">Watch the Free Video</CTAButton>
+          <CTAButton size="default" section="problem_top">Watch the Free Training (28 min)</CTAButton>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 mt-10 mb-10">
@@ -55,9 +55,9 @@ export function ProblemSection() {
         </div>
 
         <p className="text-2xl sm:text-3xl text-foreground mb-6">
-          Watch the <span className="text-primary font-semibold">free training video</span> and see how to 10x your output
+          Watch the <span className="text-primary font-semibold">free 28-min training</span> and see how senior Java devs are landing 30–70L AI roles
         </p>
-        <CTAButton size="default" section="problem_bottom">Watch the Free Video</CTAButton>
+        <CTAButton size="default" section="problem_bottom">Watch the Free Training (28 min)</CTAButton>
       </div>
     </section>
   );

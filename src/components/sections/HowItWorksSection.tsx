@@ -11,8 +11,8 @@ const features = [
   },
   {
     icon: Video,
-    title: "1-on-1 Guidance",
-    text: "Real mentorship, not pre-recorded tutorials. Get answers when you need them.",
+    title: "Jerry. 4–5x a Week.",
+    text: "Jerry is available to answer your questions 4–5 times a week. Plus a personalised Accountability Partner checks in regularly — so you have all the support needed to make the transition.",
   },
   {
     icon: Clock,

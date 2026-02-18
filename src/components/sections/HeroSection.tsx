@@ -11,7 +11,7 @@ export function HeroSection() {
       {/* Sumo bar */}
       <div className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center">
         <p className="text-sm sm:text-base font-semibold">
-          Free Video: The 120-Day Path from Java Developer to AI Architect
+          Free Video: How Senior Java Devs Land 30–70L AI Architect Roles in 120 Days
         </p>
       </div>
 
@@ -20,8 +20,9 @@ export function HeroSection() {
 
           <div className="text-center">
             <h1 className="mt-7 font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
-            Senior Java Developers — Upgrade Your Career to{" "}
-            <span className="text-primary">AI Architect</span> in 120 Days
+            Senior Java Developers Are Landing{" "}
+            <span className="text-primary">AI Architect Roles Paying 30–70L</span>{" "}
+            in 120 Days
           </h1>
 
           <div className="mt-8 glass-card max-w-4xl mx-auto overflow-hidden">
@@ -86,11 +87,12 @@ export function HeroSection() {
           </div>
 
           <p className="mt-9 text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-            Join 150+ senior Java developers already in the program — building AI skills, gaining confidence, and working towards their next career breakthrough.
+            150+ senior Java developers are already using this system to ship faster, get noticed by AI teams, and land roles paying 2–3x their current salary.
           </p>
 
           <div className="mt-9">
-            <CTAButton size="default" section="hero">Get Instant Access</CTAButton>
+            <CTAButton size="default" section="hero">Watch the Free Training (28 min)</CTAButton>
+            <p className="mt-3 text-sm text-muted-foreground/70">Free training. No credit card. No strings.</p>
           </div>
         </div>
         </div>

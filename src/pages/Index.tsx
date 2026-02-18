@@ -21,8 +21,8 @@ const Index = () => {
       <EmpathySection />
       <TransformationSection />
       <RolesSection />
-      <HowItWorksSection />
       <MentorSection />
+      <HowItWorksSection />
       <AnswerSection />
       <TestimonialsSection />
       <FAQSection />

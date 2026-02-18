@@ -3,7 +3,6 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { trackEvent } from "@/lib/analytics";
 
 const FORM_BASE_URL = "https://share.synamate.com/widget/form/TW7vEwm553MbqKYmfMPP";
-const SYNAMATE_ORIGIN = "https://share.synamate.com";
 
 function buildFormUrl() {
   const params = window.location.search;
@@ -20,31 +19,10 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
   const formUrl = useMemo(() => buildFormUrl(), []);
   const [iframeLoaded, setIframeLoaded] = useState(false);
 
-  // Warm the Synamate connection as soon as this component mounts.
-  // Using link hints only — no hidden iframe — so Radix Dialog's
-  // focus restoration and scroll-lock cleanup are not affected.
+  // Reset on open (not close) — resetting on close triggers a state change
+  // during Radix's exit animation which causes a React insertBefore crash.
   useEffect(() => {
-    const hints: HTMLLinkElement[] = [];
-
-    const addHint = (rel: string, href: string, as?: string) => {
-      const link = document.createElement("link");
-      link.rel = rel;
-      link.href = href;
-      if (as) link.setAttribute("as", as);
-      document.head.appendChild(link);
-      hints.push(link);
-    };
-
-    addHint("preconnect", SYNAMATE_ORIGIN);
-    addHint("dns-prefetch", SYNAMATE_ORIGIN);
-    addHint("prefetch", FORM_BASE_URL, "document");
-
-    return () => hints.forEach((l) => document.head.removeChild(l));
-  }, []);
-
-  // Reset loaded state when modal closes so spinner shows correctly on re-open
-  useEffect(() => {
-    if (!open) setIframeLoaded(false);
+    if (open) setIframeLoaded(false);
   }, [open]);
 
   // Listen for Synamate form submission via postMessage
@@ -84,8 +62,7 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
   }, [open]);
 
   return (
-    <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-xl w-full p-0 overflow-hidden rounded-xl max-h-[90vh] flex flex-col border-2 border-primary/30 shadow-[0_0_30px_rgba(99,102,241,0.2)] bg-white">
 
           {/* Header — Hormozi: lead with dream outcome */}
@@ -139,7 +116,6 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
             </a>
           </div>
         </DialogContent>
-      </Dialog>
-    </>
+    </Dialog>
   );
 }

@@ -1,5 +1,4 @@
 import { CTAButton } from "@/components/ui/cta-button";
-import { Play } from "lucide-react";
 import { useFormModal } from "@/contexts/FormModalContext";
 import { trackEvent } from "@/lib/analytics";
 
@@ -55,12 +54,6 @@ export function HeroSection() {
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
 
-              {/* Wistia-style play button */}
-              <div className="absolute inset-0 flex items-center justify-center z-10">
-                <div className="w-24 h-16 sm:w-32 sm:h-20 rounded-2xl bg-primary flex items-center justify-center shadow-lg group-hover:bg-primary/90 group-hover:scale-105 transition-all">
-                  <Play className="w-9 h-9 sm:w-10 sm:h-10 text-white fill-white ml-0.5" />
-                </div>
-              </div>
             </button>
           </div>
 

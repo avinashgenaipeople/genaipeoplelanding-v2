@@ -32,7 +32,7 @@ const faqs = [
   {
     question: "How much time do I need to invest daily?",
     answer:
-      "Most developers dedicate 1–2 hours per day alongside their current job. The curriculum is structured for working professionals, with recorded sessions you can watch at your own pace and weekend mentorship calls.",
+      "The program is 6 months long, but developers who dedicate 2–3 hours a day typically see results within 120 days. The curriculum is designed for working professionals — recorded sessions you can watch at your own pace, plus regular mentorship calls that fit around your job.",
   },
   {
     question: "Is this relevant if I have 15+ years of experience?",
@@ -40,14 +40,14 @@ const faqs = [
       "That's actually the sweet spot. The more enterprise experience you have, the faster you can transition. Senior developers already understand system design, architecture trade-offs, and production concerns — those skills directly transfer to AI Architect roles.",
   },
   {
-    question: "What happens after the 120 days?",
+    question: "What happens after the 6 months?",
     answer:
-      "By the end of the program, you'll have a working portfolio of AI projects, a positioned LinkedIn profile, and the technical fluency to interview confidently for AI Architect roles. For developers who want continued support beyond 120 days, extended mentorship options are available.",
+      "By the end of the program, you'll have a working portfolio of AI projects, a positioned LinkedIn profile, and the technical fluency to interview confidently for AI Architect roles. Most developers who put in 2–3 hours a day hit this milestone well before the 6 months are up. For those who want continued support after the program, extended mentorship options are available.",
   },
   {
     question: "What if I don't get the results I came for?",
     answer:
-      "We don't walk away at day 120 if you haven't hit your goal. If you've done the work and aren't where you want to be, we keep working with you — at no extra cost — until you get there. We're invested in your outcome, not just your enrolment.",
+      "We don't walk away at the end of the 6 months if you haven't hit your goal. If you've done the work and aren't where you want to be, we keep working with you — at no extra cost — until you get there. We're invested in your outcome, not just your enrolment.",
   },
 ];
 

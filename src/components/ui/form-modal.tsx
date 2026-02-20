@@ -30,14 +30,28 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
     if (!open) return;
 
     const handleMessage = (event: MessageEvent) => {
-      if (
-        typeof event.data === "object" &&
-        event.data !== null &&
-        (event.data.type === "form:submit" ||
-          event.data.type === "form_submitted" ||
-          event.data.event === "form_submit" ||
-          event.data.action === "submit")
-      ) {
+      // Normalise: Synamate may send an object OR a JSON string
+      let data = event.data;
+      if (typeof data === "string") {
+        try { data = JSON.parse(data); } catch { /* keep as string */ }
+      }
+
+      // Dev: log every postMessage from the form origin to catch format changes
+      if (import.meta.env.DEV && event.origin.includes("synamate")) {
+        console.log("[Synamate postMessage]", data);
+      }
+
+      const isSubmit =
+        (typeof data === "object" &&
+          data !== null &&
+          (data.type === "form:submit" ||
+            data.type === "form_submitted" ||
+            data.event === "form_submit" ||
+            data.action === "submit")) ||
+        (typeof data === "string" &&
+          (data === "form:submit" || data === "form_submitted" || data === "submit"));
+
+      if (isSubmit) {
         trackEvent("lead_form_submit", {
           form_id: "TW7vEwm553MbqKYmfMPP",
           form_name: "LFMVP Optin -Improved",

@@ -10,6 +10,11 @@ declare global {
 export function trackEvent(eventName: string, params: EventParams = {}) {
   if (typeof window === "undefined") return;
 
+  // Dev-mode console log so you can verify events before checking GA4
+  if (import.meta.env.DEV) {
+    console.log(`[GA] event: ${eventName}`, params);
+  }
+
   if (typeof window.gtag === "function") {
     window.gtag("event", eventName, params);
   }

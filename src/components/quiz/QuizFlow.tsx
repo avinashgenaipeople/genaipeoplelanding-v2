@@ -35,29 +35,29 @@ const QUESTIONS: QuizQuestion[] = [
     id: "q1", step: "q1", next: "q2", num: 1,
     text: "How long have you been working as a Java developer professionally?",
     options: [
-      { value: "lt3",   label: "Less than 3 years" },
+      { value: "lt3",   label: "Less than 3 years — just getting started" },
       { value: "3to6",  label: "3–6 years" },
       { value: "7to12", label: "7–12 years" },
-      { value: "13plus",label: "13+ years — the grind is real" },
+      { value: "13plus",label: "13+ years — seen every framework come and go" },
     ],
   },
   {
     id: "q2", step: "q2", next: "q3", num: 2,
     text: "What would a successful career move look like for you in the next 12 months?",
     options: [
-      { value: "title",    label: "A Senior AI Architect or ML Engineer title" },
-      { value: "salary",   label: "Salary jump into the 30–70L+ range" },
-      { value: "projects", label: "Working on AI products that actually ship to real users" },
-      { value: "security", label: "Job security as AI reshapes my industry" },
+      { value: "title",    label: "An AI Architect or GenAI Engineer title" },
+      { value: "salary",   label: "A major salary upgrade — into the 30–70L+ bracket" },
+      { value: "projects", label: "Building GenAI products that ship to real users" },
+      { value: "security", label: "Future-proofing my career before AI replaces my role" },
     ],
   },
   {
     id: "q3", step: "q3", next: "q4", num: 3,
-    text: "What has been your biggest obstacle when trying to break into AI so far?",
+    text: "What has been your biggest obstacle when trying to break into GenAI so far?",
     options: [
-      { value: "overload", label: "Too many frameworks & resources — no clear path" },
+      { value: "overload", label: "Too many tools — LangChain, RAG, agents — no clear path" },
       { value: "time",     label: "Can't find time while managing a full-time job" },
-      { value: "transfer", label: "Not sure my Java / backend skills transfer to AI" },
+      { value: "transfer", label: "Not sure my Java / backend skills transfer to GenAI" },
       { value: "apply",    label: "Tried tutorials but can't apply them to real projects" },
     ],
   },
@@ -65,7 +65,7 @@ const QUESTIONS: QuizQuestion[] = [
     id: "q4", step: "q4", next: "q5", num: 4,
     text: "When you really think about it — what's the real reason you haven't made the move yet?",
     options: [
-      { value: "confidence", label: "Not confident enough in my AI / ML knowledge yet" },
+      { value: "confidence", label: "Not confident enough in my GenAI knowledge yet" },
       { value: "startover",  label: "Afraid I'll have to start over and take a pay cut" },
       { value: "timing",     label: "Waiting for the right moment or opportunity" },
       { value: "worth",      label: "Unsure if the time and investment will pay off" },
@@ -76,7 +76,7 @@ const QUESTIONS: QuizQuestion[] = [
     text: "If your career looks exactly the same 6 months from now — same role, same salary, same Java stack — how does that feel?",
     options: [
       { value: "fine",       label: "Completely fine — I'm satisfied where I am" },
-      { value: "unsettling", label: "A bit unsettling — AI is moving fast" },
+      { value: "unsettling", label: "A bit unsettling — GenAI is moving fast" },
       { value: "stressful",  label: "Stressful — I can see my skills becoming less relevant" },
       { value: "urgent",     label: "Urgent — I know I need to act but don't know how" },
     ],
@@ -100,28 +100,28 @@ function getDiagnosis(answers: Answers) {
   const urgency  = answers.q5  ?? "unsettling";
 
   const headlineMap: Record<string, string> = {
-    overload:  "You're stuck in Information Overload — and it's costing you years.",
+    overload:  "You're stuck in GenAI Information Overload — and it's costing you years.",
     time:      "You're caught in the 'someday' trap — waiting for time that never comes.",
     transfer:  "You're sitting on a hidden advantage most Java devs don't realise they own.",
-    apply:     "You have the knowledge — you're missing the bridge from theory to real projects.",
+    apply:     "You have the knowledge — you're missing the bridge from theory to real GenAI projects.",
   };
 
   const bodyMap: Record<string, string> = {
     overload:
-      "You said your biggest obstacle is too many resources with no clear path. This is the most common trap for senior Java developers. You're smart enough to know you need to upskill — but every article, course, and YouTube rabbit hole pulls you in a different direction. The result: months of 'learning AI' but no closer to an actual offer. What you need isn't more information. You need a sequenced, mentor-guided system that tells you exactly what to learn and in what order.",
+      "You said your biggest obstacle is too many tools with no clear path. This is the most common trap for senior Java developers. LangChain, LlamaIndex, RAG pipelines, AI agents, vector databases — every week there's a new framework and a new YouTube rabbit hole. The result: months of 'learning GenAI' but no closer to an actual role change. What you need isn't more information. You need a sequenced, mentor-guided system that tells you exactly what to learn and in what order — built specifically for Java developers.",
     time:
-      "You said you can't find time while managing a full-time job. Here's the truth: you will never have more free time than you do today. The Java devs who successfully made the switch didn't wait — they found a focused 90-day system built around a demanding job. You don't need more hours in the day. You need a path that produces tangible results in the limited hours you already have.",
+      "You said you can't find time while managing a full-time job. Here's the truth: you will never have more free time than you do today. The Java devs who successfully made the switch didn't wait — they found a focused system built around a demanding 10-12 hour workday. You don't need more hours in the day. You need a path that produces tangible results in the limited hours you already have.",
     transfer:
-      "You said you're not sure your Java skills transfer to AI — and this is the biggest misconception holding senior devs back. System design, distributed architecture, production engineering: these are precisely what every serious AI team desperately needs, and most ML engineers never have. You're not starting from zero. You're starting from a position of enormous hidden advantage that you haven't yet been shown how to leverage.",
+      "You said you're not sure your Java skills transfer to GenAI — and this is the biggest misconception holding senior devs back. System design, distributed architecture, production engineering, Spring Boot microservices: these are precisely what every serious GenAI team desperately needs, and most ML engineers never have. You're not starting from zero. You're starting from a position of enormous hidden advantage that you haven't yet been shown how to leverage.",
     apply:
-      "You've tried tutorials but can't connect them to real work. This is tutorial hell — endemic in AI education. Most courses teach theory in isolation, never showing you how to integrate an LLM into a production Java service, or how to architect an AI system at enterprise scale. You don't need another 40-hour course. You need a mentor who can show you how a real AI project is scoped, built, and shipped — end to end.",
+      "You've tried tutorials but can't connect them to real work. This is tutorial hell — endemic in GenAI education. Most courses teach LLM theory in isolation, never showing you how to integrate GenAI into a production Java service, or how to architect an AI system at enterprise scale. You don't need another 40-hour course. You need a mentor who can show you how a real GenAI project is scoped, built, and shipped — end to end.",
   };
 
   const urgencyMap: Record<string, string> = {
-    urgent:      "Your sense of urgency is well-founded. The window for senior Java devs to enter AI at a premium salary is open right now — but it won't stay open forever.",
-    stressful:   "Your instincts are right. Every month you stay in a pure Java role is a month the AI wave moves further ahead without you.",
-    unsettling:  "That uneasy feeling is data. The developers who act on it now will be writing their own ticket in 2026 and beyond.",
-    fine:        "Whether or not you're set on making the move, having a clear picture of what's possible for a Java dev like you is worth 45 minutes of your time.",
+    urgent:      "Your sense of urgency is well-founded. The window for senior Java devs to enter GenAI at a premium salary is open right now — but it won't stay open forever. Companies are hiring architects who can bridge Java and AI today.",
+    stressful:   "Your instincts are right. Every month you stay in a pure Java role is a month the GenAI wave moves further ahead without you. The developers making the switch now are locking in the best roles.",
+    unsettling:  "That uneasy feeling is data. The developers who act on it now will be the GenAI architects writing their own ticket in 2026 and beyond.",
+    fine:        "Even if you're comfortable today, having a clear picture of how your Java skills map to GenAI roles is worth 45 minutes of your time. The landscape is shifting fast.",
   };
 
   return {
@@ -191,7 +191,7 @@ export function QuizFlow() {
       {/* Sumo bar */}
       <div className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center shrink-0">
         <p className="text-sm font-semibold">
-          FREE Strategy Call with GenAI People — Get Your Personalised AI Architect Roadmap in 45 Mins
+          FREE Strategy Call with GenAI People — Get Your Personalised GenAI Architect Roadmap in 45 Mins
         </p>
       </div>
 
@@ -210,11 +210,11 @@ export function QuizFlow() {
               ⚡ 2-Minute Career Diagnosis
             </div>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight">
-              Are You on Track to Become an{" "}
-              <span className="text-primary">AI Architect?</span>
+              Are You Ready to Become a{" "}
+              <span className="text-primary">GenAI-Native</span> Java Developer?
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
-              Answer 5 quick questions and get a personalised diagnosis of what's holding you back — then book a free strategy call to map out your fastest path.
+              Answer 5 quick questions and get a personalised diagnosis of what's holding you back — then book a free strategy call to map out your fastest path to an AI Architect role.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-500" />Takes 2 minutes</span>
@@ -227,7 +227,7 @@ export function QuizFlow() {
             >
               Start My Diagnosis <ArrowRight className="w-5 h-5" />
             </button>
-            <p className="text-xs text-muted-foreground/60">150+ Java developers have already taken this quiz</p>
+            <p className="text-xs text-muted-foreground/60">150+ Java developers are already part of our mentoring</p>
           </div>
         )}
 
@@ -293,7 +293,7 @@ export function QuizFlow() {
             <div className="space-y-2 text-sm text-muted-foreground text-left max-w-xs mx-auto">
               <p className="flex items-center gap-2"><span className="text-primary">▶</span> Mapping your experience level</p>
               <p className="flex items-center gap-2 opacity-75"><span className="text-primary">▶</span> Identifying your specific blockers</p>
-              <p className="flex items-center gap-2 opacity-50"><span className="text-primary">▶</span> Building your personalised roadmap</p>
+              <p className="flex items-center gap-2 opacity-50"><span className="text-primary">▶</span> Building your personalised GenAI readiness report</p>
             </div>
           </div>
         )}
@@ -307,7 +307,7 @@ export function QuizFlow() {
       {/* Minimal footer */}
       {step !== "results" && (
         <div className="text-center py-4 text-xs text-muted-foreground/45 shrink-0">
-          © {new Date().getFullYear()} AI Architect Academy · 150+ Java devs already enrolled
+          © {new Date().getFullYear()} AI Architect Academy · 150+ Java devs in our mentoring
         </div>
       )}
     </div>
@@ -335,7 +335,7 @@ function ResultsPage({ answers }: { answers: Answers }) {
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground leading-snug">
           Here's what's{" "}
           <span className="text-primary">actually holding you back</span>{" "}
-          from your AI Architect role:
+          from becoming a GenAI-native developer:
         </h2>
       </div>
 
@@ -354,7 +354,7 @@ function ResultsPage({ answers }: { answers: Answers }) {
           The fastest way to fix this? A free 1-on-1 strategy call with our team.
         </p>
         <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-          In 45 minutes we'll map out your personalised roadmap from Senior Java Dev to AI Architect — based on your exact situation.
+          In 45 minutes we'll map out your personalised roadmap from Senior Java Dev to GenAI Architect — based on your exact situation and experience.
         </p>
       </div>
 
@@ -385,7 +385,7 @@ function ResultsPage({ answers }: { answers: Answers }) {
 
       {/* Trust signals */}
       <div className="flex flex-wrap justify-center gap-5 text-sm text-muted-foreground">
-        <span>✅ 150+ Java devs already enrolled</span>
+        <span>✅ 150+ Java devs in our mentoring</span>
         <span>✅ No sales pressure — just a roadmap</span>
         <span>✅ 45 minutes, completely free</span>
         <span>✅ Personalised to your situation</span>

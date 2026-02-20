@@ -227,7 +227,7 @@ export function QuizFlow() {
             >
               Start My Diagnosis <ArrowRight className="w-5 h-5" />
             </button>
-            <p className="text-xs text-muted-foreground/60">150+ Java developers have already taken this quiz</p>
+            <p className="text-xs text-muted-foreground/60">150+ Java developers are already part of our mentoring</p>
           </div>
         )}
 
@@ -307,7 +307,7 @@ export function QuizFlow() {
       {/* Minimal footer */}
       {step !== "results" && (
         <div className="text-center py-4 text-xs text-muted-foreground/45 shrink-0">
-          © {new Date().getFullYear()} AI Architect Academy · 150+ Java devs already enrolled
+          © {new Date().getFullYear()} AI Architect Academy · 150+ Java devs in our mentoring
         </div>
       )}
     </div>
@@ -385,7 +385,7 @@ function ResultsPage({ answers }: { answers: Answers }) {
 
       {/* Trust signals */}
       <div className="flex flex-wrap justify-center gap-5 text-sm text-muted-foreground">
-        <span>✅ 150+ Java devs already enrolled</span>
+        <span>✅ 150+ Java devs in our mentoring</span>
         <span>✅ No sales pressure — just a roadmap</span>
         <span>✅ 45 minutes, completely free</span>
         <span>✅ Personalised to your situation</span>

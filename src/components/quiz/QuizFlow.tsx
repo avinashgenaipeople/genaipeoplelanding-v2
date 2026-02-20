@@ -211,7 +211,7 @@ export function QuizFlow() {
             </div>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight">
               Are You Ready to Become a{" "}
-              <span className="text-primary">GenAI-Native</span> Java Developer?
+              <span className="text-primary">GenAI Architect</span> in 120 Days?
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
               Answer 5 quick questions and get a personalised diagnosis of what's holding you back — then book a free strategy call to map out your fastest path to an AI Architect role.

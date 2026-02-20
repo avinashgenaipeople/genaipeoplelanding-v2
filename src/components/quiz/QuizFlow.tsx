@@ -7,7 +7,6 @@ import { trackEvent } from "@/lib/analytics";
 type Step =
   | "intro"
   | "q1" | "q2" | "q3" | "q4" | "q5"
-  | "lead"
   | "analyzing"
   | "results";
 
@@ -17,13 +16,6 @@ interface Answers {
   q3?: string;
   q4?: string;
   q5?: string;
-}
-
-interface LeadData {
-  name: string;
-  email: string;
-  phone: string;
-  employment: string;
 }
 
 // ─── Quiz data ──────────────────────────────────────────────────────────────────
@@ -80,7 +72,7 @@ const QUESTIONS: QuizQuestion[] = [
     ],
   },
   {
-    id: "q5", step: "q5", next: "lead", num: 5,
+    id: "q5", step: "q5", next: "analyzing", num: 5,
     text: "If your career looks exactly the same 6 months from now — same role, same salary, same Java stack — how does that feel?",
     options: [
       { value: "fine",       label: "Completely fine — I'm satisfied where I am" },
@@ -91,22 +83,14 @@ const QUESTIONS: QuizQuestion[] = [
   },
 ];
 
-const EMPLOYMENT_OPTIONS = [
-  "Employed as a Java / Backend Developer",
-  "Freelancer / Consultant",
-  "Between Jobs",
-  "Student / Fresher",
-  "Other",
-];
-
-const FORM_BASE = "https://share.synamate.com/widget/form/TW7vEwm553MbqKYmfMPP";
+const CALENDAR_URL = "https://learning.genaipeople.com/apply-70";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────────
 
 function getProgress(step: Step): number {
   const map: Record<Step, number> = {
     intro: 0, q1: 10, q2: 28, q3: 46, q4: 64, q5: 82,
-    lead: 92, analyzing: 100, results: 100,
+    analyzing: 100, results: 100,
   };
   return map[step] ?? 0;
 }
@@ -137,7 +121,7 @@ function getDiagnosis(answers: Answers) {
     urgent:      "Your sense of urgency is well-founded. The window for senior Java devs to enter AI at a premium salary is open right now — but it won't stay open forever.",
     stressful:   "Your instincts are right. Every month you stay in a pure Java role is a month the AI wave moves further ahead without you.",
     unsettling:  "That uneasy feeling is data. The developers who act on it now will be writing their own ticket in 2026 and beyond.",
-    fine:        "Whether or not you're set on making the move, having a clear picture of what's possible for a Java dev like you is worth 28 minutes of your time.",
+    fine:        "Whether or not you're set on making the move, having a clear picture of what's possible for a Java dev like you is worth 45 minutes of your time.",
   };
 
   return {
@@ -145,14 +129,6 @@ function getDiagnosis(answers: Answers) {
     body:     bodyMap[obstacle]     ?? bodyMap.overload,
     urgency:  urgencyMap[urgency]   ?? urgencyMap.unsettling,
   };
-}
-
-function buildFormUrl(lead: LeadData): string {
-  const params = new URLSearchParams(window.location.search);
-  if (lead.name)  { params.set("name",  lead.name);  params.set("full_name", lead.name); }
-  if (lead.email) params.set("email", lead.email);
-  if (lead.phone) { params.set("phone", lead.phone); params.set("phone_number", lead.phone); }
-  return `${FORM_BASE}?${params.toString()}`;
 }
 
 // ─── Dot-stepper ────────────────────────────────────────────────────────────────
@@ -180,14 +156,22 @@ export function QuizFlow() {
   const [step, setStep]               = useState<Step>("intro");
   const [answers, setAnswers]         = useState<Answers>({});
   const [selected, setSelected]       = useState<string | null>(null);
-  const [lead, setLead]               = useState<LeadData>({ name: "", email: "", phone: "", employment: "" });
-  const [errors, setErrors]           = useState<Partial<Record<keyof LeadData, string>>>({});
 
   const progress    = getProgress(step);
   const showProgress = step !== "intro" && step !== "results";
 
   // Reset selected highlight on step change
   useEffect(() => { setSelected(null); }, [step]);
+
+  // Auto-advance from analyzing → results
+  useEffect(() => {
+    if (step !== "analyzing") return;
+    trackEvent("quiz_completed", { page_path: window.location.pathname });
+    if (typeof window.gtag === "function") window.gtag("event", "generate_lead", { currency: "INR", value: 1 });
+    if (typeof window.fbq === "function")  window.fbq("track", "Lead", { content_name: "Quiz Funnel" });
+    const timer = setTimeout(() => setStep("results"), 2700);
+    return () => clearTimeout(timer);
+  }, [step]);
 
   // ── Option click: highlight → wait → advance ─────────────────────────────────
   const handleOption = (qId: keyof Answers, value: string, next: Step) => {
@@ -200,24 +184,6 @@ export function QuizFlow() {
     }, 320);
   };
 
-  // ── Lead capture submit ───────────────────────────────────────────────────────
-  const handleLeadSubmit = () => {
-    const e: Partial<Record<keyof LeadData, string>> = {};
-    if (!lead.name.trim())                         e.name       = "Name is required";
-    if (!lead.email.match(/^\S+@\S+\.\S+$/))       e.email      = "Enter a valid email";
-    if (lead.phone.replace(/\D/g, "").length < 10) e.phone      = "Enter a valid phone number";
-    if (!lead.employment)                          e.employment = "Please select your status";
-    if (Object.keys(e).length) { setErrors(e); return; }
-    setErrors({});
-    setStep("analyzing");
-
-    trackEvent("lead_form_submit", { form_id: "TW7vEwm553MbqKYmfMPP", form_name: "Quiz Funnel", page_path: window.location.pathname });
-    if (typeof window.gtag === "function") window.gtag("event", "generate_lead", { currency: "INR", value: 1 });
-    if (typeof window.fbq === "function")  window.fbq("track", "Lead", { content_name: "Quiz Funnel" });
-
-    setTimeout(() => setStep("results"), 2700);
-  };
-
   // ─── Render ──────────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -225,7 +191,7 @@ export function QuizFlow() {
       {/* Sumo bar */}
       <div className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center shrink-0">
         <p className="text-sm font-semibold">
-          Free Video: How Senior Java Devs Land 30–70L AI Architect Roles in 120 Days
+          FREE Strategy Call with GenAI People — Get Your Personalised AI Architect Roadmap in 45 Mins
         </p>
       </div>
 
@@ -248,12 +214,12 @@ export function QuizFlow() {
               <span className="text-primary">AI Architect?</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
-              Answer 5 quick questions and get a personalised diagnosis of what's holding you back — plus the fastest path from Senior Java Dev to AI Architect.
+              Answer 5 quick questions and get a personalised diagnosis of what's holding you back — then book a free strategy call to map out your fastest path.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-500" />Takes 2 minutes</span>
               <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-500" />Personalised to your situation</span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-500" />Free roadmap at the end</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-500" />Free strategy call at the end</span>
             </div>
             <button
               onClick={() => { trackEvent("quiz_started", { page_path: window.location.pathname }); setStep("q1"); }}
@@ -313,105 +279,6 @@ export function QuizFlow() {
           </div>
         ))}
 
-        {/* LEAD CAPTURE */}
-        {step === "lead" && (
-          <div key="lead" className="max-w-lg w-full animate-in fade-in slide-in-from-right-4 duration-500">
-
-            <div className="text-center mb-8 space-y-2">
-              <div className="inline-flex items-center gap-1.5 bg-green-500/10 text-green-600 text-sm font-semibold px-3 py-1 rounded-full">
-                <CheckCircle2 className="w-4 h-4" /> Almost there — one last step
-              </div>
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
-                Where should we send your{" "}
-                <span className="text-primary">personalised results?</span>
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                We'll include your diagnosis + the free 28-minute AI Architect Roadmap.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-
-              {/* Name */}
-              <div>
-                <label className="block text-sm font-semibold text-foreground mb-1.5">Full Name</label>
-                <input
-                  type="text"
-                  placeholder="Your full name"
-                  value={lead.name}
-                  onChange={(e) => setLead((p) => ({ ...p, name: e.target.value }))}
-                  className={`w-full px-4 py-3.5 rounded-xl border-2 bg-card text-foreground placeholder:text-muted-foreground/50 focus:outline-none transition-colors text-base ${errors.name ? "border-destructive" : "border-border focus:border-primary"}`}
-                />
-                {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
-              </div>
-
-              {/* Email */}
-              <div>
-                <label className="block text-sm font-semibold text-foreground mb-1.5">Email Address</label>
-                <input
-                  type="email"
-                  placeholder="you@email.com"
-                  value={lead.email}
-                  onChange={(e) => setLead((p) => ({ ...p, email: e.target.value }))}
-                  className={`w-full px-4 py-3.5 rounded-xl border-2 bg-card text-foreground placeholder:text-muted-foreground/50 focus:outline-none transition-colors text-base ${errors.email ? "border-destructive" : "border-border focus:border-primary"}`}
-                />
-                {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
-              </div>
-
-              {/* Phone */}
-              <div>
-                <label className="block text-sm font-semibold text-foreground mb-1.5">WhatsApp / Phone Number</label>
-                <input
-                  type="tel"
-                  placeholder="+91 98765 43210"
-                  value={lead.phone}
-                  onChange={(e) => setLead((p) => ({ ...p, phone: e.target.value }))}
-                  className={`w-full px-4 py-3.5 rounded-xl border-2 bg-card text-foreground placeholder:text-muted-foreground/50 focus:outline-none transition-colors text-base ${errors.phone ? "border-destructive" : "border-border focus:border-primary"}`}
-                />
-                {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
-              </div>
-
-              {/* Employment status */}
-              <div>
-                <label className="block text-sm font-semibold text-foreground mb-2.5">
-                  What is your current employment status?
-                </label>
-                <div className="grid gap-2">
-                  {EMPLOYMENT_OPTIONS.map((opt) => (
-                    <button
-                      key={opt}
-                      type="button"
-                      onClick={() => setLead((p) => ({ ...p, employment: opt }))}
-                      className={`
-                        w-full text-left px-4 py-3 rounded-xl border-2 text-sm font-medium
-                        transition-all duration-150 flex items-center gap-3
-                        ${lead.employment === opt
-                          ? "border-primary bg-primary/10 text-primary"
-                          : "border-border bg-card text-foreground hover:border-primary/50 hover:bg-primary/5"}
-                      `}
-                    >
-                      <span className={`w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center transition-all ${lead.employment === opt ? "border-primary bg-primary" : "border-muted-foreground/30"}`}>
-                        {lead.employment === opt && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
-                      </span>
-                      {opt}
-                    </button>
-                  ))}
-                </div>
-                {errors.employment && <p className="text-destructive text-xs mt-1">{errors.employment}</p>}
-              </div>
-
-            </div>
-
-            <button
-              onClick={handleLeadSubmit}
-              className="mt-6 w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground font-bold text-lg px-8 py-4 rounded-2xl hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25 hover:scale-[1.01] active:scale-[0.99]"
-            >
-              Show Me My Results <ArrowRight className="w-5 h-5" />
-            </button>
-            <p className="mt-3 text-xs text-center text-muted-foreground/55">No spam. Unsubscribe anytime.</p>
-          </div>
-        )}
-
         {/* ANALYZING */}
         {step === "analyzing" && (
           <div key="analyzing" className="max-w-md w-full text-center space-y-7 animate-in fade-in duration-500">
@@ -433,7 +300,7 @@ export function QuizFlow() {
 
         {/* RESULTS */}
         {step === "results" && (
-          <ResultsPage lead={lead} answers={answers} />
+          <ResultsPage answers={answers} />
         )}
       </div>
 
@@ -449,27 +316,12 @@ export function QuizFlow() {
 
 // ─── Results Page ───────────────────────────────────────────────────────────────
 
-function ResultsPage({ lead, answers }: { lead: LeadData; answers: Answers }) {
-  const diagnosis  = getDiagnosis(answers);
-  const formUrl    = buildFormUrl(lead);
+function ResultsPage({ answers }: { answers: Answers }) {
+  const diagnosis   = getDiagnosis(answers);
   const [iframeLoaded, setIframeLoaded] = useState(false);
-  const firstName  = lead.name.split(" ")[0] || "there";
 
   useEffect(() => {
-    const handle = (e: MessageEvent) => {
-      let data = e.data;
-      if (typeof data === "string") { try { data = JSON.parse(data); } catch { /* ignore */ } }
-      const isSubmit =
-        (typeof data === "object" && data !== null &&
-          (data.type === "form:submit" || data.type === "form_submitted" ||
-           data.event === "form_submit" || data.action === "submit")) ||
-        (typeof data === "string" && ["form:submit", "form_submitted", "submit"].includes(data));
-      if (isSubmit) {
-        trackEvent("quiz_synamate_submit", { page_path: window.location.pathname });
-      }
-    };
-    window.addEventListener("message", handle);
-    return () => window.removeEventListener("message", handle);
+    trackEvent("quiz_results_shown", { page_path: window.location.pathname });
   }, []);
 
   return (
@@ -478,7 +330,7 @@ function ResultsPage({ lead, answers }: { lead: LeadData; answers: Answers }) {
       {/* Header */}
       <div className="text-center space-y-3">
         <div className="inline-flex items-center gap-2 bg-green-500/10 text-green-600 text-sm font-bold px-4 py-1.5 rounded-full">
-          <CheckCircle2 className="w-4 h-4" /> Your diagnosis is ready, {firstName}
+          <CheckCircle2 className="w-4 h-4" /> Your diagnosis is ready
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground leading-snug">
           Here's what's{" "}
@@ -497,44 +349,35 @@ function ResultsPage({ lead, answers }: { lead: LeadData; answers: Answers }) {
       </div>
 
       {/* Bridge copy */}
-      <div className="text-center">
+      <div className="text-center space-y-2">
         <p className="text-lg font-semibold text-foreground">
-          Watch the free 28-minute AI Architect Roadmap — Jerry walks through the exact system that solves this:
+          The fastest way to fix this? A free 1-on-1 strategy call with our team.
+        </p>
+        <p className="text-sm text-muted-foreground max-w-xl mx-auto">
+          In 45 minutes we'll map out your personalised roadmap from Senior Java Dev to AI Architect — based on your exact situation.
         </p>
       </div>
 
-      {/* Synamate form (pre-filled via URL params) */}
+      {/* Calendar embed */}
       <div className="rounded-2xl border-2 border-primary/20 overflow-hidden shadow-xl">
         <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-5 text-center">
-          <h3 className="text-xl font-bold text-white">Get Instant Access — It's Free</h3>
+          <h3 className="text-xl font-bold text-white">Book Your FREE Strategy Call</h3>
           <p className="text-sm text-white/90 mt-1">
-            28 minutes. See exactly how senior Java devs land 30–70L roles — without starting over.
+            Reserve your 45-minute slot — limited spots available each week.
           </p>
         </div>
-        <div className="relative bg-white overflow-y-auto">
+        <div className="relative bg-white" style={{ minHeight: "600px" }}>
           {!iframeLoaded && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white z-10 gap-3 min-h-48">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white z-10 gap-3">
               <div className="w-10 h-10 rounded-full border-4 border-primary/20 border-t-primary animate-spin" />
-              <p className="text-sm text-muted-foreground">Loading your roadmap…</p>
+              <p className="text-sm text-muted-foreground">Loading calendar…</p>
             </div>
           )}
           <iframe
-            src={formUrl}
+            src={CALENDAR_URL}
             className="w-full border-none"
-            style={{ height: "944px" }}
-            id="inline-TW7vEwm553MbqKYmfMPP"
-            data-layout="{'id':'INLINE'}"
-            data-trigger-type="alwaysShow"
-            data-trigger-value=""
-            data-activation-type="alwaysActivated"
-            data-activation-value=""
-            data-deactivation-type="neverDeactivate"
-            data-deactivation-value=""
-            data-form-name="LFMVP Optin -Improved"
-            data-height="944"
-            data-layout-iframe-id="inline-TW7vEwm553MbqKYmfMPP"
-            data-form-id="TW7vEwm553MbqKYmfMPP"
-            title="LFMVP Optin -Improved"
+            style={{ height: "700px" }}
+            title="Book a Strategy Call"
             onLoad={() => setIframeLoaded(true)}
           />
         </div>
@@ -543,9 +386,9 @@ function ResultsPage({ lead, answers }: { lead: LeadData; answers: Answers }) {
       {/* Trust signals */}
       <div className="flex flex-wrap justify-center gap-5 text-sm text-muted-foreground">
         <span>✅ 150+ Java devs already enrolled</span>
-        <span>✅ No credit card required</span>
-        <span>✅ Instant access</span>
-        <span>✅ Free for life</span>
+        <span>✅ No sales pressure — just a roadmap</span>
+        <span>✅ 45 minutes, completely free</span>
+        <span>✅ Personalised to your situation</span>
       </div>
 
       {/* Footer */}

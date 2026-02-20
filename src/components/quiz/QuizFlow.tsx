@@ -201,7 +201,7 @@ export function QuizFlow() {
       </div>
 
       {/* ── Content ── */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-10 md:py-16">
+      <div className="flex-1 flex flex-col items-center justify-center px-3 sm:px-4 py-6 sm:py-10 md:py-16">
 
         {/* INTRO */}
         {step === "intro" && (
@@ -211,7 +211,7 @@ export function QuizFlow() {
             </div>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight">
               Are You Ready to Become a{" "}
-              <span className="text-primary">GenAI-Native</span> Java Developer?
+              <span className="text-primary">GenAI Architect</span> in 120 Days?
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
               Answer 5 quick questions and get a personalised diagnosis of what's holding you back — then book a free strategy call to map out your fastest path to an AI Architect role.
@@ -325,14 +325,14 @@ function ResultsPage({ answers }: { answers: Answers }) {
   }, []);
 
   return (
-    <div className="max-w-3xl w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
+    <div className="max-w-3xl w-full space-y-5 sm:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-8 sm:pb-12">
 
       {/* Header */}
-      <div className="text-center space-y-3">
+      <div className="text-center space-y-2 sm:space-y-3">
         <div className="inline-flex items-center gap-2 bg-green-500/10 text-green-600 text-sm font-bold px-4 py-1.5 rounded-full">
           <CheckCircle2 className="w-4 h-4" /> Your diagnosis is ready
         </div>
-        <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground leading-snug">
+        <h2 className="font-display text-xl sm:text-3xl font-bold text-foreground leading-snug">
           Here's what's{" "}
           <span className="text-primary">actually holding you back</span>{" "}
           from becoming a GenAI-native developer:
@@ -340,33 +340,33 @@ function ResultsPage({ answers }: { answers: Answers }) {
       </div>
 
       {/* Diagnosis card */}
-      <div className="bg-card border border-border border-l-4 border-l-primary rounded-2xl p-6 sm:p-8 shadow-md space-y-4">
-        <h3 className="font-display text-lg sm:text-xl font-bold text-foreground">
+      <div className="bg-card border border-border border-l-4 border-l-primary rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-md space-y-3 sm:space-y-4">
+        <h3 className="font-display text-base sm:text-xl font-bold text-foreground">
           {diagnosis.headline}
         </h3>
-        <p className="text-muted-foreground leading-relaxed">{diagnosis.body}</p>
-        <p className="font-semibold text-foreground">{diagnosis.urgency}</p>
+        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{diagnosis.body}</p>
+        <p className="text-sm sm:text-base font-semibold text-foreground">{diagnosis.urgency}</p>
       </div>
 
       {/* Bridge copy */}
-      <div className="text-center space-y-2">
-        <p className="text-lg font-semibold text-foreground">
+      <div className="text-center space-y-1.5 sm:space-y-2">
+        <p className="text-base sm:text-lg font-semibold text-foreground">
           The fastest way to fix this? A free 1-on-1 strategy call with our team.
         </p>
-        <p className="text-sm text-muted-foreground max-w-xl mx-auto">
+        <p className="text-xs sm:text-sm text-muted-foreground max-w-xl mx-auto">
           In 45 minutes we'll map out your personalised roadmap from Senior Java Dev to GenAI Architect — based on your exact situation and experience.
         </p>
       </div>
 
       {/* Calendar embed */}
-      <div className="rounded-2xl border-2 border-primary/20 overflow-hidden shadow-xl">
-        <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-5 text-center">
-          <h3 className="text-xl font-bold text-white">Book Your FREE Strategy Call</h3>
-          <p className="text-sm text-white/90 mt-1">
+      <div className="rounded-xl sm:rounded-2xl border-2 border-primary/20 overflow-hidden shadow-xl -mx-2 sm:mx-0">
+        <div className="bg-gradient-to-r from-primary to-primary/80 px-4 py-3 sm:px-6 sm:py-5 text-center">
+          <h3 className="text-lg sm:text-xl font-bold text-white">Book Your FREE Strategy Call</h3>
+          <p className="text-xs sm:text-sm text-white/90 mt-0.5 sm:mt-1">
             Reserve your 45-minute slot — limited spots available each week.
           </p>
         </div>
-        <div className="relative bg-white" style={{ minHeight: "600px" }}>
+        <div className="relative bg-white" style={{ minHeight: "480px" }}>
           {!iframeLoaded && (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-white z-10 gap-3">
               <div className="w-10 h-10 rounded-full border-4 border-primary/20 border-t-primary animate-spin" />
@@ -376,7 +376,7 @@ function ResultsPage({ answers }: { answers: Answers }) {
           <iframe
             src={CALENDAR_URL}
             className="w-full border-none"
-            style={{ height: "700px" }}
+            style={{ height: "clamp(520px, 80vh, 700px)" }}
             title="Book a Strategy Call"
             onLoad={() => setIframeLoaded(true)}
           />
@@ -384,7 +384,7 @@ function ResultsPage({ answers }: { answers: Answers }) {
       </div>
 
       {/* Trust signals */}
-      <div className="flex flex-wrap justify-center gap-5 text-sm text-muted-foreground">
+      <div className="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2 sm:gap-5 text-xs sm:text-sm text-muted-foreground">
         <span>✅ 150+ Java devs in our mentoring</span>
         <span>✅ No sales pressure — just a roadmap</span>
         <span>✅ 45 minutes, completely free</span>

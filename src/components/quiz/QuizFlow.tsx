@@ -6,7 +6,7 @@ import { trackEvent } from "@/lib/analytics";
 
 type Step =
   | "intro"
-  | "q1" | "q2" | "q3" | "q4" | "q5"
+  | "q1" | "q2" | "q3" | "q4" | "q5" | "q6"
   | "analyzing"
   | "results";
 
@@ -16,6 +16,7 @@ interface Answers {
   q3?: string;
   q4?: string;
   q5?: string;
+  q6?: string;
 }
 
 // ─── Quiz data ──────────────────────────────────────────────────────────────────
@@ -72,13 +73,23 @@ const QUESTIONS: QuizQuestion[] = [
     ],
   },
   {
-    id: "q5", step: "q5", next: "analyzing", num: 5,
+    id: "q5", step: "q5", next: "q6", num: 5,
     text: "If your career looks exactly the same 6 months from now — same role, same salary, same Java stack — how does that feel?",
     options: [
       { value: "fine",       label: "Completely fine — I'm satisfied where I am" },
       { value: "unsettling", label: "A bit unsettling — GenAI is moving fast" },
       { value: "stressful",  label: "Stressful — I can see my skills becoming less relevant" },
       { value: "urgent",     label: "Urgent — I know I need to act but don't know how" },
+    ],
+  },
+  {
+    id: "q6", step: "q6", next: "analyzing", num: 6,
+    text: "Have you tried building anything with GenAI tools yet?",
+    options: [
+      { value: "none",        label: "Not yet — haven't written a single prompt programmatically" },
+      { value: "played",      label: "Played around with ChatGPT / Copilot but nothing production-level" },
+      { value: "poc",         label: "Built a small POC or side project using LLM APIs" },
+      { value: "integrating", label: "Already integrating GenAI into work projects" },
     ],
   },
 ];
@@ -89,16 +100,29 @@ const CALENDAR_URL = "https://learning.genaipeople.com/apply-70";
 
 function getProgress(step: Step): number {
   const map: Record<Step, number> = {
-    intro: 0, q1: 10, q2: 28, q3: 46, q4: 64, q5: 82,
+    intro: 0, q1: 8, q2: 22, q3: 38, q4: 54, q5: 70, q6: 86,
     analyzing: 100, results: 100,
   };
   return map[step] ?? 0;
 }
 
 function getDiagnosis(answers: Answers) {
-  const obstacle = answers.q3 ?? "overload";
-  const urgency  = answers.q5  ?? "unsettling";
+  const experience = answers.q1 ?? "3to6";
+  const goal       = answers.q2 ?? "title";
+  const obstacle   = answers.q3 ?? "overload";
+  const objection  = answers.q4 ?? "confidence";
+  const urgency    = answers.q5 ?? "unsettling";
+  const exposure   = answers.q6 ?? "none";
 
+  // Section 1 — Experience-based opener (Q1)
+  const experienceMap: Record<string, string> = {
+    lt3:     "As a developer early in your career, you have the rare chance to build GenAI skills before your habits calcify around legacy patterns.",
+    "3to6":  "With 3–6 years of Java experience, you've built solid production fundamentals that translate directly to GenAI architecture.",
+    "7to12": "With 7–12 years in Java, you have deep production expertise — system design, distributed architecture — that most GenAI engineers simply don't have.",
+    "13plus":"With 13+ years of Java experience, you've seen frameworks come and go. But GenAI is different — and your depth of production engineering is exactly what the market values most right now.",
+  };
+
+  // Section 2 — Core obstacle diagnosis (Q3)
   const headlineMap: Record<string, string> = {
     overload:  "You're stuck in GenAI Information Overload — and it's costing you years.",
     time:      "You're caught in the 'someday' trap — waiting for time that never comes.",
@@ -117,6 +141,23 @@ function getDiagnosis(answers: Answers) {
       "You've tried tutorials but can't connect them to real work. This is tutorial hell — endemic in GenAI education. Most courses teach LLM theory in isolation, never showing you how to integrate GenAI into a production Java service, or how to architect an AI system at enterprise scale. You don't need another 40-hour course. You need a mentor who can show you how a real GenAI project is scoped, built, and shipped — end to end.",
   };
 
+  // Section 3 — Objection handler (Q4)
+  const objectionMap: Record<string, string> = {
+    confidence: "The confidence gap you're feeling is completely normal. Every senior Java dev we've mentored felt the same way before they started. The truth is: you don't need to become an ML researcher. You need to learn how to architect GenAI systems — and that builds on everything you already know.",
+    startover:  "Here's the good news: you won't start over, and you won't take a pay cut. Java developers who add GenAI skills command a premium precisely because they bring production engineering experience that pure ML engineers lack. This is an upgrade, not a restart.",
+    timing:     "There is no perfect moment — only the moment you decide to start. The Java devs in our mentoring who moved fastest all say the same thing: 'I wish I'd started three months earlier.' The market is hiring GenAI architects now. Waiting only makes the gap harder to close.",
+    worth:      "The ROI question is valid — and the numbers are clear. GenAI Architect roles in India are commanding 30–70L+, and the supply of qualified candidates is far below demand. A 120-day focused investment to move into a role that could double your compensation is one of the highest-ROI career moves available to Java developers today.",
+  };
+
+  // Section 4 — GenAI exposure assessment (Q6)
+  const exposureMap: Record<string, string> = {
+    none:        "You haven't started building with GenAI yet — and that's completely fine. Most of our mentees started exactly where you are. The important thing is you're here now, asking the right questions.",
+    played:      "You've explored ChatGPT and Copilot — which means you already understand the potential. But there's a massive gap between using AI tools and architecting AI systems. That's exactly the gap our mentoring closes.",
+    poc:         "You've already built a POC — which puts you ahead of 80% of Java developers. You've seen what's possible. Now you need the structured path to go from side project to production-grade GenAI systems.",
+    integrating: "You're already integrating GenAI at work — impressive. You're further along than most. What you need now isn't basics — it's the architectural patterns, best practices, and career positioning to make this your full-time identity.",
+  };
+
+  // Section 5 — Urgency close (Q5)
   const urgencyMap: Record<string, string> = {
     urgent:      "Your sense of urgency is well-founded. The window for senior Java devs to enter GenAI at a premium salary is open right now — but it won't stay open forever. Companies are hiring architects who can bridge Java and AI today.",
     stressful:   "Your instincts are right. Every month you stay in a pure Java role is a month the GenAI wave moves further ahead without you. The developers making the switch now are locking in the best roles.",
@@ -124,10 +165,22 @@ function getDiagnosis(answers: Answers) {
     fine:        "Even if you're comfortable today, having a clear picture of how your Java skills map to GenAI roles is worth 45 minutes of your time. The landscape is shifting fast.",
   };
 
+  // Goal-aligned bridge copy (Q2)
+  const bridgeMap: Record<string, string> = {
+    title:    "In our strategy call, we'll map out how to position yourself for an AI Architect or GenAI Engineer title — leveraging your Java background as a competitive advantage.",
+    salary:   "In our strategy call, we'll map out the fastest path to the 30–70L+ salary bracket — showing you exactly which GenAI skills command the highest premiums for Java developers.",
+    projects: "In our strategy call, we'll show you how to go from Java backend developer to shipping real GenAI products — the kind that make it to production, not just a Jupyter notebook.",
+    security: "In our strategy call, we'll map out how to future-proof your career by adding GenAI architecture skills that make you indispensable — not replaceable — as AI transforms the industry.",
+  };
+
   return {
-    headline: headlineMap[obstacle] ?? headlineMap.overload,
-    body:     bodyMap[obstacle]     ?? bodyMap.overload,
-    urgency:  urgencyMap[urgency]   ?? urgencyMap.unsettling,
+    experienceOpener: experienceMap[experience] ?? experienceMap["3to6"],
+    headline:         headlineMap[obstacle]      ?? headlineMap.overload,
+    body:             bodyMap[obstacle]           ?? bodyMap.overload,
+    objection:        objectionMap[objection]     ?? objectionMap.confidence,
+    exposure:         exposureMap[exposure]       ?? exposureMap.none,
+    urgency:          urgencyMap[urgency]         ?? urgencyMap.unsettling,
+    bridge:           bridgeMap[goal]             ?? bridgeMap.title,
   };
 }
 
@@ -136,7 +189,7 @@ function getDiagnosis(answers: Answers) {
 function DotStepper({ current }: { current: number }) {
   return (
     <div className="flex gap-1.5 items-center">
-      {[1, 2, 3, 4, 5].map((n) => (
+      {[1, 2, 3, 4, 5, 6].map((n) => (
         <div
           key={n}
           className={`h-1.5 rounded-full transition-all duration-300 ${
@@ -214,7 +267,7 @@ export function QuizFlow() {
               <span className="text-primary">GenAI Architect</span> in 120 Days?
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
-              Answer 5 quick questions and get a personalised diagnosis of what's holding you back — then book a free strategy call to map out your fastest path to an AI Architect role.
+              Answer 6 quick questions and get a personalised diagnosis of what's holding you back — then book a free strategy call to map out your fastest path to an AI Architect role.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-500" />Takes 2 minutes</span>
@@ -238,7 +291,7 @@ export function QuizFlow() {
             {/* Question header */}
             <div className="flex items-center justify-between mb-7">
               <span className="text-sm font-medium text-muted-foreground">
-                Question {q.num} <span className="text-muted-foreground/40">of 5</span>
+                Question {q.num} <span className="text-muted-foreground/40">of 6</span>
               </span>
               <DotStepper current={q.num} />
             </div>
@@ -341,10 +394,13 @@ function ResultsPage({ answers }: { answers: Answers }) {
 
       {/* Diagnosis card */}
       <div className="bg-card border border-border border-l-4 border-l-primary rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-md space-y-3 sm:space-y-4">
+        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{diagnosis.experienceOpener}</p>
         <h3 className="font-display text-base sm:text-xl font-bold text-foreground">
           {diagnosis.headline}
         </h3>
         <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{diagnosis.body}</p>
+        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{diagnosis.objection}</p>
+        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{diagnosis.exposure}</p>
         <p className="text-sm sm:text-base font-semibold text-foreground">{diagnosis.urgency}</p>
       </div>
 
@@ -354,7 +410,7 @@ function ResultsPage({ answers }: { answers: Answers }) {
           The fastest way to fix this? A free 1-on-1 strategy call with our team.
         </p>
         <p className="text-xs sm:text-sm text-muted-foreground max-w-xl mx-auto">
-          In 45 minutes we'll map out your personalised roadmap from Senior Java Dev to GenAI Architect — based on your exact situation and experience.
+          {diagnosis.bridge}
         </p>
       </div>
 

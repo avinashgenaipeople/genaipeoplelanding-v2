@@ -94,7 +94,7 @@ const QUESTIONS: QuizQuestion[] = [
   },
 ];
 
-const CALENDAR_URL = "https://learning.genaipeople.com/apply-70";
+const CALENDAR_URL = "https://learning.genaipeople.com/apply-calendly";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────────
 

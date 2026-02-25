@@ -18,7 +18,7 @@ const LpV2 = () => {
       <HeroSection />
       <ProblemSection />
       <TestimonialsSection />
-      <FinalCTASection />
+      <FinalCTASection showGuarantee={false} />
       <Footer />
       <StickyDesktopHeader />
       <StickyMobileBar />

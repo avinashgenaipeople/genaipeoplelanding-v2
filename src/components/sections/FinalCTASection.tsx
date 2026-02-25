@@ -2,7 +2,7 @@ import { CTAButton } from "@/components/ui/cta-button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { ShieldCheck } from "lucide-react";
 
-export function FinalCTASection() {
+export function FinalCTASection({ showGuarantee = true }: { showGuarantee?: boolean } = {}) {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
@@ -37,22 +37,24 @@ export function FinalCTASection() {
         </div>
 
         {/* Guarantee */}
-        <div
-          className={`mt-10 glass-card p-6 sm:p-8 border-success/30 transition-all duration-500 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-          style={{ transitionDelay: "500ms" }}
-        >
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <ShieldCheck className="w-6 h-6 text-success" />
-            <p className="font-display text-xl sm:text-2xl font-bold text-foreground">
-              Our Guarantee
+        {showGuarantee && (
+          <div
+            className={`mt-10 glass-card p-6 sm:p-8 border-success/30 transition-all duration-500 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+            style={{ transitionDelay: "500ms" }}
+          >
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <ShieldCheck className="w-6 h-6 text-success" />
+              <p className="font-display text-xl sm:text-2xl font-bold text-foreground">
+                Our Guarantee
+              </p>
+            </div>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              If you join the program, do the work, and don't land a higher-paying AI role — we keep working with you at no extra cost until you do. We're invested in your outcome, not just your enrolment.
             </p>
           </div>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            If you join the program, do the work, and don't land a higher-paying AI role — we keep working with you at no extra cost until you do. We're invested in your outcome, not just your enrolment.
-          </p>
-        </div>
+        )}
 
         <p
           className={`text-base text-muted-foreground/70 mt-6 transition-all duration-500 ${

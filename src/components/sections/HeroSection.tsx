@@ -45,7 +45,7 @@ export function HeroSection() {
               {/* Thumbnail image */}
               <div className="absolute inset-0">
                 <img
-                  src="/hero-thumbnail.png"
+                  src="/hero-thumbnail.jpg"
                   alt="How to use your Java skills to land a high-paying AI job — Jerry Kurian"
                   className="h-full w-full object-cover object-center"
                 />

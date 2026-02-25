@@ -19,9 +19,8 @@ export function HeroSection() {
 
           <div className="text-center">
             <h1 className="mt-7 font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
-            Senior Java Developers Are Landing{" "}
-            <span className="text-primary">AI Architect Roles Paying 30–70L</span>{" "}
-            in 120 Days
+            Senior Java Developers{" "}
+            <span className="text-primary">Use Your Java Skills to Land a High-Paying AI Job</span>
           </h1>
 
           <div className="mt-8 glass-card max-w-4xl mx-auto overflow-hidden">

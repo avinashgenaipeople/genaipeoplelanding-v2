@@ -83,10 +83,10 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
 
           {/* Header — matches CTA language */}
           <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-5 shrink-0">
-            <DialogTitle className="text-xl font-bold text-center text-white">
+            <DialogTitle className="text-2xl font-bold text-center text-white">
               {title}
             </DialogTitle>
-            <p className="text-sm text-white/90 text-center mt-1">
+            <p className="text-base text-white/90 text-center mt-1">
               {subtitle}
             </p>
           </div>

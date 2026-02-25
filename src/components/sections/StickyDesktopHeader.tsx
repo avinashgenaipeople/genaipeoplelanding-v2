@@ -26,7 +26,7 @@ export function StickyDesktopHeader() {
           GenAI People
         </span>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-muted-foreground">
+          <span className="text-base text-muted-foreground">
             Senior Java Dev → High-Paying AI Job (30–70L)
           </span>
           <CTAButton size="small" section="sticky_desktop" showSubtext={false}>Get Instant Access</CTAButton>

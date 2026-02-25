@@ -26,7 +26,7 @@ export function StickyMobileBar() {
       }`}
     >
       <div className="bg-card/95 backdrop-blur-lg border-t border-border px-4 py-3 flex items-center justify-between">
-        <span className="text-base font-medium text-foreground">
+        <span className="text-lg font-medium text-foreground">
           Free 28-min Roadmap
         </span>
         <button
@@ -43,7 +43,7 @@ export function StickyMobileBar() {
             });
             openFormModal();
           }}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-full shadow-lg"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground text-base font-semibold rounded-full shadow-lg"
         >
           Get Instant Access
           <ArrowRight className="w-3.5 h-3.5" />

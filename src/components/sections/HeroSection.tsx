@@ -38,7 +38,7 @@ export function HeroSection() {
                 });
                 openFormModal();
               }}
-              className="group relative w-full aspect-[4/3] overflow-hidden bg-black text-left cursor-pointer"
+              className="group relative w-full aspect-[1408/736] overflow-hidden bg-black text-left cursor-pointer"
               aria-label="Open free training popup"
             >
 

@@ -79,13 +79,13 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-xl w-full p-0 overflow-hidden rounded-xl max-h-[90vh] flex flex-col border-2 border-primary/30 shadow-[0_0_30px_rgba(99,102,241,0.2)] bg-white">
 
-          {/* Header — Hormozi: lead with dream outcome */}
+          {/* Header — matches CTA language */}
           <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-5 shrink-0">
             <DialogTitle className="text-xl font-bold text-center text-white">
-              Your Free AI Career Roadmap
+              Watch the Free Training
             </DialogTitle>
-            <p className="text-sm text-white/90 text-center mt-2">
-              28 minutes. See exactly how senior Java devs use their skills to land AI jobs paying 30–70L.
+            <p className="text-sm text-white/90 text-center mt-1">
+              Get instant access to the 28-min roadmap
             </p>
           </div>
 

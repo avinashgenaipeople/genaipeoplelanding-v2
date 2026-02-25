@@ -25,7 +25,13 @@ export function StickyMobileBar() {
         isVisible ? "translate-y-0" : "translate-y-full"
       }`}
     >
-      <div className="bg-card/95 backdrop-blur-lg border-t border-border px-4 py-3 flex items-center justify-between">
+      <div
+        className="bg-card/95 backdrop-blur-lg border-t border-border px-4 py-3 flex items-center justify-between cursor-pointer"
+        onClick={() => {
+          trackEvent("cta_click", { cta_label: "sticky_mobile_bar", cta_section: "sticky_mobile", page_path: window.location.pathname });
+          openFormModal();
+        }}
+      >
         <span className="text-lg font-medium text-foreground">
           Free 28-min Roadmap
         </span>

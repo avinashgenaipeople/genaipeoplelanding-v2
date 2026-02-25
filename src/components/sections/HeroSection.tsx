@@ -8,11 +8,18 @@ export function HeroSection() {
   return (
     <>
       {/* Sumo bar */}
-      <div className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center">
+      <button
+        type="button"
+        onClick={() => {
+          trackEvent("cta_click", { cta_label: "sumo_bar", cta_section: "sumo_bar", page_path: window.location.pathname });
+          openFormModal();
+        }}
+        className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
+      >
         <p className="text-sm sm:text-base font-semibold">
           Free Video: How Senior Java Devs Use Their Skills to Land 30–70L AI Jobs
         </p>
-      </div>
+      </button>
 
       <section className="px-4 pt-6 pb-14 md:pt-8 md:pb-20 bg-background">
         <div className="container max-w-5xl">

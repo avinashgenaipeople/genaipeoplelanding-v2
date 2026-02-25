@@ -18,4 +18,18 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom"],
+          router: ["react-router-dom"],
+          ui: ["@radix-ui/react-dialog", "@radix-ui/react-accordion", "@radix-ui/react-tabs"],
+        },
+      },
+    },
+    cssCodeSplit: true,
+    sourcemap: false,
+    minify: "esbuild",
+  },
 }));

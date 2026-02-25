@@ -6,11 +6,15 @@
     <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" href="/favicon-192x192.png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <!-- Warm connection to GHL calendar so the booking iframe loads fast -->
+    <!-- Preconnect to critical third-party origins -->
     <link rel="preconnect" href="https://learning.genaipeople.com" />
     <link rel="dns-prefetch" href="https://learning.genaipeople.com" />
     <link rel="preconnect" href="https://stcdn.leadconnectorhq.com" />
     <link rel="dns-prefetch" href="https://stcdn.leadconnectorhq.com" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
+    <!-- Preload hero image for faster LCP -->
+    <link rel="preload" href="/hero-thumbnail.png" as="image" />
     <title>GenAI Readiness Quiz for Java Developers | GenAI People</title>
     <meta name="description" content="Are you ready to become a GenAI-native Java developer? Take this 2-minute career diagnosis and find out what's holding you back — then book a free strategy call to map out your fastest path to an AI Architect role." />
     <meta name="author" content="GenAI People" />

@@ -13,9 +13,11 @@ function buildFormUrl() {
 interface FormModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  title?: string;
+  subtitle?: string;
 }
 
-export function FormModal({ open, onOpenChange }: FormModalProps) {
+export function FormModal({ open, onOpenChange, title = "Watch the Free Training", subtitle = "Get instant access to the 28-min roadmap" }: FormModalProps) {
   const formUrl = useMemo(() => buildFormUrl(), []);
   const [iframeLoaded, setIframeLoaded] = useState(false);
 
@@ -82,10 +84,10 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
           {/* Header — matches CTA language */}
           <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-5 shrink-0">
             <DialogTitle className="text-xl font-bold text-center text-white">
-              Watch the Free Training
+              {title}
             </DialogTitle>
             <p className="text-sm text-white/90 text-center mt-1">
-              Get instant access to the 28-min roadmap
+              {subtitle}
             </p>
           </div>
 

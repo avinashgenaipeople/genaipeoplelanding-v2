@@ -1,7 +1,7 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const metrics = [
-  { value: "15L → 24L", label: "Avg. salary jump" },
+  { value: "Up to 2–3x", label: "Salary increase" },
   { value: "6 Months", label: "Program duration" },
   { value: "150+", label: "Developers in the program" },
 ];

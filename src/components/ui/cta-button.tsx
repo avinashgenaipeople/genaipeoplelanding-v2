@@ -56,7 +56,7 @@ export function CTAButton({ children, className, size = "default", variant = "pr
       </button>
       {showSubtext && (
         <p className="mt-2 text-xs sm:text-sm text-muted-foreground">
-          28 min Java to GenAI Architect Roadmap
+          28 min Java to High-Paying AI Job Roadmap
         </p>
       )}
     </div>

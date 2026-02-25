@@ -4,8 +4,8 @@ import { Check } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const points = [
-  "Why AI makes senior devs faster, not redundant.",
-  "The exact workflow to ship 10x faster in 120 days.",
+  "Why senior Java devs have an unfair advantage in the AI job market.",
+  "The exact roadmap to land a 30–70L AI role using your existing skills.",
   "How to book a 1:1 plan call with Jerry.",
 ];
 
@@ -20,7 +20,7 @@ export function AnswerSection() {
           Watch the Free Training Video.
         </h2>
         <p className="text-2xl sm:text-3xl text-muted-foreground mb-12">
-          In 28 minutes, see exactly how senior Java devs are shipping 10x faster.
+          In 28 minutes, see exactly how senior Java devs are landing AI jobs at 30–70L.
         </p>
 
         {/* Check points */}

@@ -10,6 +10,10 @@ const quotes = [
     quote: "It's too late to start over.",
     response: "You're not starting over. You're stepping up.",
   },
+  {
+    quote: "I don't have time — I have a full-time job.",
+    response: "2–3 hours a day. That's it. We designed this for working professionals.",
+  },
 ];
 
 export function EmpathySection() {
@@ -87,7 +91,7 @@ export function EmpathySection() {
           </div>
 
           <p className="text-center font-display text-lg sm:text-xl font-bold text-foreground mt-4">
-            Together = AI Architect Ready
+            Together = Ready for 30–70L AI Roles
           </p>
         </div>
 

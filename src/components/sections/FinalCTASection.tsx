@@ -1,5 +1,6 @@
 import { CTAButton } from "@/components/ui/cta-button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { ShieldCheck } from "lucide-react";
 
 export function FinalCTASection() {
   const { ref, isVisible } = useScrollAnimation();
@@ -16,10 +17,10 @@ export function FinalCTASection() {
           }`}
         >
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-            Ready to <span className="text-primary">ship 10x faster</span>? Watch the video, then let's build your plan.
+            Ready to <span className="text-primary">land a 30–70L AI role</span>? Watch the video, then let's build your plan.
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            Book a call with Jerry after the free training and get a practical plan to 10x your shipping speed.
+            Book a call with Jerry after the free training and get a personalised roadmap to your next high-paying AI role.
           </p>
         </div>
 
@@ -35,13 +36,31 @@ export function FinalCTASection() {
           </CTAButton>
         </div>
 
-        <p
-          className={`text-lg text-muted-foreground/70 mt-6 transition-all duration-500 ${
-            isVisible ? "opacity-100" : "opacity-0"
+        {/* Guarantee */}
+        <div
+          className={`mt-10 glass-card p-6 sm:p-8 border-success/30 transition-all duration-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
           style={{ transitionDelay: "500ms" }}
         >
-          Free 28-min training. No credit card. No strings. And if you join the program and do the work — we stay with you until you get the results.
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <ShieldCheck className="w-6 h-6 text-success" />
+            <p className="font-display text-xl sm:text-2xl font-bold text-foreground">
+              Our Guarantee
+            </p>
+          </div>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            If you join the program, do the work, and don't land a higher-paying AI role — we keep working with you at no extra cost until you do. We're invested in your outcome, not just your enrolment.
+          </p>
+        </div>
+
+        <p
+          className={`text-base text-muted-foreground/70 mt-6 transition-all duration-500 ${
+            isVisible ? "opacity-100" : "opacity-0"
+          }`}
+          style={{ transitionDelay: "700ms" }}
+        >
+          Free 28-min training. No credit card. No strings.
         </p>
       </div>
     </section>

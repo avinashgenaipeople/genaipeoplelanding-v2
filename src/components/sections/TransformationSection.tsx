@@ -6,7 +6,7 @@ const comparisons = [
   {
     label: "Role",
     before: "Senior Java Developer",
-    after: "AI/ML Architect",
+    after: "AI/ML Engineer or Lead",
   },
   {
     label: "Focus",
@@ -24,9 +24,9 @@ const comparisons = [
     after: "Orchestrating AI agents & workflows",
   },
   {
-    label: "Career Ceiling",
-    before: "Staff / Principal Engineer track",
-    after: "AI Architect / Engineering Leader",
+    label: "Compensation",
+    before: "15–25L (Senior Java range)",
+    after: "30–70L (AI role range)",
   },
 ];
 
@@ -38,10 +38,10 @@ export function TransformationSection() {
       <div className="container max-w-4xl">
         <SectionLabel>The Shift</SectionLabel>
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-          From Senior Java Developer to AI Architect in 120 Days
+          From Senior Java Developer to High-Paying AI Role
         </h2>
         <p className="text-lg sm:text-xl text-muted-foreground mb-8">
-          Same domain expertise. Much higher compensation.
+          Same domain expertise. 30–70L compensation.
         </p>
 
         {/* Desktop table */}

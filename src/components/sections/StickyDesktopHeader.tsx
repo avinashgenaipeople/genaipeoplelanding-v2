@@ -27,7 +27,7 @@ export function StickyDesktopHeader() {
         </span>
         <div className="flex items-center gap-4">
           <span className="text-sm text-muted-foreground">
-            Senior Java Dev → AI Architect in 120 Days
+            Senior Java Dev → High-Paying AI Job (30–70L)
           </span>
           <CTAButton size="small" section="sticky_desktop" showSubtext={false}>Get Instant Access</CTAButton>
         </div>

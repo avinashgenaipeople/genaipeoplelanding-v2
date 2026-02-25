@@ -37,12 +37,12 @@ const faqs = [
   {
     question: "Is this relevant if I have 15+ years of experience?",
     answer:
-      "That's actually the sweet spot. The more enterprise experience you have, the faster you can transition. Senior developers already understand system design, architecture trade-offs, and production concerns — those skills directly transfer to AI Architect roles.",
+      "That's actually the sweet spot. The more enterprise experience you have, the faster you can transition. Senior developers already understand system design, architecture trade-offs, and production concerns — those skills directly transfer to high-paying AI roles.",
   },
   {
     question: "What happens after the 6 months?",
     answer:
-      "By the end of the program, you'll have a working portfolio of AI projects, a positioned LinkedIn profile, and the technical fluency to interview confidently for AI Architect roles. Most developers who put in 2–3 hours a day hit this milestone well before the 6 months are up. For those who want continued support after the program, extended mentorship options are available.",
+      "By the end of the program, you'll have a working portfolio of AI projects, a positioned LinkedIn profile, and the technical fluency to interview confidently for high-paying AI roles. Most developers who put in 2–3 hours a day hit this milestone well before the 6 months are up. For those who want continued support after the program, extended mentorship options are available.",
   },
   {
     question: "What if I don't get the results I came for?",

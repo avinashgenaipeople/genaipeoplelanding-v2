@@ -32,7 +32,8 @@ export function ProblemSection() {
             Why senior Java devs have an unfair advantage in the AI shift.
           </p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            How senior Java devs are landing <span className="text-primary">AI Architect roles</span> paying{" "}
+            How senior Java devs are using their skills to land{" "}
+            <span className="text-primary">high-paying AI jobs</span> at{" "}
             <span className="text-primary">30–70L per year</span>.
           </h2>
           <CTAButton size="default" section="problem_top">Watch the Free Training (28 min)</CTAButton>
@@ -55,7 +56,7 @@ export function ProblemSection() {
         </div>
 
         <p className="text-2xl sm:text-3xl text-foreground mb-6">
-          Watch the <span className="text-primary font-semibold">free 28-min training</span> and see how senior Java devs are landing 30–70L AI roles
+          Watch the <span className="text-primary font-semibold">free 28-min training</span> and see how senior Java devs are landing high-paying AI jobs at 30–70L
         </p>
         <CTAButton size="default" section="problem_bottom">Watch the Free Training (28 min)</CTAButton>
       </div>

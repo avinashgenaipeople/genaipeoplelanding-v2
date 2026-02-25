@@ -4,7 +4,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const visionStatements = [
   "A new AI tool launches. Everyone panics. You don't — because you're the one deciding which tools your team uses.",
-  "Your next salary conversation starts at 40L. Not because you asked. Because that's what architects get paid.",
+  "Your next salary conversation starts at 50L. Not because you asked. Because that's what AI roles pay.",
   "You open LinkedIn and AI roles don't scare you. They excite you. Because you're qualified.",
 ];
 

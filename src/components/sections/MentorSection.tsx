@@ -40,12 +40,12 @@ export function MentorSection() {
 
               <div className="space-y-4 text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 <p>
-                  We run a focused 6-month program that turns senior Java developers into engineers who ship 10x faster
-                  using AI agents, copilots, and automation. Dedicate 2–3 hours a day and most developers hit results within 120 days.
+                  We run a focused 6-month program that helps senior Java developers land high-paying AI roles at 30–70L.
+                  Dedicate 2–3 hours a day and most developers are interview-ready well before the 6 months are up.
                 </p>
                 <p>
-                  You don't start from zero. Your enterprise experience is the base. We layer on AI-powered workflows,
-                  agent orchestration, and the speed techniques top engineers are using right now.
+                  You don't start from zero. Your enterprise experience is the base. We layer on AI agents, LLMs, MLOps,
+                  and the career strategy that gets you hired into the roles paying 2–3x your current salary.
                 </p>
               </div>
 

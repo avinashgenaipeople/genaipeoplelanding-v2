@@ -82,10 +82,10 @@ export function FormModal({ open, onOpenChange }: FormModalProps) {
           {/* Header — Hormozi: lead with dream outcome */}
           <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-5 shrink-0">
             <DialogTitle className="text-xl font-bold text-center text-white">
-              Your Free AI Architect Roadmap
+              Your Free AI Career Roadmap
             </DialogTitle>
             <p className="text-sm text-white/90 text-center mt-2">
-              28 minutes. See exactly how senior Java devs land roles paying 30–70L — without starting over.
+              28 minutes. See exactly how senior Java devs use their skills to land AI jobs paying 30–70L.
             </p>
           </div>
 

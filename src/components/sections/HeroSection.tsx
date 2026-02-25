@@ -10,7 +10,7 @@ export function HeroSection() {
       {/* Sumo bar */}
       <div className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center">
         <p className="text-sm sm:text-base font-semibold">
-          Free Video: How Senior Java Devs Land 30–70L AI Architect Roles in 120 Days
+          Free Video: How Senior Java Devs Use Their Skills to Land 30–70L AI Jobs
         </p>
       </div>
 
@@ -19,9 +19,8 @@ export function HeroSection() {
 
           <div className="text-center">
             <h1 className="mt-7 font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
-            Senior Java Developers Are Landing{" "}
-            <span className="text-primary">AI Architect Roles Paying 30–70L</span>{" "}
-            in 120 Days
+            Senior Java Developers:{" "}
+            <span className="text-primary">Use Your Java Skills to Land a High-Paying AI Job</span>
           </h1>
 
           <div className="mt-8 glass-card max-w-4xl mx-auto overflow-hidden">
@@ -47,7 +46,7 @@ export function HeroSection() {
               <div className="absolute inset-0">
                 <img
                   src="/hero-thumbnail.png"
-                  alt="From Java to AI Architect in 6 Months — Jerry Kurian"
+                  alt="How to use your Java skills to land a high-paying AI job — Jerry Kurian"
                   className="h-full w-full object-cover object-center"
                 />
               </div>

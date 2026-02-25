@@ -23,7 +23,7 @@ export function HeroSection() {
             <span className="text-primary">Use Your Java Skills to Land a High-Paying AI Job</span>
           </h1>
 
-          <div className="mt-8 glass-card max-w-4xl mx-auto overflow-hidden">
+          <div className="mt-8 glass-card max-w-none sm:max-w-4xl overflow-hidden -mx-[calc(1rem+24px)] sm:mx-auto rounded-none sm:rounded-xl">
             <button
               type="button"
               onClick={() => {

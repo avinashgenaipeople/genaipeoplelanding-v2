@@ -20,11 +20,15 @@ interface FormModalProps {
 export function FormModal({ open, onOpenChange, title = "Watch the Free Training", subtitle = "Get instant access to the 28-min roadmap" }: FormModalProps) {
   const formUrl = useMemo(() => buildFormUrl(), []);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [iframeHeight, setIframeHeight] = useState(500);
 
   // Reset on open (not close) — resetting on close triggers a state change
   // during Radix's exit animation which causes a React insertBefore crash.
   useEffect(() => {
-    if (open) setIframeLoaded(false);
+    if (open) {
+      setIframeLoaded(false);
+      setIframeHeight(500);
+    }
   }, [open]);
 
   // Listen for Synamate form submission via postMessage
@@ -41,6 +45,23 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
       // Dev: log every postMessage from the form origin to catch format changes
       if (import.meta.env.DEV && event.origin.includes("synamate")) {
         console.log("[Synamate postMessage]", data);
+      }
+
+      // Resize iframe if Synamate sends height via iFrameSizer protocol
+      // Format: "[iFrameSizer]id:height:width:event"
+      if (typeof event.data === "string" && event.data.startsWith("[iFrameSizer]")) {
+        const parts = event.data.replace("[iFrameSizer]", "").split(":");
+        const h = Number(parts[1]);
+        if (h && h > 100) setIframeHeight(h);
+      }
+      // Also handle object-based height messages
+      if (
+        typeof data === "object" &&
+        data !== null &&
+        (data.type === "resize" || data.height)
+      ) {
+        const h = Number(data.height);
+        if (h && h > 100) setIframeHeight(h);
       }
 
       const isSubmit =
@@ -103,7 +124,7 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
             <iframe
               src={formUrl}
               className="w-full border-none"
-              style={{ height: "944px" }}
+              style={{ height: `${iframeHeight}px`, transition: "height 0.2s ease" }}
               id="inline-TW7vEwm553MbqKYmfMPP"
               data-layout="{'id':'INLINE'}"
               data-trigger-type="alwaysShow"
@@ -113,7 +134,7 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
               data-deactivation-type="neverDeactivate"
               data-deactivation-value=""
               data-form-name="LFMVP Optin -Improved"
-              data-height="944"
+              data-height={iframeHeight}
               data-layout-iframe-id="inline-TW7vEwm553MbqKYmfMPP"
               data-form-id="TW7vEwm553MbqKYmfMPP"
               title="LFMVP Optin -Improved"

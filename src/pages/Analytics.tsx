@@ -1,0 +1,256 @@
+import { useState } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+
+type Summary = { views: number; clicks: number; opens: number; submits: number };
+type FunnelRow = { page: string; views: number; clicks: number; opens: number; submits: number };
+type UtmRow = { source: string; views: number; clicks: number; opens: number; submits: number };
+type DailyRow = { date: string; views: number; clicks: number; opens: number; submits: number };
+
+type AnalyticsData = {
+  summary: Summary;
+  funnel: FunnelRow[];
+  utmSources: UtmRow[];
+  daily: DailyRow[];
+};
+
+const DAYS_OPTIONS = [7, 14, 30, 90] as const;
+
+function pct(numerator: number, denominator: number) {
+  if (denominator === 0) return "–";
+  return ((numerator / denominator) * 100).toFixed(1) + "%";
+}
+
+export default function Analytics() {
+  const [password, setPassword] = useState("");
+  const [authed, setAuthed] = useState(false);
+  const [days, setDays] = useState<number>(30);
+  const [data, setData] = useState<AnalyticsData | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function fetchData(pw?: string, d?: number) {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/analytics", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: pw ?? password, days: d ?? days }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || `HTTP ${res.status}`);
+      }
+      const json: AnalyticsData = await res.json();
+      setData(json);
+      setAuthed(true);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Unknown error");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    fetchData();
+  }
+
+  function changeDays(d: number) {
+    setDays(d);
+    fetchData(undefined, d);
+  }
+
+  // --- Password gate ---
+  if (!authed) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+          <h1 className="text-xl font-bold mb-4 text-gray-900">Analytics Dashboard</h1>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full border border-gray-300 rounded px-3 py-2 mb-3 text-gray-900"
+            autoFocus
+          />
+          {error && <p className="text-red-600 text-sm mb-3">{error}</p>}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          >
+            {loading ? "Loading…" : "Enter"}
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  // --- Dashboard ---
+  const { summary, funnel, utmSources, daily } = data!;
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <h1 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h1>
+          <div className="flex gap-2">
+            {DAYS_OPTIONS.map((d) => (
+              <button
+                key={d}
+                onClick={() => changeDays(d)}
+                className={`px-3 py-1 rounded text-sm font-medium ${
+                  days === d
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
+                }`}
+              >
+                {d}d
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {loading && <p className="text-gray-500 mb-4">Refreshing…</p>}
+        {error && <p className="text-red-600 mb-4">{error}</p>}
+
+        {/* Summary cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          {([
+            ["Page Views", summary.views],
+            ["CTA Clicks", summary.clicks],
+            ["Form Opens", summary.opens],
+            ["Form Submits", summary.submits],
+          ] as const).map(([label, value]) => (
+            <div key={label} className="bg-white rounded-lg shadow p-4">
+              <p className="text-sm text-gray-500">{label}</p>
+              <p className="text-3xl font-bold text-gray-900">{value.toLocaleString()}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Funnel by page */}
+        <section className="bg-white rounded-lg shadow p-4 mb-8 overflow-x-auto">
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">Funnel by Page</h2>
+          <table className="w-full text-sm text-left">
+            <thead>
+              <tr className="border-b text-gray-500">
+                <th className="py-2 pr-4">Page</th>
+                <th className="py-2 pr-4 text-right">Views</th>
+                <th className="py-2 pr-4 text-right">Clicks</th>
+                <th className="py-2 pr-4 text-right">Click %</th>
+                <th className="py-2 pr-4 text-right">Opens</th>
+                <th className="py-2 pr-4 text-right">Open %</th>
+                <th className="py-2 pr-4 text-right">Submits</th>
+                <th className="py-2 text-right">Submit %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {funnel.map((r) => (
+                <tr key={r.page} className="border-b last:border-0">
+                  <td className="py-2 pr-4 font-mono text-gray-900">{r.page}</td>
+                  <td className="py-2 pr-4 text-right text-gray-900">{r.views}</td>
+                  <td className="py-2 pr-4 text-right text-gray-900">{r.clicks}</td>
+                  <td className="py-2 pr-4 text-right text-gray-600">{pct(r.clicks, r.views)}</td>
+                  <td className="py-2 pr-4 text-right text-gray-900">{r.opens}</td>
+                  <td className="py-2 pr-4 text-right text-gray-600">{pct(r.opens, r.views)}</td>
+                  <td className="py-2 pr-4 text-right text-gray-900">{r.submits}</td>
+                  <td className="py-2 text-right text-gray-600">{pct(r.submits, r.views)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        {/* UTM source table */}
+        <section className="bg-white rounded-lg shadow p-4 mb-8 overflow-x-auto">
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">Traffic Sources (UTM)</h2>
+          <table className="w-full text-sm text-left">
+            <thead>
+              <tr className="border-b text-gray-500">
+                <th className="py-2 pr-4">Source</th>
+                <th className="py-2 pr-4 text-right">Views</th>
+                <th className="py-2 pr-4 text-right">Clicks</th>
+                <th className="py-2 pr-4 text-right">Opens</th>
+                <th className="py-2 pr-4 text-right">Submits</th>
+                <th className="py-2 text-right">Conv %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {utmSources.map((r) => (
+                <tr key={r.source} className="border-b last:border-0">
+                  <td className="py-2 pr-4 font-mono text-gray-900">{r.source}</td>
+                  <td className="py-2 pr-4 text-right text-gray-900">{r.views}</td>
+                  <td className="py-2 pr-4 text-right text-gray-900">{r.clicks}</td>
+                  <td className="py-2 pr-4 text-right text-gray-900">{r.opens}</td>
+                  <td className="py-2 pr-4 text-right text-gray-900">{r.submits}</td>
+                  <td className="py-2 text-right text-gray-600">{pct(r.submits, r.views)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        {/* Daily trend chart */}
+        <section className="bg-white rounded-lg shadow p-4 mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">Daily Trend</h2>
+          {daily.length > 0 ? (
+            <ResponsiveContainer width="100%" height={320}>
+              <BarChart data={daily}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" tick={{ fontSize: 11 }} />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="views" stackId="a" fill="#3b82f6" name="Views" />
+                <Bar dataKey="clicks" stackId="a" fill="#f59e0b" name="Clicks" />
+                <Bar dataKey="opens" stackId="a" fill="#8b5cf6" name="Opens" />
+                <Bar dataKey="submits" stackId="a" fill="#10b981" name="Submits" />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <p className="text-gray-500">No data for this period.</p>
+          )}
+        </section>
+
+        {/* Daily data table (for Claude readability) */}
+        <section className="bg-white rounded-lg shadow p-4 overflow-x-auto">
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">Daily Data</h2>
+          <table className="w-full text-sm text-left">
+            <thead>
+              <tr className="border-b text-gray-500">
+                <th className="py-2 pr-4">Date</th>
+                <th className="py-2 pr-4 text-right">Views</th>
+                <th className="py-2 pr-4 text-right">Clicks</th>
+                <th className="py-2 pr-4 text-right">Opens</th>
+                <th className="py-2 text-right">Submits</th>
+              </tr>
+            </thead>
+            <tbody>
+              {daily.map((r) => (
+                <tr key={r.date} className="border-b last:border-0">
+                  <td className="py-2 pr-4 font-mono text-gray-900">{r.date}</td>
+                  <td className="py-2 pr-4 text-right text-gray-900">{r.views}</td>
+                  <td className="py-2 pr-4 text-right text-gray-900">{r.clicks}</td>
+                  <td className="py-2 pr-4 text-right text-gray-900">{r.opens}</td>
+                  <td className="py-2 text-right text-gray-900">{r.submits}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+  );
+}

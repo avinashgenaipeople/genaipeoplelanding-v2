@@ -161,6 +161,13 @@ export default function Analytics() {
                 {d}d
               </button>
             ))}
+            <button
+              onClick={() => fetchData()}
+              disabled={loading}
+              className="px-3 py-1 rounded text-sm font-medium bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 disabled:opacity-50"
+            >
+              {loading ? "Refreshing…" : "Refresh"}
+            </button>
           </div>
         </div>
 

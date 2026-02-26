@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { trackEvent } from "@/lib/analytics";
 
@@ -21,6 +21,8 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
   const formUrl = useMemo(() => buildFormUrl(), []);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [iframeHeight, setIframeHeight] = useState(500);
+  const [loadCount, setLoadCount] = useState(0);
+  const submitFiredRef = React.useRef(false);
 
   // Reset on open (not close) — resetting on close triggers a state change
   // during Radix's exit animation which causes a React insertBefore crash.
@@ -28,8 +30,32 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
     if (open) {
       setIframeLoaded(false);
       setIframeHeight(500);
+      setLoadCount(0);
+      submitFiredRef.current = false;
     }
   }, [open]);
+
+  const fireSubmitOnce = () => {
+    if (submitFiredRef.current) return;
+    submitFiredRef.current = true;
+
+    trackEvent("lead_form_submit", {
+      form_id: "TW7vEwm553MbqKYmfMPP",
+      form_name: "LFMVP Optin -Improved",
+      page_path: window.location.pathname,
+    });
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "generate_lead", {
+        currency: "INR",
+        value: 1,
+      });
+    }
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "Lead", {
+        content_name: "LFMVP Optin -Improved",
+      });
+    }
+  };
 
   // Listen for Synamate form submission via postMessage
   useEffect(() => {
@@ -79,22 +105,7 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
           (data === "form:submit" || data === "form_submitted" || data === "submit"));
 
       if (isSubmit) {
-        trackEvent("lead_form_submit", {
-          form_id: "TW7vEwm553MbqKYmfMPP",
-          form_name: "LFMVP Optin -Improved",
-          page_path: window.location.pathname,
-        });
-        if (typeof window.gtag === "function") {
-          window.gtag("event", "generate_lead", {
-            currency: "INR",
-            value: 1,
-          });
-        }
-        if (typeof window.fbq === "function") {
-          window.fbq("track", "Lead", {
-            content_name: "LFMVP Optin -Improved",
-          });
-        }
+        fireSubmitOnce();
       }
     };
 
@@ -142,7 +153,15 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
               data-layout-iframe-id="inline-TW7vEwm553MbqKYmfMPP"
               data-form-id="TW7vEwm553MbqKYmfMPP"
               title="LFMVP Optin -Improved"
-              onLoad={() => setIframeLoaded(true)}
+              onLoad={() => {
+                setIframeLoaded(true);
+                setLoadCount((prev) => {
+                  const next = prev + 1;
+                  // First load = form page; subsequent loads = form submitted → thank-you page
+                  if (next >= 2) fireSubmitOnce();
+                  return next;
+                });
+              }}
             />
           </div>
 

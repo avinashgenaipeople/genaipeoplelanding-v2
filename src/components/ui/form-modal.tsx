@@ -42,9 +42,9 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
         try { data = JSON.parse(data); } catch { /* keep as string */ }
       }
 
-      // Dev: log every postMessage from the form origin to catch format changes
-      if (import.meta.env.DEV && event.origin.includes("synamate")) {
-        console.log("[Synamate postMessage]", data);
+      // Dev: log every postMessage to catch Synamate's array-based protocol
+      if (import.meta.env.DEV) {
+        console.log("[postMessage]", event.origin, data);
       }
 
       // Resize iframe if Synamate sends height via iFrameSizer protocol
@@ -64,9 +64,13 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
         if (h && h > 100) setIframeHeight(h);
       }
 
+      // Synamate sends array-based postMessages:
+      // ["set-sticky-contacts", ...] fires when a lead form is submitted
       const isSubmit =
+        (Array.isArray(data) && data[0] === "set-sticky-contacts") ||
         (typeof data === "object" &&
           data !== null &&
+          !Array.isArray(data) &&
           (data.type === "form:submit" ||
             data.type === "form_submitted" ||
             data.event === "form_submit" ||

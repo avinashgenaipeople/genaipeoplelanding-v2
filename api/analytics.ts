@@ -12,11 +12,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const { password, days = 30, filters = {} } = req.body ?? {};
-  const { page: filterPage, source: filterSource, medium: filterMedium, campaign: filterCampaign } = filters as {
-    page?: string;
-    source?: string;
-    medium?: string;
-    campaign?: string;
+  const {
+    page: filterPage, source: filterSource, medium: filterMedium, campaign: filterCampaign,
+    adname: filterAdname, adid: filterAdid, placement: filterPlacement, ad_account: filterAdAccount, utm_id: filterUtmId,
+  } = filters as {
+    page?: string; source?: string; medium?: string; campaign?: string;
+    adname?: string; adid?: string; placement?: string; ad_account?: string; utm_id?: string;
   };
 
   if (password !== process.env.ANALYTICS_PASSWORD) {
@@ -67,6 +68,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const sourceSet = new Set<string>();
   const mediumSet = new Set<string>();
   const campaignSet = new Set<string>();
+  const adnameSet = new Set<string>();
+  const adidSet = new Set<string>();
+  const placementSet = new Set<string>();
+  const adAccountSet = new Set<string>();
+  const utmIdSet = new Set<string>();
 
   // Summary totals
   let totalViews = 0;
@@ -81,17 +87,35 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const campaign = row.utm_campaign || "(none)";
     const day = row.created_at.slice(0, 10); // YYYY-MM-DD
 
+    // Extract Facebook ad params from url_params JSONB
+    const up = (row.url_params && typeof row.url_params === "object" ? row.url_params : {}) as Record<string, string>;
+    const adname = up.utm_adname || "(none)";
+    const adid = up.utm_adid || "(none)";
+    const placement = up.utm_placement || "(none)";
+    const adAccount = up.utm_ad_account || "(none)";
+    const utmId = up.utm_id || "(none)";
+
     // Collect all distinct values before filtering
     pageSet.add(page);
     sourceSet.add(source);
     mediumSet.add(medium);
     campaignSet.add(campaign);
+    if (adname !== "(none)") adnameSet.add(adname);
+    if (adid !== "(none)") adidSet.add(adid);
+    if (placement !== "(none)") placementSet.add(placement);
+    if (adAccount !== "(none)") adAccountSet.add(adAccount);
+    if (utmId !== "(none)") utmIdSet.add(utmId);
 
     // Apply filters — skip rows that don't match active filters
     if (filterPage && page !== filterPage) continue;
     if (filterSource && source !== filterSource) continue;
     if (filterMedium && medium !== filterMedium) continue;
     if (filterCampaign && campaign !== filterCampaign) continue;
+    if (filterAdname && adname !== filterAdname) continue;
+    if (filterAdid && adid !== filterAdid) continue;
+    if (filterPlacement && placement !== filterPlacement) continue;
+    if (filterAdAccount && adAccount !== filterAdAccount) continue;
+    if (filterUtmId && utmId !== filterUtmId) continue;
 
     const f = ensure(page);
     const u = ensureUtm(source);
@@ -154,6 +178,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       sources: [...sourceSet].sort(),
       mediums: [...mediumSet].sort(),
       campaigns: [...campaignSet].sort(),
+      adnames: [...adnameSet].sort(),
+      adids: [...adidSet].sort(),
+      placements: [...placementSet].sort(),
+      adAccounts: [...adAccountSet].sort(),
+      utmIds: [...utmIdSet].sort(),
     },
   });
 }

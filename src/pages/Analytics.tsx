@@ -20,6 +20,11 @@ type FilterOptions = {
   sources: string[];
   mediums: string[];
   campaigns: string[];
+  adnames: string[];
+  adids: string[];
+  placements: string[];
+  adAccounts: string[];
+  utmIds: string[];
 };
 
 type Filters = {
@@ -27,6 +32,11 @@ type Filters = {
   source: string;
   medium: string;
   campaign: string;
+  adname: string;
+  adid: string;
+  placement: string;
+  ad_account: string;
+  utm_id: string;
 };
 
 type AnalyticsData = {
@@ -51,7 +61,7 @@ export default function Analytics() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [filters, setFilters] = useState<Filters>({ page: "", source: "", medium: "", campaign: "" });
+  const [filters, setFilters] = useState<Filters>({ page: "", source: "", medium: "", campaign: "", adname: "", adid: "", placement: "", ad_account: "", utm_id: "" });
 
   async function fetchData(pw?: string, d?: number, f?: Filters) {
     setLoading(true);
@@ -59,10 +69,9 @@ export default function Analytics() {
     const activeFilters = f ?? filters;
     // Only send non-empty filter values
     const filterPayload: Record<string, string> = {};
-    if (activeFilters.page) filterPayload.page = activeFilters.page;
-    if (activeFilters.source) filterPayload.source = activeFilters.source;
-    if (activeFilters.medium) filterPayload.medium = activeFilters.medium;
-    if (activeFilters.campaign) filterPayload.campaign = activeFilters.campaign;
+    for (const [k, v] of Object.entries(activeFilters)) {
+      if (v) filterPayload[k] = v;
+    }
     try {
       const res = await fetch("/api/analytics", {
         method: "POST",
@@ -163,7 +172,12 @@ export default function Analytics() {
               ["source", "Source", data.filterOptions.sources],
               ["medium", "Medium", data.filterOptions.mediums],
               ["campaign", "Campaign", data.filterOptions.campaigns],
-            ] as const).map(([key, label, options]) => (
+              ["adname", "Ad Name", data.filterOptions.adnames ?? []],
+              ["adid", "Ad ID", data.filterOptions.adids ?? []],
+              ["placement", "Placement", data.filterOptions.placements ?? []],
+              ["ad_account", "Ad Account", data.filterOptions.adAccounts ?? []],
+              ["utm_id", "UTM ID", data.filterOptions.utmIds ?? []],
+            ] as const).filter(([, , options]) => options.length > 0).map(([key, label, options]) => (
               <label key={key} className="flex items-center gap-1.5 text-sm text-gray-700">
                 {label}
                 <select

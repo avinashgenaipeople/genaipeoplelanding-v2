@@ -15,11 +15,26 @@ type FunnelRow = { page: string; views: number; clicks: number; opens: number; s
 type UtmRow = { source: string; views: number; clicks: number; opens: number; submits: number };
 type DailyRow = { date: string; views: number; clicks: number; opens: number; submits: number };
 
+type FilterOptions = {
+  pages: string[];
+  sources: string[];
+  mediums: string[];
+  campaigns: string[];
+};
+
+type Filters = {
+  page: string;
+  source: string;
+  medium: string;
+  campaign: string;
+};
+
 type AnalyticsData = {
   summary: Summary;
   funnel: FunnelRow[];
   utmSources: UtmRow[];
   daily: DailyRow[];
+  filterOptions: FilterOptions;
 };
 
 const DAYS_OPTIONS = [7, 14, 30, 90] as const;
@@ -36,15 +51,27 @@ export default function Analytics() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [filters, setFilters] = useState<Filters>({ page: "", source: "", medium: "", campaign: "" });
 
-  async function fetchData(pw?: string, d?: number) {
+  async function fetchData(pw?: string, d?: number, f?: Filters) {
     setLoading(true);
     setError("");
+    const activeFilters = f ?? filters;
+    // Only send non-empty filter values
+    const filterPayload: Record<string, string> = {};
+    if (activeFilters.page) filterPayload.page = activeFilters.page;
+    if (activeFilters.source) filterPayload.source = activeFilters.source;
+    if (activeFilters.medium) filterPayload.medium = activeFilters.medium;
+    if (activeFilters.campaign) filterPayload.campaign = activeFilters.campaign;
     try {
       const res = await fetch("/api/analytics", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: pw ?? password, days: d ?? days }),
+        body: JSON.stringify({
+          password: pw ?? password,
+          days: d ?? days,
+          ...(Object.keys(filterPayload).length > 0 ? { filters: filterPayload } : {}),
+        }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -67,7 +94,13 @@ export default function Analytics() {
 
   function changeDays(d: number) {
     setDays(d);
-    fetchData(undefined, d);
+    fetchData(undefined, d, filters);
+  }
+
+  function changeFilter(key: keyof Filters, value: string) {
+    const next = { ...filters, [key]: value };
+    setFilters(next);
+    fetchData(undefined, undefined, next);
   }
 
   // --- Password gate ---
@@ -121,6 +154,32 @@ export default function Analytics() {
             ))}
           </div>
         </div>
+
+        {/* Filter bar */}
+        {data?.filterOptions && (
+          <div className="flex flex-wrap gap-3 mb-6">
+            {([
+              ["page", "Page", data.filterOptions.pages],
+              ["source", "Source", data.filterOptions.sources],
+              ["medium", "Medium", data.filterOptions.mediums],
+              ["campaign", "Campaign", data.filterOptions.campaigns],
+            ] as const).map(([key, label, options]) => (
+              <label key={key} className="flex items-center gap-1.5 text-sm text-gray-700">
+                {label}
+                <select
+                  value={filters[key as keyof Filters]}
+                  onChange={(e) => changeFilter(key as keyof Filters, e.target.value)}
+                  className="border border-gray-300 rounded px-2 py-1 text-sm bg-white text-gray-900"
+                >
+                  <option value="">All</option>
+                  {options.map((opt) => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+              </label>
+            ))}
+          </div>
+        )}
 
         {loading && <p className="text-gray-500 mb-4">Refreshing…</p>}
         {error && <p className="text-red-600 mb-4">{error}</p>}

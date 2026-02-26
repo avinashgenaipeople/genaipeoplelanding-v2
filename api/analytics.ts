@@ -11,7 +11,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { password, days = 30 } = req.body ?? {};
+  const { password, days = 30, filters = {} } = req.body ?? {};
+  const { page: filterPage, source: filterSource, medium: filterMedium, campaign: filterCampaign } = filters as {
+    page?: string;
+    source?: string;
+    medium?: string;
+    campaign?: string;
+  };
 
   if (password !== process.env.ANALYTICS_PASSWORD) {
     return res.status(401).json({ error: "Invalid password" });
@@ -22,7 +28,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const { data: events, error } = await supabase
     .from("analytics_events")
-    .select("event_name, page_path, cta_section, cta_label, utm_source, utm_medium, utm_campaign, created_at")
+    .select("event_name, page_path, cta_section, cta_label, utm_source, utm_medium, utm_campaign, url_params, created_at")
     .gte("created_at", since.toISOString())
     .order("created_at", { ascending: false })
     .limit(50_000);
@@ -56,6 +62,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return dailyMap.get(d)!;
   };
 
+  // Collect distinct values for filter dropdowns
+  const pageSet = new Set<string>();
+  const sourceSet = new Set<string>();
+  const mediumSet = new Set<string>();
+  const campaignSet = new Set<string>();
+
   // Summary totals
   let totalViews = 0;
   let totalClicks = 0;
@@ -65,7 +77,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   for (const row of events as Row[]) {
     const page = row.page_path || "(unknown)";
     const source = row.utm_source || "(direct)";
+    const medium = row.utm_medium || "(none)";
+    const campaign = row.utm_campaign || "(none)";
     const day = row.created_at.slice(0, 10); // YYYY-MM-DD
+
+    // Collect all distinct values before filtering
+    pageSet.add(page);
+    sourceSet.add(source);
+    mediumSet.add(medium);
+    campaignSet.add(campaign);
+
+    // Apply filters — skip rows that don't match active filters
+    if (filterPage && page !== filterPage) continue;
+    if (filterSource && source !== filterSource) continue;
+    if (filterMedium && medium !== filterMedium) continue;
+    if (filterCampaign && campaign !== filterCampaign) continue;
+
     const f = ensure(page);
     const u = ensureUtm(source);
     const d = ensureDay(day);
@@ -122,5 +149,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     funnel,
     utmSources,
     daily,
+    filterOptions: {
+      pages: [...pageSet].sort(),
+      sources: [...sourceSet].sort(),
+      mediums: [...mediumSet].sort(),
+      campaigns: [...campaignSet].sort(),
+    },
   });
 }

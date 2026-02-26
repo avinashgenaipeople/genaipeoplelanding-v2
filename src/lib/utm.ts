@@ -31,6 +31,15 @@ export function captureUtmParams(): void {
   if (hasAny) {
     sessionStorage.setItem("utm", JSON.stringify(found));
   }
+
+  // Store ALL URL params (not just utm_*) for richer attribution
+  const allParams: Record<string, string> = {};
+  params.forEach((value, key) => {
+    allParams[key] = value;
+  });
+  if (Object.keys(allParams).length > 0) {
+    sessionStorage.setItem("url_params", JSON.stringify(allParams));
+  }
 }
 
 /** Read whatever UTM params are stored for this session. */
@@ -38,6 +47,16 @@ export function getUtmParams(): UtmParams {
   if (typeof window === "undefined") return {};
   try {
     return JSON.parse(sessionStorage.getItem("utm") || "{}");
+  } catch {
+    return {};
+  }
+}
+
+/** Read all URL params captured on landing. */
+export function getAllParams(): Record<string, string> {
+  if (typeof window === "undefined") return {};
+  try {
+    return JSON.parse(sessionStorage.getItem("url_params") || "{}");
   } catch {
     return {};
   }

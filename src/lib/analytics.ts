@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import { getUtmParams } from "./utm";
+import { getUtmParams, getAllParams } from "./utm";
 
 type EventParams = Record<string, string | number | boolean | undefined>;
 
@@ -29,6 +29,7 @@ export function trackEvent(eventName: string, params: EventParams = {}) {
   // Fire-and-forget Supabase INSERT (no await, no blocking)
   if (supabase) {
     const utm = getUtmParams();
+    const urlParams = getAllParams();
     supabase
       .from("analytics_events")
       .insert({
@@ -41,6 +42,7 @@ export function trackEvent(eventName: string, params: EventParams = {}) {
         utm_campaign: utm.utm_campaign ?? null,
         utm_term: utm.utm_term ?? null,
         utm_content: utm.utm_content ?? null,
+        url_params: Object.keys(urlParams).length > 0 ? urlParams : {},
       })
       .then(({ error }) => {
         if (error && import.meta.env.DEV) {

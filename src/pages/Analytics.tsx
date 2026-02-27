@@ -100,14 +100,14 @@ export default function Analytics() {
   daysRef.current = days;
   filtersRef.current = filters;
 
-  const fetchMetaData = useCallback(async (pw?: string) => {
+  const fetchMetaData = useCallback(async (pw?: string, d?: number) => {
     setMetaLoading(true);
     setMetaError("");
     try {
       const res = await fetch("/api/meta-ads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: pw ?? password }),
+        body: JSON.stringify({ password: pw ?? password, days: d ?? days }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -121,7 +121,7 @@ export default function Analytics() {
     } finally {
       setMetaLoading(false);
     }
-  }, [password]);
+  }, [password, days]);
 
   // Auto-refresh every 5 minutes when authenticated
   useEffect(() => {
@@ -129,7 +129,7 @@ export default function Analytics() {
     const id = setInterval(() => {
       // Use refs for latest values
       fetchData(passwordRef.current, daysRef.current, filtersRef.current);
-      fetchMetaData(passwordRef.current);
+      fetchMetaData(passwordRef.current, daysRef.current);
     }, 300_000);
     return () => clearInterval(id);
   }, [authed]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -176,6 +176,7 @@ export default function Analytics() {
   function changeDays(d: number) {
     setDays(d);
     fetchData(undefined, d, filters);
+    fetchMetaData(undefined, d);
   }
 
   function changeFilter(key: keyof Filters, value: string) {
@@ -352,7 +353,7 @@ export default function Analytics() {
         {costPerSubmit.length > 0 && (
           <section className="bg-white rounded-lg shadow p-4 mb-8 overflow-x-auto">
             <h2 className="text-lg font-semibold text-gray-900 mb-1">Cost per Submit (by Adset)</h2>
-            <p className="text-xs text-gray-400 mb-3">Meta adset spend (this month) matched with form submits via utm_medium</p>
+            <p className="text-xs text-gray-400 mb-3">Meta adset spend (last {days}d) matched with form submits via utm_medium</p>
             <table className="w-full text-sm text-left">
               <thead>
                 <tr className="border-b text-gray-500">

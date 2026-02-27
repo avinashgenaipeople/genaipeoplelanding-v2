@@ -7,7 +7,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { password } = req.body ?? {};
+  const { password, days } = req.body ?? {};
 
   if (password !== process.env.ANALYTICS_PASSWORD) {
     return res.status(401).json({ error: "Invalid password" });
@@ -22,10 +22,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const accountIds = accountIdsRaw.split(",").map((id) => id.trim()).filter(Boolean);
 
-  // "This month" range: 1st of current month → today
   const now = new Date();
-  const sinceStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
   const untilStr = now.toISOString().split("T")[0];
+
+  // "This month" range for account-level cards
+  const monthSinceStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
+
+  // Days-based range for adset spend (matches dashboard filter)
+  const adsetSince = new Date(now);
+  adsetSince.setDate(adsetSince.getDate() - Number(days || 30));
+  const adsetSinceStr = adsetSince.toISOString().split("T")[0];
 
   async function metaGet(path: string, params: Record<string, string> = {}) {
     const url = new URL(`${BASE_URL}/${path}`);
@@ -59,7 +65,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // 3. This month's spend (1st of month → today)
         const monthInsights = await metaGet(`${actId}/insights`, {
           fields: "spend,impressions,clicks,ctr,cpc,cpm",
-          time_range: JSON.stringify({ since: sinceStr, until: untilStr }),
+          time_range: JSON.stringify({ since: monthSinceStr, until: untilStr }),
         });
 
         const todayData = todayInsights.data?.[0];
@@ -101,7 +107,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const adsetInsights = await metaGet(`${actId}/insights`, {
           level: "adset",
           fields: "adset_id,adset_name,spend,impressions,clicks",
-          time_range: JSON.stringify({ since: sinceStr, until: untilStr }),
+          time_range: JSON.stringify({ since: adsetSinceStr, until: untilStr }),
           limit: "100",
         });
         return (adsetInsights.data ?? []) as Array<{

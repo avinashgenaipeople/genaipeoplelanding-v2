@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import LpV2 from "./pages/LpV2";
+import LpV3 from "./pages/LpV3";
 
 const Analytics = lazy(() => import("./pages/Analytics"));
 
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/lp-v2" element={<LpV2 />} />
+            <Route path="/lp-v3" element={<LpV3 />} />
             <Route path="/analytics" element={<Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}><Analytics /></Suspense>} />
 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

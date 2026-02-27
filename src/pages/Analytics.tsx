@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   BarChart,
   Bar,
@@ -14,6 +14,18 @@ type Summary = { views: number; clicks: number; opens: number; submits: number }
 type FunnelRow = { page: string; views: number; clicks: number; opens: number; submits: number };
 type UtmRow = { source: string; views: number; clicks: number; opens: number; submits: number };
 type DailyRow = { date: string; views: number; clicks: number; opens: number; submits: number };
+
+type MetaAccount = {
+  id: string;
+  name: string;
+  currency: string;
+  balance: string;
+  amountSpent: string;
+  todaySpend: string;
+  periodSpend: string;
+  periodImpressions: string;
+  periodClicks: string;
+};
 
 type FilterOptions = {
   pages: string[];
@@ -63,6 +75,52 @@ export default function Analytics() {
   const [error, setError] = useState("");
   const [filters, setFilters] = useState<Filters>({ page: "", source: "", medium: "", campaign: "", adname: "", adid: "", placement: "", ad_account: "", utm_id: "" });
 
+  // Meta Ads state
+  const [metaData, setMetaData] = useState<MetaAccount[] | null>(null);
+  const [metaLoading, setMetaLoading] = useState(false);
+  const [metaError, setMetaError] = useState("");
+
+  // Refs for auto-refresh (to access latest values without re-creating interval)
+  const passwordRef = useRef(password);
+  const daysRef = useRef(days);
+  const filtersRef = useRef(filters);
+  passwordRef.current = password;
+  daysRef.current = days;
+  filtersRef.current = filters;
+
+  const fetchMetaData = useCallback(async (pw?: string, d?: number) => {
+    setMetaLoading(true);
+    setMetaError("");
+    try {
+      const res = await fetch("/api/meta-ads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: pw ?? password, days: d ?? days }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || `HTTP ${res.status}`);
+      }
+      const json = await res.json();
+      setMetaData(json.accounts);
+    } catch (e: unknown) {
+      setMetaError(e instanceof Error ? e.message : "Unknown error");
+    } finally {
+      setMetaLoading(false);
+    }
+  }, [password, days]);
+
+  // Auto-refresh every 5 minutes when authenticated
+  useEffect(() => {
+    if (!authed) return;
+    const id = setInterval(() => {
+      // Use refs for latest values
+      fetchData(passwordRef.current, daysRef.current, filtersRef.current);
+      fetchMetaData(passwordRef.current, daysRef.current);
+    }, 300_000);
+    return () => clearInterval(id);
+  }, [authed]); // eslint-disable-line react-hooks/exhaustive-deps
+
   async function fetchData(pw?: string, d?: number, f?: Filters) {
     setLoading(true);
     setError("");
@@ -99,11 +157,13 @@ export default function Analytics() {
   function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     fetchData();
+    fetchMetaData();
   }
 
   function changeDays(d: number) {
     setDays(d);
     fetchData(undefined, d, filters);
+    fetchMetaData(undefined, d);
   }
 
   function changeFilter(key: keyof Filters, value: string) {
@@ -162,12 +222,13 @@ export default function Analytics() {
               </button>
             ))}
             <button
-              onClick={() => fetchData()}
+              onClick={() => { fetchData(); fetchMetaData(); }}
               disabled={loading}
               className="px-3 py-1 rounded text-sm font-medium bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 disabled:opacity-50"
             >
               {loading ? "Refreshing…" : "Refresh"}
             </button>
+            <span className="text-xs text-gray-400 self-center">Auto-refreshes every 5 min</span>
           </div>
         </div>
 
@@ -219,6 +280,41 @@ export default function Analytics() {
             </div>
           ))}
         </div>
+
+        {/* Meta Ads */}
+        <section className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">Meta Ads</h2>
+          {metaLoading && <p className="text-gray-500 text-sm mb-2">Loading Meta data…</p>}
+          {metaError && <p className="text-red-600 text-sm mb-2">{metaError}</p>}
+          {metaData && metaData.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {metaData.map((acct) => (
+                <div key={acct.id} className="bg-white rounded-lg shadow p-4">
+                  <p className="text-sm font-medium text-gray-700 mb-3 truncate" title={acct.id}>
+                    {acct.name} <span className="text-gray-400">({acct.currency})</span>
+                  </p>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div>
+                      <p className="text-xs text-gray-500">Today Spend</p>
+                      <p className="text-xl font-bold text-gray-900">{acct.currency === "INR" ? "₹" : "$"}{Number(acct.todaySpend).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">{days}d Spend</p>
+                      <p className="text-xl font-bold text-gray-900">{acct.currency === "INR" ? "₹" : "$"}{Number(acct.periodSpend).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">Balance</p>
+                      <p className="text-xl font-bold text-green-700">{acct.currency === "INR" ? "₹" : "$"}{Number(acct.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {metaData && metaData.length === 0 && (
+            <p className="text-gray-500 text-sm">No Meta ad accounts found.</p>
+          )}
+        </section>
 
         {/* Funnel by page */}
         <section className="bg-white rounded-lg shadow p-4 mb-8 overflow-x-auto">

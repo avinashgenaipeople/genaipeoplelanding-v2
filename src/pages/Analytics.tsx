@@ -70,7 +70,7 @@ type AnalyticsData = {
   filterOptions: FilterOptions;
 };
 
-const DAYS_OPTIONS = [7, 14, 30, 90] as const;
+const DAYS_OPTIONS = [1, 7, 14, 30, 90] as const;
 
 function pct(numerator: number, denominator: number) {
   if (denominator === 0) return "–";
@@ -251,7 +251,7 @@ export default function Analytics() {
                     : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
                 }`}
               >
-                {d}d
+                {d === 1 ? "Today" : `${d}d`}
               </button>
             ))}
             <button

@@ -22,9 +22,9 @@ type MetaAccount = {
   balance: string;
   amountSpent: string;
   todaySpend: string;
-  periodSpend: string;
-  periodImpressions: string;
-  periodClicks: string;
+  monthSpend: string;
+  monthImpressions: string;
+  monthClicks: string;
 };
 
 type FilterOptions = {
@@ -88,14 +88,14 @@ export default function Analytics() {
   daysRef.current = days;
   filtersRef.current = filters;
 
-  const fetchMetaData = useCallback(async (pw?: string, d?: number) => {
+  const fetchMetaData = useCallback(async (pw?: string) => {
     setMetaLoading(true);
     setMetaError("");
     try {
       const res = await fetch("/api/meta-ads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: pw ?? password, days: d ?? days }),
+        body: JSON.stringify({ password: pw ?? password }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -108,7 +108,7 @@ export default function Analytics() {
     } finally {
       setMetaLoading(false);
     }
-  }, [password, days]);
+  }, [password]);
 
   // Auto-refresh every 5 minutes when authenticated
   useEffect(() => {
@@ -116,7 +116,7 @@ export default function Analytics() {
     const id = setInterval(() => {
       // Use refs for latest values
       fetchData(passwordRef.current, daysRef.current, filtersRef.current);
-      fetchMetaData(passwordRef.current, daysRef.current);
+      fetchMetaData(passwordRef.current);
     }, 300_000);
     return () => clearInterval(id);
   }, [authed]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -163,7 +163,6 @@ export default function Analytics() {
   function changeDays(d: number) {
     setDays(d);
     fetchData(undefined, d, filters);
-    fetchMetaData(undefined, d);
   }
 
   function changeFilter(key: keyof Filters, value: string) {
@@ -299,8 +298,8 @@ export default function Analytics() {
                       <p className="text-xl font-bold text-gray-900">{acct.currency === "INR" ? "₹" : "$"}{Number(acct.todaySpend).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">{days}d Spend</p>
-                      <p className="text-xl font-bold text-gray-900">{acct.currency === "INR" ? "₹" : "$"}{Number(acct.periodSpend).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                      <p className="text-xs text-gray-500">This Month</p>
+                      <p className="text-xl font-bold text-gray-900">{acct.currency === "INR" ? "₹" : "$"}{Number(acct.monthSpend).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-500">Balance</p>

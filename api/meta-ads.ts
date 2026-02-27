@@ -7,7 +7,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { password, days = 30 } = req.body ?? {};
+  const { password } = req.body ?? {};
 
   if (password !== process.env.ANALYTICS_PASSWORD) {
     return res.status(401).json({ error: "Invalid password" });
@@ -22,13 +22,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const accountIds = accountIdsRaw.split(",").map((id) => id.trim()).filter(Boolean);
 
-  // Build date range matching the dashboard's "days" selector
+  // "This month" range: 1st of current month → today
   const now = new Date();
-  const since = new Date(now);
-  since.setDate(since.getDate() - Number(days));
-  const sinceStr = since.toISOString().split("T")[0];
+  const sinceStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
   const untilStr = now.toISOString().split("T")[0];
-  const todayStr = untilStr;
 
   async function metaGet(path: string, params: Record<string, string> = {}) {
     const url = new URL(`${BASE_URL}/${path}`);
@@ -48,9 +45,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const accounts = await Promise.all(
       accountIds.map(async (actId) => {
-        // 1. Account info (balance, lifetime spend)
+        // 1. Account info (balance + spend cap for remaining funds)
         const info = await metaGet(actId, {
-          fields: "name,currency,account_status,balance,amount_spent",
+          fields: "name,currency,account_status,balance,amount_spent,spend_cap",
         });
 
         // 2. Today's spend
@@ -59,25 +56,38 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           date_preset: "today",
         });
 
-        // 3. Period spend (matching dashboard date range)
-        const periodInsights = await metaGet(`${actId}/insights`, {
+        // 3. This month's spend (1st of month → today)
+        const monthInsights = await metaGet(`${actId}/insights`, {
           fields: "spend,impressions,clicks,ctr,cpc,cpm",
           time_range: JSON.stringify({ since: sinceStr, until: untilStr }),
         });
 
         const todayData = todayInsights.data?.[0];
-        const periodData = periodInsights.data?.[0];
+        const monthData = monthInsights.data?.[0];
+
+        // Meta returns balance & amount_spent in the account's currency units (not cents)
+        // For prepaid: balance = remaining funds
+        // For postpaid with spend_cap: remaining = spend_cap - amount_spent
+        const rawBalance = info.balance ? Number(info.balance) / 100 : 0;
+        const rawSpentLifetime = info.amount_spent ? Number(info.amount_spent) / 100 : 0;
+        const rawSpendCap = info.spend_cap ? Number(info.spend_cap) / 100 : 0;
+        // Use balance if available (prepaid), otherwise compute from spend_cap
+        const remaining = rawBalance > 0
+          ? rawBalance
+          : rawSpendCap > 0
+            ? rawSpendCap - rawSpentLifetime
+            : 0;
 
         return {
           id: info.id,
           name: info.name,
           currency: info.currency,
-          balance: info.balance ? (Number(info.balance) / 100).toFixed(2) : "0.00",
-          amountSpent: info.amount_spent ? (Number(info.amount_spent) / 100).toFixed(2) : "0.00",
+          balance: remaining.toFixed(2),
+          amountSpent: rawSpentLifetime.toFixed(2),
           todaySpend: todayData?.spend ?? "0.00",
-          periodSpend: periodData?.spend ?? "0.00",
-          periodImpressions: periodData?.impressions ?? "0",
-          periodClicks: periodData?.clicks ?? "0",
+          monthSpend: monthData?.spend ?? "0.00",
+          monthImpressions: monthData?.impressions ?? "0",
+          monthClicks: monthData?.clicks ?? "0",
         };
       })
     );

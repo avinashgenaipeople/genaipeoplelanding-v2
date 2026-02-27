@@ -45,9 +45,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const accounts = await Promise.all(
       accountIds.map(async (actId) => {
-        // 1. Account info (balance + spend cap for remaining funds)
+        // 1. Account info + funding source (prepaid balance)
         const info = await metaGet(actId, {
-          fields: "name,currency,account_status,balance,amount_spent,spend_cap",
+          fields: "name,currency,account_status,balance,amount_spent,funding_source_details",
         });
 
         // 2. Today's spend
@@ -65,25 +65,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const todayData = todayInsights.data?.[0];
         const monthData = monthInsights.data?.[0];
 
-        // Meta returns balance & amount_spent in the account's currency units (not cents)
-        // For prepaid: balance = remaining funds
-        // For postpaid with spend_cap: remaining = spend_cap - amount_spent
-        const rawBalance = info.balance ? Number(info.balance) / 100 : 0;
-        const rawSpentLifetime = info.amount_spent ? Number(info.amount_spent) / 100 : 0;
-        const rawSpendCap = info.spend_cap ? Number(info.spend_cap) / 100 : 0;
-        // Use balance if available (prepaid), otherwise compute from spend_cap
-        const remaining = rawBalance > 0
-          ? rawBalance
-          : rawSpendCap > 0
-            ? rawSpendCap - rawSpentLifetime
-            : 0;
+        // Extract funding source balance from display_string
+        // Format: "Available balance (₹77,584.79 INR)"
+        let fundingBalance = "0.00";
+        const fsd = info.funding_source_details;
+        if (fsd?.display_string) {
+          const match = fsd.display_string.match(/[\d,]+\.\d{2}/);
+          if (match) {
+            fundingBalance = match[0].replace(/,/g, "");
+          }
+        }
+
+        // Fallback: ad account balance (in cents) if no funding source
+        if (fundingBalance === "0.00" && info.balance) {
+          fundingBalance = (Number(info.balance) / 100).toFixed(2);
+        }
 
         return {
           id: info.id,
           name: info.name,
           currency: info.currency,
-          balance: remaining.toFixed(2),
-          amountSpent: rawSpentLifetime.toFixed(2),
+          balance: fundingBalance,
+          amountSpent: info.amount_spent ? (Number(info.amount_spent) / 100).toFixed(2) : "0.00",
           todaySpend: todayData?.spend ?? "0.00",
           monthSpend: monthData?.spend ?? "0.00",
           monthImpressions: monthData?.impressions ?? "0",

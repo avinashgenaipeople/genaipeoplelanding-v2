@@ -95,7 +95,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       })
     );
 
-    return res.status(200).json({ accounts });
+    // Adset-level spend (across all accounts) for cost-per-submit
+    const adsetResults = await Promise.all(
+      accountIds.map(async (actId) => {
+        const adsetInsights = await metaGet(`${actId}/insights`, {
+          level: "adset",
+          fields: "adset_id,adset_name,spend,impressions,clicks",
+          time_range: JSON.stringify({ since: sinceStr, until: untilStr }),
+          limit: "100",
+        });
+        return (adsetInsights.data ?? []) as Array<{
+          adset_id: string;
+          adset_name: string;
+          spend: string;
+          impressions: string;
+          clicks: string;
+        }>;
+      })
+    );
+    const adsets = adsetResults.flat().map((a) => ({
+      adsetId: a.adset_id,
+      adsetName: a.adset_name,
+      spend: a.spend,
+      impressions: a.impressions,
+      clicks: a.clicks,
+    }));
+
+    return res.status(200).json({ accounts, adsets });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Unknown Meta API error";
     return res.status(502).json({ error: message });

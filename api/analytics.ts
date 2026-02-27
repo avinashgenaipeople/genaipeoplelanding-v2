@@ -63,6 +63,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return dailyMap.get(d)!;
   };
 
+  // 4. By medium (adset ID) — for cost-per-submit calculation
+  const mediumMap = new Map<string, { views: number; clicks: number; opens: number; submits: number }>();
+  const ensureMedium = (m: string) => {
+    if (!mediumMap.has(m)) mediumMap.set(m, { views: 0, clicks: 0, opens: 0, submits: 0 });
+    return mediumMap.get(m)!;
+  };
+
   // Collect distinct values for filter dropdowns
   const pageSet = new Set<string>();
   const sourceSet = new Set<string>();
@@ -120,6 +127,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const f = ensure(page);
     const u = ensureUtm(source);
     const d = ensureDay(day);
+    const m = ensureMedium(medium);
 
     switch (row.event_name) {
       case "page_view_lander":
@@ -128,24 +136,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         f.views++;
         u.views++;
         d.views++;
+        m.views++;
         totalViews++;
         break;
       case "cta_click":
         f.clicks++;
         u.clicks++;
         d.clicks++;
+        m.clicks++;
         totalClicks++;
         break;
       case "lead_form_open":
         f.opens++;
         u.opens++;
         d.opens++;
+        m.opens++;
         totalOpens++;
         break;
       case "lead_form_submit":
         f.submits++;
         u.submits++;
         d.submits++;
+        m.submits++;
         totalSubmits++;
         break;
     }
@@ -164,6 +176,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     .map(([date, v]) => ({ date, ...v }))
     .sort((a, b) => a.date.localeCompare(b.date));
 
+  const byMedium = [...mediumMap.entries()]
+    .map(([medium, v]) => ({ medium, ...v }))
+    .sort((a, b) => b.views - a.views);
+
   return res.status(200).json({
     summary: {
       views: totalViews,
@@ -173,6 +189,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     },
     funnel,
     utmSources,
+    byMedium,
     daily,
     filterOptions: {
       pages: [...pageSet].sort(),

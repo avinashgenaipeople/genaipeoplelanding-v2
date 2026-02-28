@@ -6,29 +6,29 @@ import { Footer } from "@/components/sections/Footer";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useFormModal } from "@/contexts/FormModalContext";
 import { trackEvent } from "@/lib/analytics";
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-/* ── V2 Secrets ────────────────────────────────────────────────────── */
+/* ── V1 Secrets (from marketing landing) ───────────────────────────── */
 const secrets = [
   {
     title: "Secret #1",
-    subtitle: "AI multiplies senior engineers.",
-    text: "The developers shipping fastest aren't juniors — they're experienced engineers who know what to build and use AI to build it 10x faster.",
+    subtitle: "Traditional Path is Broken.",
+    text: "By the time you finish another certificate course, the AI tech has already changed. You don't need a certificate; you need specific skills that companies are hiring for right now.",
   },
   {
     title: "Secret #2",
-    subtitle: "Your Java skills are the foundation.",
-    text: "Enterprise architecture, system design, production debugging — AI amplifies all of it. You're not starting over, you're levelling up.",
+    subtitle: "You are already 80% there.",
+    text: "Stop worrying about the math and stats. Your Java experience gives you an unfair advantage in backend architecture — the backbone of AI.",
   },
   {
     title: "Secret #3",
-    subtitle: "Speed is the new seniority.",
-    text: "The engineers getting promoted now ship in days what used to take weeks. AI is their multiplier, not their replacement.",
+    subtitle: "Code Less, Architect More.",
+    text: "Being the \"best coder\" doesn't guarantee the best job anymore. Learn how to leverage AI to solve problems — companies pay for solving problems, not writing code.",
   },
 ];
 
-/* ── V2 Sticky Desktop Header ─────────────────────────────────────── */
-function V2StickyDesktopHeader() {
+/* ── V1 Sticky Desktop Header ─────────────────────────────────────── */
+function V1StickyDesktopHeader() {
   const [isVisible, setIsVisible] = useState(false);
   const { openFormModal } = useFormModal();
 
@@ -63,17 +63,17 @@ function V2StickyDesktopHeader() {
         </span>
         <div className="flex items-center gap-4">
           <span className="text-base text-muted-foreground">
-            Senior Java Dev → AI Architect (30–70L)
+            Senior Java Dev → High-Paying AI Job
           </span>
-          <CTAButton size="small" section="sticky_desktop" showSubtext={false}>Get Instant Access</CTAButton>
+          <CTAButton size="small" section="sticky_desktop" showSubtext={false}>Watch Free Roadmap</CTAButton>
         </div>
       </div>
     </div>
   );
 }
 
-/* ── V2 Sticky Mobile Bar ─────────────────────────────────────────── */
-function V2StickyMobileBar() {
+/* ── V1 Sticky Mobile Bar ─────────────────────────────────────────── */
+function V1StickyMobileBar() {
   const [isVisible, setIsVisible] = useState(false);
   const { openFormModal } = useFormModal();
 
@@ -99,18 +99,18 @@ function V2StickyMobileBar() {
         }}
       >
         <span className="text-lg font-medium text-foreground">
-          Free 28-min Roadmap
+          Free Roadmap Video
         </span>
         <button
           type="button"
           onClick={() => {
-            trackEvent("cta_click", { cta_label: "Get Instant Access", cta_section: "sticky_mobile", page_path: window.location.pathname });
-            trackEvent("cta_click_sticky_mobile", { cta_label: "Get Instant Access", page_path: window.location.pathname });
+            trackEvent("cta_click", { cta_label: "Watch Free Roadmap", cta_section: "sticky_mobile", page_path: window.location.pathname });
+            trackEvent("cta_click_sticky_mobile", { cta_label: "Watch Free Roadmap", page_path: window.location.pathname });
             openFormModal();
           }}
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground text-base font-semibold rounded-full shadow-lg"
         >
-          Get Instant Access
+          Watch Now
           <ArrowRight className="w-3.5 h-3.5" />
         </button>
       </div>
@@ -118,8 +118,8 @@ function V2StickyMobileBar() {
   );
 }
 
-/* ── V2 Hero Section ──────────────────────────────────────────────── */
-function V2HeroSection() {
+/* ── V1 Hero Section ──────────────────────────────────────────────── */
+function V1HeroSection() {
   const { openFormModal } = useFormModal();
 
   return (
@@ -134,19 +134,24 @@ function V2HeroSection() {
         className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
       >
         <p className="text-sm sm:text-base font-semibold">
-          Free Video: How Senior Java Devs Use Their Skills to Land 30–70L AI Jobs
+          Watch FREE training video
         </p>
       </button>
 
       <section className="px-4 pt-6 pb-14 md:pt-8 md:pb-20 bg-background">
         <div className="container max-w-5xl">
           <div className="text-center">
-            <h1 className="mt-7 font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
-              Senior Java Developers Are Landing{" "}
-              <span className="text-primary">AI Architect Roles Paying 30–70L</span>{" "}
-              in 120 Days
+            {/* Qualifier pill */}
+            <div className="inline-block bg-primary/10 text-primary font-semibold text-sm sm:text-base px-6 py-2.5 rounded-full mb-6">
+              Video Training for Senior Developers earning at least <span className="underline">15 Lakhs Per Annum</span>
+            </div>
+
+            <h1 className="font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
+              Senior <span className="text-primary">Java Developers</span> Use Your Java Skills to Land a{" "}
+              <span className="text-primary">High-Paying AI Job</span>
             </h1>
 
+            {/* Video thumbnail */}
             <div className="mt-8 glass-card max-w-none sm:max-w-4xl overflow-hidden -mx-[calc(1rem+24px)] sm:mx-auto rounded-none sm:rounded-xl">
               <button
                 type="button"
@@ -169,12 +174,13 @@ function V2HeroSection() {
               </button>
             </div>
 
-            <p className="mt-9 text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-              150+ senior Java developers are already using this system to ship faster, get noticed by AI teams, and land roles paying up to 2–3x their current salary.
+            <p className="mt-9 text-lg sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
+              We know how frustrating it is when your years of Senior Java experience feel undervalued.
+              You don't need another certificate. You just need a roadmap to translate your domain knowledge to become an AI architect.
             </p>
 
             <div className="mt-9">
-              <CTAButton size="default" section="hero">Watch the Free Training (28 min)</CTAButton>
+              <CTAButton size="default" section="hero">Watch the Free Roadmap Video</CTAButton>
               <p className="mt-3 text-sm text-muted-foreground/70">Free training. No credit card. No strings.</p>
             </div>
           </div>
@@ -184,8 +190,8 @@ function V2HeroSection() {
   );
 }
 
-/* ── V2 Problem / Secrets Section ─────────────────────────────────── */
-function V2ProblemSection() {
+/* ── V1 Problem / Secrets Section ─────────────────────────────────── */
+function V1ProblemSection() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
@@ -194,14 +200,13 @@ function V2ProblemSection() {
         <div className="border-t border-border pt-8">
           <SectionLabel>Video Highlights</SectionLabel>
           <p className="text-base sm:text-lg font-semibold text-foreground/85 mb-4">
-            Why senior Java devs have an unfair advantage in the AI shift.
+            Watch the 3 secrets to future-proofing your salary and your skillset.
           </p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            How senior Java devs are using their skills to land{" "}
-            <span className="text-primary">high-paying AI jobs</span> at{" "}
-            <span className="text-primary">30–70L per year</span>.
+            How to Switch from "Legacy Coder" to{" "}
+            <span className="text-primary">"AI Developer"</span> Without Taking a Pay Cut.
           </h2>
-          <CTAButton size="default" section="problem_top">Watch the Free Training (28 min)</CTAButton>
+          <CTAButton size="default" section="problem_top">Watch the Free Roadmap Video</CTAButton>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 mt-10 mb-10">
@@ -221,16 +226,16 @@ function V2ProblemSection() {
         </div>
 
         <p className="text-2xl sm:text-3xl text-foreground mb-6">
-          Watch the <span className="text-primary font-semibold">free 28-min training</span> and see how senior Java devs are landing high-paying AI jobs at 30–70L
+          Watch the <span className="text-primary font-semibold">FREE training video</span> now by clicking below
         </p>
-        <CTAButton size="default" section="problem_bottom">Watch the Free Training (28 min)</CTAButton>
+        <CTAButton size="default" section="problem_bottom">Watch the Free Roadmap Video</CTAButton>
       </div>
     </section>
   );
 }
 
-/* ── V2 Final CTA Section ─────────────────────────────────────────── */
-function V2FinalCTASection() {
+/* ── V1 Final CTA Section ─────────────────────────────────────────── */
+function V1FinalCTASection() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
@@ -245,10 +250,11 @@ function V2FinalCTASection() {
           }`}
         >
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-            Ready to <span className="text-primary">land a 30–70L AI role</span>? Watch the video, then let's build your plan.
+            Ready to switch from "Legacy Coder" to{" "}
+            <span className="text-primary">"AI Developer"</span>?
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            Book a call with Jerry after the free training and get a personalised roadmap to your next high-paying AI role.
+            Watch the free roadmap video and discover how your Java skills give you an unfair advantage in the AI shift.
           </p>
         </div>
 
@@ -259,26 +265,8 @@ function V2FinalCTASection() {
           style={{ transitionDelay: "300ms" }}
         >
           <CTAButton size="large" section="final_cta" className="text-lg px-10 py-5">
-            Watch the Free Training (28 min)
+            Watch the Free Roadmap Video
           </CTAButton>
-        </div>
-
-        {/* Guarantee */}
-        <div
-          className={`mt-10 glass-card p-6 sm:p-8 border-success/30 transition-all duration-500 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-          style={{ transitionDelay: "500ms" }}
-        >
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <ShieldCheck className="w-6 h-6 text-success" />
-            <p className="font-display text-xl sm:text-2xl font-bold text-foreground">
-              Our Guarantee
-            </p>
-          </div>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            If you join the program, do the work, and don't land a higher-paying AI role — we keep working with you at no extra cost until you do. We're invested in your outcome, not just your enrolment.
-          </p>
         </div>
 
         <p
@@ -287,7 +275,7 @@ function V2FinalCTASection() {
           }`}
           style={{ transitionDelay: "700ms" }}
         >
-          Free 28-min training. No credit card. No strings.
+          Free training. No credit card. No strings.
         </p>
       </div>
     </section>
@@ -295,28 +283,28 @@ function V2FinalCTASection() {
 }
 
 /* ── Page Component ────────────────────────────────────────────────── */
-const LpV2 = () => {
+const LpV1 = () => {
   const { setFormHeader } = useFormModal();
 
   useEffect(() => {
-    trackEvent("page_view_lp_v2", { page_path: window.location.pathname });
+    trackEvent("page_view_lp_v1", { page_path: window.location.pathname });
     setFormHeader({
-      title: "Get Instant Access",
-      subtitle: "Enter your info and the 28-min training plays immediately",
+      title: "Watch the Free Roadmap Video",
+      subtitle: "Enter your info and the training plays immediately",
     });
   }, []);
 
   return (
     <div className="min-h-screen bg-background">
-      <V2HeroSection />
-      <V2ProblemSection />
+      <V1HeroSection />
+      <V1ProblemSection />
       <TestimonialsSection />
-      <V2FinalCTASection />
+      <V1FinalCTASection />
       <Footer />
-      <V2StickyDesktopHeader />
-      <V2StickyMobileBar />
+      <V1StickyDesktopHeader />
+      <V1StickyMobileBar />
     </div>
   );
 };
 
-export default LpV2;
+export default LpV1;

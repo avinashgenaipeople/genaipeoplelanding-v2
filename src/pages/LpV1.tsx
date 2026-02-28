@@ -134,7 +134,7 @@ function V1HeroSection() {
         className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
       >
         <p className="text-sm sm:text-base font-semibold">
-          Watch FREE training video
+          Free Video: The 3 Secrets Senior Java Devs Use to Break Into AI (Without Another Certificate)
         </p>
       </button>
 
@@ -175,8 +175,7 @@ function V1HeroSection() {
             </div>
 
             <p className="mt-9 text-lg sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-              We know how frustrating it is when your years of Senior Java experience feel undervalued.
-              You don't need another certificate. You just need a roadmap to translate your domain knowledge to become an AI architect.
+              You've spent 10+ years mastering Java. The AI shift doesn't erase that — it makes it more valuable. This free roadmap shows you exactly how to translate your backend architecture skills into an AI career — no certificate required.
             </p>
 
             <div className="mt-9">
@@ -203,8 +202,8 @@ function V1ProblemSection() {
             Watch the 3 secrets to future-proofing your salary and your skillset.
           </p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            How to Switch from "Legacy Coder" to{" "}
-            <span className="text-primary">"AI Developer"</span> Without Taking a Pay Cut.
+            How Senior Java Devs Are Making the Switch to{" "}
+            <span className="text-primary">"AI Developer"</span> — and Getting Paid More to Do It.
           </h2>
           <CTAButton size="default" section="problem_top">Watch the Free Roadmap Video</CTAButton>
         </div>
@@ -226,7 +225,7 @@ function V1ProblemSection() {
         </div>
 
         <p className="text-2xl sm:text-3xl text-foreground mb-6">
-          Watch the <span className="text-primary font-semibold">FREE training video</span> now by clicking below
+          See how your Java skills give you an <span className="text-primary font-semibold">unfair advantage</span> in the AI shift — watch the free roadmap video
         </p>
         <CTAButton size="default" section="problem_bottom">Watch the Free Roadmap Video</CTAButton>
       </div>
@@ -254,7 +253,7 @@ function V1FinalCTASection() {
             <span className="text-primary">"AI Developer"</span>?
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            Watch the free roadmap video and discover how your Java skills give you an unfair advantage in the AI shift.
+            In 28 minutes, you'll see the exact 3-step roadmap senior Java devs are using to land AI roles — without starting over.
           </p>
         </div>
 
@@ -275,7 +274,7 @@ function V1FinalCTASection() {
           }`}
           style={{ transitionDelay: "700ms" }}
         >
-          Free training. No credit card. No strings.
+          Free 28-min training. No credit card. No strings.
         </p>
       </div>
     </section>

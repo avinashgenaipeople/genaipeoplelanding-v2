@@ -142,9 +142,8 @@ function V2HeroSection() {
         <div className="container max-w-5xl">
           <div className="text-center">
             <h1 className="mt-7 font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
-              Senior Java Developers Are Landing{" "}
-              <span className="text-primary">AI Architect Roles Paying 30–70L</span>{" "}
-              in 120 Days
+              Senior Java Developers Use Your Java Skills to Land a{" "}
+              <span className="text-primary">High-Paying AI Job (30L–70L)</span>
             </h1>
 
             <div className="mt-8 glass-card max-w-none sm:max-w-4xl overflow-hidden -mx-[calc(1rem+24px)] sm:mx-auto rounded-none sm:rounded-xl">

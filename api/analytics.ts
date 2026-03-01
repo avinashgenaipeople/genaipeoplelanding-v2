@@ -165,6 +165,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     switch (row.event_name) {
       case "page_view_lander":
+      case "page_view_lp_v1":
       case "page_view_lp_v2":
       case "page_view_lp_v3":
         f.views++;

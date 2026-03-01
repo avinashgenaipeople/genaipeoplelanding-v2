@@ -12,18 +12,18 @@ import { ArrowRight } from "lucide-react";
 const secrets = [
   {
     title: "Secret #1",
-    subtitle: "Traditional Path is Broken.",
-    text: "By the time you finish another certificate course, the AI tech has already changed. You don't need a certificate; you need specific skills that companies are hiring for right now.",
+    subtitle: "AI multiplies senior engineers.",
+    text: "The developers shipping fastest aren't juniors — they're experienced engineers who know what to build and use AI to build it 10x faster.",
   },
   {
     title: "Secret #2",
-    subtitle: "You are already 80% there.",
-    text: "Stop worrying about the math and stats. Your Java experience gives you an unfair advantage in backend architecture — the backbone of AI.",
+    subtitle: "Your Java skills are the foundation.",
+    text: "Enterprise architecture, system design, production debugging — AI amplifies all of it. You're not starting over, you're levelling up.",
   },
   {
     title: "Secret #3",
-    subtitle: "Code Less, Architect More.",
-    text: "Being the \"best coder\" doesn't guarantee the best job anymore. Learn how to leverage AI to solve problems — companies pay for solving problems, not writing code.",
+    subtitle: "Speed is the new seniority.",
+    text: "The engineers getting promoted now ship in days what used to take weeks. AI is their multiplier, not their replacement.",
   },
 ];
 

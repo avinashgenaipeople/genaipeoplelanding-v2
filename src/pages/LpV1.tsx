@@ -288,8 +288,8 @@ const LpV1 = () => {
   useEffect(() => {
     trackEvent("page_view_lp_v1", { page_path: window.location.pathname });
     setFormHeader({
-      title: "Watch the Free Roadmap Video",
-      subtitle: "Enter your info and the training plays immediately",
+      title: "Get Instant Access",
+      subtitle: "Enter your info and the 28-min training plays immediately",
     });
   }, []);
 

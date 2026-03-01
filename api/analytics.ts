@@ -1,28 +1,11 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
+import { todayIST, subtractDaysIST, istDayStartUTC, utcToISTDate } from "./lib/date-ist";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SECRET_KEY!
 );
-
-// Convert a UTC Date to IST date string (YYYY-MM-DD)
-function toISTDateString(date: Date): string {
-  return date.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" }); // en-CA gives YYYY-MM-DD
-}
-
-// Get the start of a day in IST as a UTC ISO string (for Supabase queries)
-function istDayStartUTC(dateStr: string): string {
-  // dateStr is YYYY-MM-DD in IST → IST midnight = UTC previous day 18:30
-  const [y, m, d] = dateStr.split("-").map(Number);
-  const istMidnight = new Date(Date.UTC(y, m - 1, d, 0, 0, 0) - 5.5 * 60 * 60 * 1000);
-  return istMidnight.toISOString();
-}
-
-// Convert a UTC timestamp string to IST date string (YYYY-MM-DD)
-function utcToISTDate(utcTimestamp: string): string {
-  return toISTDateString(new Date(utcTimestamp));
-}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
@@ -42,12 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: "Invalid password" });
   }
 
-  // Calculate "since" date in IST
-  const nowIST = toISTDateString(new Date());
-  const sinceDate = new Date(nowIST);
-  sinceDate.setDate(sinceDate.getDate() - Number(days));
-  const sinceDateStr = sinceDate.toISOString().split("T")[0]; // YYYY-MM-DD
-  const sinceUTC = istDayStartUTC(sinceDateStr);
+  const sinceUTC = istDayStartUTC(subtractDaysIST(todayIST(), Number(days) || 30));
 
   const { data: events, error } = await supabase
     .from("analytics_events")
@@ -114,7 +92,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const source = row.utm_source || "(direct)";
     const medium = row.utm_medium || "(none)";
     const campaign = row.utm_campaign || "(none)";
-    const day = utcToISTDate(row.created_at); // YYYY-MM-DD in IST
 
     // Extract Facebook ad params from url_params JSONB
     const up = (row.url_params && typeof row.url_params === "object" ? row.url_params : {}) as Record<string, string>;
@@ -145,6 +122,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (filterPlacement && placement !== filterPlacement) continue;
     if (filterAdAccount && adAccount !== filterAdAccount) continue;
     if (filterUtmId && utmId !== filterUtmId) continue;
+
+    // Convert date only for rows that pass filters (avoids expensive call on filtered-out rows)
+    const day = utcToISTDate(row.created_at);
 
     const f = ensure(page);
     const u = ensureUtm(source);

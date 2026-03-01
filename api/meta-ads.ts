@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { todayIST, subtractDaysIST } from "./lib/date-ist";
 
 const BASE_URL = "https://graph.facebook.com/v21.0";
 
@@ -7,7 +8,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { password, days } = req.body ?? {};
+  const { password, days = 30 } = req.body ?? {};
 
   if (password !== process.env.ANALYTICS_PASSWORD) {
     return res.status(401).json({ error: "Invalid password" });
@@ -23,17 +24,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const accountIds = accountIdsRaw.split(",").map((id) => id.trim()).filter(Boolean);
 
   // All date calculations in IST (Asia/Kolkata)
-  const nowIST = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" }); // YYYY-MM-DD
-  const untilStr = nowIST;
-
-  // "This month" range for account-level cards (1st of current month in IST)
+  const nowIST = todayIST();
   const [istYear, istMonth] = nowIST.split("-");
   const monthSinceStr = `${istYear}-${istMonth}-01`;
-
-  // Days-based range for adset spend (matches dashboard filter)
-  const adsetSince = new Date(nowIST);
-  adsetSince.setDate(adsetSince.getDate() - Number(days || 30));
-  const adsetSinceStr = adsetSince.toISOString().split("T")[0];
+  const adsetSinceStr = subtractDaysIST(nowIST, Number(days) || 30);
 
   async function metaGet(path: string, params: Record<string, string> = {}) {
     const url = new URL(`${BASE_URL}/${path}`);
@@ -51,77 +45,77 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const accounts = await Promise.all(
-      accountIds.map(async (actId) => {
-        // 1. Account info + funding source (prepaid balance) + timezone
-        const info = await metaGet(actId, {
-          fields: "name,currency,account_status,balance,amount_spent,funding_source_details,timezone_name",
-        });
+    // Fetch account-level data and adset-level data concurrently
+    const [accountResults, adsetResults] = await Promise.all([
+      // Account-level: info + today + month (parallelized per account)
+      Promise.all(
+        accountIds.map(async (actId) => {
+          const [info, todayInsights, monthInsights] = await Promise.all([
+            metaGet(actId, {
+              fields: "name,currency,account_status,balance,amount_spent,funding_source_details,timezone_name",
+            }),
+            metaGet(`${actId}/insights`, {
+              fields: "spend,impressions,clicks,ctr,cpc,cpm",
+              time_range: JSON.stringify({ since: nowIST, until: nowIST }),
+            }),
+            metaGet(`${actId}/insights`, {
+              fields: "spend,impressions,clicks,ctr,cpc,cpm",
+              time_range: JSON.stringify({ since: monthSinceStr, until: nowIST }),
+            }),
+          ]);
 
-        // 2. Today's spend (explicit IST date range, not date_preset which uses account timezone)
-        const todayInsights = await metaGet(`${actId}/insights`, {
-          fields: "spend,impressions,clicks,ctr,cpc,cpm",
-          time_range: JSON.stringify({ since: nowIST, until: nowIST }),
-        });
+          const todayData = todayInsights.data?.[0];
+          const monthData = monthInsights.data?.[0];
 
-        // 3. This month's spend (1st of month → today)
-        const monthInsights = await metaGet(`${actId}/insights`, {
-          fields: "spend,impressions,clicks,ctr,cpc,cpm",
-          time_range: JSON.stringify({ since: monthSinceStr, until: untilStr }),
-        });
-
-        const todayData = todayInsights.data?.[0];
-        const monthData = monthInsights.data?.[0];
-
-        // Extract funding source balance from display_string
-        // Format: "Available balance (₹77,584.79 INR)"
-        let fundingBalance = "0.00";
-        const fsd = info.funding_source_details;
-        if (fsd?.display_string) {
-          const match = fsd.display_string.match(/[\d,]+\.\d{2}/);
-          if (match) {
-            fundingBalance = match[0].replace(/,/g, "");
+          // Extract funding source balance from display_string
+          let fundingBalance = "0.00";
+          const fsd = info.funding_source_details;
+          if (fsd?.display_string) {
+            const match = fsd.display_string.match(/[\d,]+\.\d{2}/);
+            if (match) {
+              fundingBalance = match[0].replace(/,/g, "");
+            }
           }
-        }
 
-        // Fallback: ad account balance (in cents) if no funding source
-        if (fundingBalance === "0.00" && info.balance) {
-          fundingBalance = (Number(info.balance) / 100).toFixed(2);
-        }
+          // Fallback: ad account balance (in cents) if no funding source
+          if (fundingBalance === "0.00" && info.balance) {
+            fundingBalance = (Number(info.balance) / 100).toFixed(2);
+          }
 
-        return {
-          id: info.id,
-          name: info.name,
-          currency: info.currency,
-          timezone: info.timezone_name,
-          balance: fundingBalance,
-          amountSpent: info.amount_spent ? (Number(info.amount_spent) / 100).toFixed(2) : "0.00",
-          todaySpend: todayData?.spend ?? "0.00",
-          monthSpend: monthData?.spend ?? "0.00",
-          monthImpressions: monthData?.impressions ?? "0",
-          monthClicks: monthData?.clicks ?? "0",
-        };
-      })
-    );
+          return {
+            id: info.id,
+            name: info.name,
+            currency: info.currency,
+            timezone: info.timezone_name,
+            balance: fundingBalance,
+            amountSpent: info.amount_spent ? (Number(info.amount_spent) / 100).toFixed(2) : "0.00",
+            todaySpend: todayData?.spend ?? "0.00",
+            monthSpend: monthData?.spend ?? "0.00",
+            monthImpressions: monthData?.impressions ?? "0",
+            monthClicks: monthData?.clicks ?? "0",
+          };
+        })
+      ),
+      // Adset-level spend (runs concurrently with account-level)
+      Promise.all(
+        accountIds.map(async (actId) => {
+          const adsetInsights = await metaGet(`${actId}/insights`, {
+            level: "adset",
+            fields: "adset_id,adset_name,spend,impressions,clicks",
+            time_range: JSON.stringify({ since: adsetSinceStr, until: nowIST }),
+            limit: "100",
+          });
+          return (adsetInsights.data ?? []) as Array<{
+            adset_id: string;
+            adset_name: string;
+            spend: string;
+            impressions: string;
+            clicks: string;
+          }>;
+        })
+      ),
+    ]);
 
-    // Adset-level spend (across all accounts) for cost-per-submit
-    const adsetResults = await Promise.all(
-      accountIds.map(async (actId) => {
-        const adsetInsights = await metaGet(`${actId}/insights`, {
-          level: "adset",
-          fields: "adset_id,adset_name,spend,impressions,clicks",
-          time_range: JSON.stringify({ since: adsetSinceStr, until: untilStr }),
-          limit: "100",
-        });
-        return (adsetInsights.data ?? []) as Array<{
-          adset_id: string;
-          adset_name: string;
-          spend: string;
-          impressions: string;
-          clicks: string;
-        }>;
-      })
-    );
     const adsets = adsetResults.flat().map((a) => ({
       adsetId: a.adset_id,
       adsetName: a.adset_name,
@@ -130,7 +124,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       clicks: a.clicks,
     }));
 
-    return res.status(200).json({ accounts, adsets });
+    return res.status(200).json({ accounts: accountResults, adsets });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Unknown Meta API error";
     return res.status(502).json({ error: message });

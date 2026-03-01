@@ -22,14 +22,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const accountIds = accountIdsRaw.split(",").map((id) => id.trim()).filter(Boolean);
 
-  const now = new Date();
-  const untilStr = now.toISOString().split("T")[0];
+  // All date calculations in IST (Asia/Kolkata)
+  const nowIST = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" }); // YYYY-MM-DD
+  const untilStr = nowIST;
 
-  // "This month" range for account-level cards
-  const monthSinceStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
+  // "This month" range for account-level cards (1st of current month in IST)
+  const [istYear, istMonth] = nowIST.split("-");
+  const monthSinceStr = `${istYear}-${istMonth}-01`;
 
   // Days-based range for adset spend (matches dashboard filter)
-  const adsetSince = new Date(now);
+  const adsetSince = new Date(nowIST);
   adsetSince.setDate(adsetSince.getDate() - Number(days || 30));
   const adsetSinceStr = adsetSince.toISOString().split("T")[0];
 

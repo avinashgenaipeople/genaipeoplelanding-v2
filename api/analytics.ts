@@ -6,6 +6,24 @@ const supabase = createClient(
   process.env.SUPABASE_SECRET_KEY!
 );
 
+// Convert a UTC Date to IST date string (YYYY-MM-DD)
+function toISTDateString(date: Date): string {
+  return date.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" }); // en-CA gives YYYY-MM-DD
+}
+
+// Get the start of a day in IST as a UTC ISO string (for Supabase queries)
+function istDayStartUTC(dateStr: string): string {
+  // dateStr is YYYY-MM-DD in IST → IST midnight = UTC previous day 18:30
+  const [y, m, d] = dateStr.split("-").map(Number);
+  const istMidnight = new Date(Date.UTC(y, m - 1, d, 0, 0, 0) - 5.5 * 60 * 60 * 1000);
+  return istMidnight.toISOString();
+}
+
+// Convert a UTC timestamp string to IST date string (YYYY-MM-DD)
+function utcToISTDate(utcTimestamp: string): string {
+  return toISTDateString(new Date(utcTimestamp));
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -24,13 +42,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: "Invalid password" });
   }
 
-  const since = new Date();
-  since.setDate(since.getDate() - Number(days));
+  // Calculate "since" date in IST
+  const nowIST = toISTDateString(new Date());
+  const sinceDate = new Date(nowIST);
+  sinceDate.setDate(sinceDate.getDate() - Number(days));
+  const sinceDateStr = sinceDate.toISOString().split("T")[0]; // YYYY-MM-DD
+  const sinceUTC = istDayStartUTC(sinceDateStr);
 
   const { data: events, error } = await supabase
     .from("analytics_events")
     .select("event_name, page_path, cta_section, cta_label, utm_source, utm_medium, utm_campaign, url_params, created_at")
-    .gte("created_at", since.toISOString())
+    .gte("created_at", sinceUTC)
     .order("created_at", { ascending: false })
     .limit(50_000);
 
@@ -92,7 +114,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const source = row.utm_source || "(direct)";
     const medium = row.utm_medium || "(none)";
     const campaign = row.utm_campaign || "(none)";
-    const day = row.created_at.slice(0, 10); // YYYY-MM-DD
+    const day = utcToISTDate(row.created_at); // YYYY-MM-DD in IST
 
     // Extract Facebook ad params from url_params JSONB
     const up = (row.url_params && typeof row.url_params === "object" ? row.url_params : {}) as Record<string, string>;

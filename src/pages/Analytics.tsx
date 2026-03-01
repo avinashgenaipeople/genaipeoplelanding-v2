@@ -31,6 +31,7 @@ type MetaAdset = {
   adsetId: string;
   adsetName: string;
   spend: string;
+  todaySpend: string;
   impressions: string;
   clicks: string;
 };
@@ -222,11 +223,13 @@ export default function Analytics() {
     .map((m) => {
       const adset = adsetSpendMap.get(m.medium);
       const spend = adset ? Number(adset.spend) : 0;
+      const todaySpend = adset ? Number(adset.todaySpend) : 0;
       const cps = m.submits > 0 && spend > 0 ? spend / m.submits : 0;
       return {
         medium: m.medium,
         adsetName: adset?.adsetName ?? "–",
         spend,
+        todaySpend,
         views: m.views,
         submits: m.submits,
         costPerSubmit: cps,
@@ -358,7 +361,8 @@ export default function Analytics() {
               <thead>
                 <tr className="border-b text-gray-500">
                   <th className="py-2 pr-4">Adset</th>
-                  <th className="py-2 pr-4 text-right">Spend</th>
+                  <th className="py-2 pr-4 text-right">Today</th>
+                  <th className="py-2 pr-4 text-right">Spend ({days}d)</th>
                   <th className="py-2 pr-4 text-right">Views</th>
                   <th className="py-2 pr-4 text-right">Submits</th>
                   <th className="py-2 text-right">Cost / Submit</th>
@@ -371,6 +375,7 @@ export default function Analytics() {
                       <span className="block">{r.adsetName}</span>
                       <span className="block text-xs text-gray-400 font-mono">{r.medium}</span>
                     </td>
+                    <td className="py-2 pr-4 text-right text-blue-700 font-semibold">₹{r.todaySpend.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td className="py-2 pr-4 text-right text-gray-900">₹{r.spend.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td className="py-2 pr-4 text-right text-gray-900">{r.views}</td>
                     <td className="py-2 pr-4 text-right text-gray-900 font-semibold">{r.submits}</td>
@@ -379,6 +384,7 @@ export default function Analytics() {
                 ))}
                 {/* Totals row */}
                 {costPerSubmit.length > 1 && (() => {
+                  const totalTodaySpend = costPerSubmit.reduce((s, r) => s + r.todaySpend, 0);
                   const totalSpend = costPerSubmit.reduce((s, r) => s + r.spend, 0);
                   const totalViews = costPerSubmit.reduce((s, r) => s + r.views, 0);
                   const totalSubs = costPerSubmit.reduce((s, r) => s + r.submits, 0);
@@ -386,6 +392,7 @@ export default function Analytics() {
                   return (
                     <tr className="border-t-2 border-gray-300 font-bold">
                       <td className="py-2 pr-4 text-gray-900">Total</td>
+                      <td className="py-2 pr-4 text-right text-blue-700">₹{totalTodaySpend.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                       <td className="py-2 pr-4 text-right text-gray-900">₹{totalSpend.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                       <td className="py-2 pr-4 text-right text-gray-900">{totalViews}</td>
                       <td className="py-2 pr-4 text-right text-gray-900">{totalSubs}</td>

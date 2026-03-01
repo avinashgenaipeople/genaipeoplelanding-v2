@@ -68,7 +68,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     // Fetch account-level data and adset-level data concurrently
-    const [accountResults, adsetResults] = await Promise.all([
+    const [accountResults, adsetResults, adsetTodayResults] = await Promise.all([
       // Account-level: info + today + month (parallelized per account)
       Promise.all(
         accountIds.map(async (actId) => {
@@ -118,7 +118,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           };
         })
       ),
-      // Adset-level spend (runs concurrently with account-level)
+      // Adset-level spend for period (runs concurrently with account-level)
       Promise.all(
         accountIds.map(async (actId) => {
           const adsetInsights = await metaGet(`${actId}/insights`, {
@@ -136,12 +136,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }>;
         })
       ),
+      // Adset-level today spend (runs concurrently)
+      Promise.all(
+        accountIds.map(async (actId) => {
+          const adsetToday = await metaGet(`${actId}/insights`, {
+            level: "adset",
+            fields: "adset_id,spend",
+            time_range: JSON.stringify({ since: nowIST, until: nowIST }),
+            limit: "100",
+          });
+          return (adsetToday.data ?? []) as Array<{
+            adset_id: string;
+            spend: string;
+          }>;
+        })
+      ),
     ]);
+
+    // Build today spend lookup by adset ID
+    const todaySpendMap = new Map<string, string>();
+    for (const row of adsetTodayResults.flat()) {
+      todaySpendMap.set(row.adset_id, row.spend);
+    }
 
     const adsets = adsetResults.flat().map((a) => ({
       adsetId: a.adset_id,
       adsetName: a.adset_name,
       spend: a.spend,
+      todaySpend: todaySpendMap.get(a.adset_id) ?? "0.00",
       impressions: a.impressions,
       clicks: a.clicks,
     }));

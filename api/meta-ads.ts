@@ -49,7 +49,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const nowIST = todayIST();
   const [istYear, istMonth] = nowIST.split("-");
   const monthSinceStr = `${istYear}-${istMonth}-01`;
-  const adsetSinceStr = subtractDaysIST(nowIST, Number(days) || 30);
+  const numDays = Number(days) || 30;
+  const adsetSinceStr = subtractDaysIST(nowIST, numDays - 1);
 
   async function metaGet(path: string, params: Record<string, string> = {}) {
     const url = new URL(`${BASE_URL}/${path}`);

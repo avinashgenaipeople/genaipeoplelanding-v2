@@ -56,7 +56,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: "Invalid password" });
   }
 
-  const sinceUTC = istDayStartUTC(subtractDaysIST(todayIST(), Number(days) || 30));
+  const numDays = Number(days) || 30;
+  const sinceUTC = istDayStartUTC(subtractDaysIST(todayIST(), numDays - 1));
 
   const { data: events, error } = await supabase
     .from("analytics_events")

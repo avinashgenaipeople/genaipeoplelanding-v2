@@ -12,8 +12,8 @@ import { ArrowRight } from "lucide-react";
 const secrets = [
   {
     title: "Secret #1",
-    subtitle: "AI multiplies senior engineers.",
-    text: "The developers shipping fastest aren't juniors — they're experienced engineers who know what to build and use AI to build it 10x faster.",
+    subtitle: "AI multiplies senior engineers — into 30–70L candidates.",
+    text: "The developers landing top AI roles aren't juniors — they're experienced engineers who know what to build and use AI to build it 10x faster.",
   },
   {
     title: "Secret #2",
@@ -22,8 +22,8 @@ const secrets = [
   },
   {
     title: "Secret #3",
-    subtitle: "Speed is the new seniority.",
-    text: "The engineers getting promoted now ship in days what used to take weeks. AI is their multiplier, not their replacement.",
+    subtitle: "Speed is the new seniority — and it pays 2–3x more.",
+    text: "The engineers getting promoted now ship in days what used to take weeks. AI is their multiplier, and companies are paying 30–70L for it.",
   },
 ];
 
@@ -63,9 +63,9 @@ function V1StickyDesktopHeader() {
         </span>
         <div className="flex items-center gap-4">
           <span className="text-base text-muted-foreground">
-            Senior Java Dev → High-Paying AI Job
+            Senior Java Dev → AI Architect (30–70L)
           </span>
-          <CTAButton size="small" section="sticky_desktop" showSubtext={false}>Watch Free Roadmap</CTAButton>
+          <CTAButton size="small" section="sticky_desktop" showSubtext={false}>Get Instant Access</CTAButton>
         </div>
       </div>
     </div>
@@ -99,18 +99,18 @@ function V1StickyMobileBar() {
         }}
       >
         <span className="text-lg font-medium text-foreground">
-          Free Roadmap Video
+          Free 28-min Roadmap
         </span>
         <button
           type="button"
           onClick={() => {
-            trackEvent("cta_click", { cta_label: "Watch Free Roadmap", cta_section: "sticky_mobile", page_path: window.location.pathname });
-            trackEvent("cta_click_sticky_mobile", { cta_label: "Watch Free Roadmap", page_path: window.location.pathname });
+            trackEvent("cta_click", { cta_label: "Get Instant Access", cta_section: "sticky_mobile", page_path: window.location.pathname });
+            trackEvent("cta_click_sticky_mobile", { cta_label: "Get Instant Access", page_path: window.location.pathname });
             openFormModal();
           }}
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground text-base font-semibold rounded-full shadow-lg"
         >
-          Watch Now
+          Get Instant Access
           <ArrowRight className="w-3.5 h-3.5" />
         </button>
       </div>
@@ -134,21 +134,16 @@ function V1HeroSection() {
         className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
       >
         <p className="text-sm sm:text-base font-semibold">
-          Free Video: The 3 Secrets Senior Java Devs Use to Break Into AI (Without Another Certificate)
+          Free Video: How Senior Java Devs Are Landing 30–70L AI Jobs (Without Another Certificate)
         </p>
       </button>
 
       <section className="px-4 pt-6 pb-14 md:pt-8 md:pb-20 bg-background">
         <div className="container max-w-5xl">
           <div className="text-center">
-            {/* Qualifier pill */}
-            <div className="inline-block bg-primary/10 text-primary font-semibold text-sm sm:text-base px-6 py-2.5 rounded-full mb-6">
-              Video Training for Senior Developers earning at least <span className="underline">15 Lakhs Per Annum</span>
-            </div>
-
             <h1 className="font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
               Senior <span className="text-primary">Java Developers</span> Use Your Java Skills to Land a{" "}
-              <span className="text-primary">High-Paying AI Job</span>
+              <span className="text-primary">High-Paying AI Job (30L–70L)</span>
             </h1>
 
             {/* Video thumbnail */}
@@ -179,7 +174,7 @@ function V1HeroSection() {
             </p>
 
             <div className="mt-9">
-              <CTAButton size="default" section="hero">Watch the Free Roadmap Video</CTAButton>
+              <CTAButton size="default" section="hero">Watch the Free Training (28 min)</CTAButton>
               <p className="mt-3 text-sm text-muted-foreground/70">Free training. No credit card. No strings.</p>
             </div>
           </div>
@@ -206,7 +201,7 @@ function V1ProblemSection() {
             <span className="text-primary">High-Paying AI Jobs</span> at{" "}
             <span className="text-primary">30–70L Per Year</span> — Using Skills They Already Have.
           </h2>
-          <CTAButton size="default" section="problem_top">Watch the Free Roadmap Video</CTAButton>
+          <CTAButton size="default" section="problem_top">Watch the Free Training (28 min)</CTAButton>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 mt-10 mb-10">
@@ -226,9 +221,9 @@ function V1ProblemSection() {
         </div>
 
         <p className="text-2xl sm:text-3xl text-foreground mb-6">
-          See how your Java skills give you an <span className="text-primary font-semibold">unfair advantage</span> in the AI shift — watch the free roadmap video
+          Watch the <span className="text-primary font-semibold">free 28-min training</span> and see how senior Java devs are landing AI roles at <span className="text-primary font-semibold">30–70L</span>
         </p>
-        <CTAButton size="default" section="problem_bottom">Watch the Free Roadmap Video</CTAButton>
+        <CTAButton size="default" section="problem_bottom">Watch the Free Training (28 min)</CTAButton>
       </div>
     </section>
   );
@@ -264,7 +259,7 @@ function V1FinalCTASection() {
           style={{ transitionDelay: "300ms" }}
         >
           <CTAButton size="large" section="final_cta" className="text-lg px-10 py-5">
-            Watch the Free Roadmap Video
+            Watch the Free Training (28 min)
           </CTAButton>
         </div>
 
@@ -274,7 +269,7 @@ function V1FinalCTASection() {
           }`}
           style={{ transitionDelay: "700ms" }}
         >
-          Free 28-min training. No credit card. No strings.
+          Free 28-min training. No credit card. No strings. 150+ devs already inside.
         </p>
       </div>
     </section>

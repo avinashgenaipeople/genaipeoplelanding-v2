@@ -99,7 +99,7 @@ export function TestimonialsSection() {
           <div>
             <SectionLabel>What Our Mentees Say</SectionLabel>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-              Real Stories from Real Developers
+              150+ Senior Java Developers. Real Stories.
             </h2>
           </div>
 

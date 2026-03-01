@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
-import { todayIST, subtractDaysIST, istDayStartUTC, utcToISTDate } from "./lib/date-ist";
+import { todayIST, subtractDaysIST, istDayStartUTC, utcToISTDate } from "./_lib/date-ist";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,

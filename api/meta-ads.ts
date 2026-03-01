@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { todayIST, subtractDaysIST } from "./lib/date-ist";
+import { todayIST, subtractDaysIST } from "./_lib/date-ist";
 
 const BASE_URL = "https://graph.facebook.com/v21.0";
 

@@ -53,15 +53,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const accounts = await Promise.all(
       accountIds.map(async (actId) => {
-        // 1. Account info + funding source (prepaid balance)
+        // 1. Account info + funding source (prepaid balance) + timezone
         const info = await metaGet(actId, {
-          fields: "name,currency,account_status,balance,amount_spent,funding_source_details",
+          fields: "name,currency,account_status,balance,amount_spent,funding_source_details,timezone_name",
         });
 
-        // 2. Today's spend
+        // 2. Today's spend (explicit IST date range, not date_preset which uses account timezone)
         const todayInsights = await metaGet(`${actId}/insights`, {
           fields: "spend,impressions,clicks,ctr,cpc,cpm",
-          date_preset: "today",
+          time_range: JSON.stringify({ since: nowIST, until: nowIST }),
         });
 
         // 3. This month's spend (1st of month → today)
@@ -93,6 +93,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           id: info.id,
           name: info.name,
           currency: info.currency,
+          timezone: info.timezone_name,
           balance: fundingBalance,
           amountSpent: info.amount_spent ? (Number(info.amount_spent) / 100).toFixed(2) : "0.00",
           todaySpend: todayData?.spend ?? "0.00",

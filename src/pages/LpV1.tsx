@@ -175,7 +175,7 @@ function V1HeroSection() {
             </div>
 
             <p className="mt-9 text-lg sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-              You've spent 10+ years mastering Java. The AI shift doesn't erase that — it makes it more valuable. This free roadmap shows you exactly how to translate your backend architecture skills into an AI career — no certificate required.
+              150+ senior Java developers are already using this system to land AI roles paying 30–70L — without starting over or collecting another certificate.
             </p>
 
             <div className="mt-9">
@@ -202,8 +202,9 @@ function V1ProblemSection() {
             Watch the 3 secrets to future-proofing your salary and your skillset.
           </p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            How Senior Java Devs Are Making the Switch to{" "}
-            <span className="text-primary">"AI Developer"</span> — and Getting Paid More to Do It.
+            How Senior Java Devs Are Landing{" "}
+            <span className="text-primary">High-Paying AI Jobs</span> at{" "}
+            <span className="text-primary">30–70L Per Year</span> — Using Skills They Already Have.
           </h2>
           <CTAButton size="default" section="problem_top">Watch the Free Roadmap Video</CTAButton>
         </div>
@@ -249,11 +250,10 @@ function V1FinalCTASection() {
           }`}
         >
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-            Ready to switch from "Legacy Coder" to{" "}
-            <span className="text-primary">"AI Developer"</span>?
+            Ready to <span className="text-primary">land a 30–70L AI role</span>? Watch the video, then let's build your plan.
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            In 28 minutes, you'll see the exact 3-step roadmap senior Java devs are using to land AI roles — without starting over.
+            Book a call with Jerry after the free training and get a personalised roadmap to your next high-paying AI role.
           </p>
         </div>
 

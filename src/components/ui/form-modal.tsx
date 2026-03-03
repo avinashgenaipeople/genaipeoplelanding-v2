@@ -133,7 +133,7 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
             {!iframeLoaded && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-white z-10 gap-3">
                 <div className="w-10 h-10 rounded-full border-4 border-primary/20 border-t-primary animate-spin" />
-                <p className="text-sm text-muted-foreground">Loading your roadmap…</p>
+                <p className="text-sm text-muted-foreground">Loading…</p>
               </div>
             )}
             <iframe

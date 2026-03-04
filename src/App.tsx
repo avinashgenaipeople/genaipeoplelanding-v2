@@ -14,6 +14,7 @@ import LpV1 from "./pages/LpV1";
 import LpV3 from "./pages/LpV3";
 
 const Analytics = lazy(() => import("./pages/Analytics"));
+const Webinar = lazy(() => import("./pages/Webinar"));
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/lp-v2" element={<LpV2 />} />
             <Route path="/lp-v3" element={<LpV3 />} />
             <Route path="/analytics" element={<Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}><Analytics /></Suspense>} />
+            <Route path="/webinar" element={<Suspense fallback={null}><Webinar /></Suspense>} />
 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

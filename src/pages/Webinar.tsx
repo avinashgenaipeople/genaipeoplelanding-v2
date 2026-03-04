@@ -131,15 +131,26 @@ const thisIsForYou = [
 export default function Webinar() {
   return (
     <div className="min-h-screen bg-background">
+      {/* Sumo bar */}
+      <a
+        href="#register"
+        onClick={() => trackEvent("cta_click", { cta_label: "sumo_bar", cta_section: "sumo_bar", page_path: "/webinar" })}
+        className="block w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
+      >
+        <p className="text-sm sm:text-base font-semibold">
+          Live Claude Code Workshop — Register Free →
+        </p>
+      </a>
+
       {/* Hero */}
-      <section className="px-4 pt-24 pb-12 bg-hero-pattern">
+      <section className="px-4 pt-16 pb-12 bg-hero-pattern">
         <div className="container max-w-4xl text-center">
           <span className="highlight-pill text-xs font-semibold tracking-widest uppercase mb-6 inline-block">
             Live Workshop
           </span>
 
           <h1 className="mt-4 font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground leading-tight">
-            Claude Sprint:{" "}
+            Claude Code Sprint:{" "}
             <span className="text-primary">Build a Real App in 60 Minutes</span>
           </h1>
 

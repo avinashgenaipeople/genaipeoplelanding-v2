@@ -128,7 +128,7 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
           </div>
 
           {/* Iframe + loading spinner */}
-          <div className="overflow-y-auto flex-1 relative">
+          <div className="overflow-y-auto flex-1 relative overflow-x-hidden">
             {/* Spinner shown until iframe fires onLoad */}
             {!iframeLoaded && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-white z-10 gap-3">
@@ -138,8 +138,8 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
             )}
             <iframe
               src={formUrl}
-              className="w-full border-none"
-              style={{ height: `${iframeHeight}px`, transition: "height 0.2s ease" }}
+              className="w-full border-none -mt-10"
+              style={{ height: `${iframeHeight + 40}px`, transition: "height 0.2s ease" }}
               id="inline-TW7vEwm553MbqKYmfMPP"
               data-layout="{'id':'INLINE'}"
               data-trigger-type="alwaysShow"

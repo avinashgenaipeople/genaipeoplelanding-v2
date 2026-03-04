@@ -44,6 +44,16 @@ function RegistrationForm() {
     // Track event
     trackEvent("webinar_register", { cta_label: "register_form", cta_section: "registration", page_path: "/webinar" });
 
+    // Fire-and-forget n8n webhook (Zoom registration + email sequence)
+    const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL;
+    if (webhookUrl) {
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: form.name, email: form.email, phone: form.phone }),
+      }).catch(() => {});
+    }
+
     await new Promise((r) => setTimeout(r, 600));
     setSubmitting(false);
     setSubmitted(true);

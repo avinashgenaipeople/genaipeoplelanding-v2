@@ -76,7 +76,7 @@ function RegistrationForm() {
       {[
         { id: "name", label: "Full Name", type: "text", placeholder: "John Doe", key: "name" as const },
         { id: "email", label: "Email", type: "email", placeholder: "john@example.com", key: "email" as const },
-        { id: "phone", label: "Phone", type: "tel", placeholder: "+1 (555) 000-0000", key: "phone" as const },
+        { id: "phone", label: "Phone", type: "tel", placeholder: "+91 98765 43210", key: "phone" as const },
       ].map((field) => (
         <div key={field.id}>
           <label htmlFor={field.id} className="block text-sm font-medium text-muted-foreground mb-1.5">

@@ -1,123 +1,11 @@
-import { useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { SectionLabel } from "@/components/ui/section-label";
 import { trackEvent } from "@/lib/analytics";
-import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 import { Calendar, Clock, Video, Zap, Eye, Rocket, CheckCircle2, Linkedin, ArrowRight } from "lucide-react";
 
-/* ── Registration Form ──────────────────────────────────────── */
-function RegistrationForm() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-
-  function validate() {
-    const errs: Record<string, string> = {};
-    if (!form.name.trim()) errs.name = "Name is required";
-    if (!form.email.trim()) errs.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = "Invalid email";
-    if (!form.phone.trim()) errs.phone = "Phone is required";
-    else if (!/^[\d\s\-+()]{7,}$/.test(form.phone)) errs.phone = "Invalid phone number";
-    return errs;
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const errs = validate();
-    setErrors(errs);
-    if (Object.keys(errs).length > 0) return;
-
-    setSubmitting(true);
-
-    // Fire-and-forget Supabase insert
-    if (supabase) {
-      supabase
-        .from("webinar_registrations")
-        .insert({ name: form.name, email: form.email, phone: form.phone, registered_at: new Date().toISOString() })
-        .then(({ error }) => {
-          if (error && import.meta.env.DEV) console.warn("[Supabase] webinar insert failed:", error.message);
-        });
-    }
-
-    // Track event
-    trackEvent("webinar_register", { cta_label: "register_form", cta_section: "registration", page_path: "/webinar" });
-
-    // Fire-and-forget n8n webhook (Zoom registration + email sequence)
-    const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL;
-    if (webhookUrl) {
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: form.name, email: form.email, phone: form.phone }),
-      }).catch(() => {});
-    }
-
-    await new Promise((r) => setTimeout(r, 600));
-    setSubmitting(false);
-    setSubmitted(true);
-  }
-
-  if (submitted) {
-    return (
-      <div className="text-center py-10">
-        <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
-          <CheckCircle2 className="w-8 h-8 text-green-500" />
-        </div>
-        <h3 className="font-display text-2xl font-bold text-foreground mb-2">You're Registered!</h3>
-        <p className="text-muted-foreground mb-6">You're all set for March 21st, Saturday at 11:00 AM.</p>
-        <a
-          href="https://zoom.us/j/83125917464"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors"
-        >
-          <Video className="w-5 h-5" /> Join Zoom Meeting
-        </a>
-        <p className="text-muted-foreground/60 text-sm mt-4">Save this link — we'll also send it to your email.</p>
-      </div>
-    );
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      {[
-        { id: "name", label: "Full Name", type: "text", placeholder: "John Doe", key: "name" as const },
-        { id: "email", label: "Email", type: "email", placeholder: "john@example.com", key: "email" as const },
-        { id: "phone", label: "Phone", type: "tel", placeholder: "+91 98765 43210", key: "phone" as const },
-      ].map((field) => (
-        <div key={field.id}>
-          <label htmlFor={field.id} className="block text-sm font-medium text-muted-foreground mb-1.5">
-            {field.label}
-          </label>
-          <input
-            id={field.id}
-            type={field.type}
-            value={form[field.key]}
-            onChange={(e) => {
-              setForm((f) => ({ ...f, [field.key]: e.target.value }));
-              setErrors((er) => ({ ...er, [field.key]: "" }));
-            }}
-            className="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-colors"
-            placeholder={field.placeholder}
-          />
-          {errors[field.key] && <p className="text-destructive text-xs mt-1">{errors[field.key]}</p>}
-        </div>
-      ))}
-
-      <button
-        type="submit"
-        disabled={submitting}
-        className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-      >
-        {submitting ? "Registering…" : "Save My Spot"}
-      </button>
-
-      <p className="text-center text-muted-foreground/60 text-sm">Spots are filling up — grab yours</p>
-    </form>
-  );
-}
+/* ── Zoom Registration Embed ───────────────────────────────── */
+const ZOOM_REGISTER_URL = "https://us06web.zoom.us/meeting/register/OCNaS8fCTP2e4DzsPdILXA";
 
 /* ── Animated Section wrapper ───────────────────────────────── */
 function ScrollSection({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -269,15 +157,21 @@ export default function Webinar() {
         </div>
       </ScrollSection>
 
-      {/* Registration Form */}
+      {/* Registration Form — Zoom Embed */}
       <ScrollSection className="py-10 px-4 bg-section-alt" delay={0}>
         <div id="register" className="container max-w-xl scroll-mt-8">
           <SectionLabel>Register</SectionLabel>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-2">Register Now</h2>
           <p className="text-muted-foreground mb-8">Free to attend. Limited spots available.</p>
 
-          <div className="glass-card p-8">
-            <RegistrationForm />
+          <div className="glass-card overflow-hidden">
+            <iframe
+              src={ZOOM_REGISTER_URL}
+              className="w-full border-none"
+              style={{ height: "520px" }}
+              title="Zoom Meeting Registration"
+              allow="clipboard-write"
+            />
           </div>
         </div>
       </ScrollSection>

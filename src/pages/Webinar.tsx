@@ -145,7 +145,7 @@ export default function Webinar() {
                 25+ years in tech. Previously Director of Engineering at an AI company. When ChatGPT launched, Jerry recognized that the way we build software would change fundamentally. He founded GenAI People to help senior developers navigate this transition — and has since mentored 150+ engineers into AI roles.
               </p>
               <a
-                href="https://www.linkedin.com/in/jerrykurian/"
+                href="https://www.linkedin.com/in/jerryk/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-primary hover:underline text-sm font-medium"

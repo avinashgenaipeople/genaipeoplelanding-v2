@@ -157,22 +157,23 @@ export default function Webinar() {
         </div>
       </ScrollSection>
 
-      {/* Registration Form — Zoom Embed */}
-      <ScrollSection className="py-10 px-4 bg-section-alt" delay={0}>
-        <div id="register" className="container max-w-xl scroll-mt-8">
+      {/* Registration CTA */}
+      <ScrollSection className="py-16 px-4 bg-section-alt" delay={0}>
+        <div id="register" className="container max-w-xl scroll-mt-8 text-center">
           <SectionLabel>Register</SectionLabel>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-2">Register Now</h2>
           <p className="text-muted-foreground mb-8">Free to attend. Limited spots available.</p>
 
-          <div className="glass-card overflow-hidden">
-            <iframe
-              src={ZOOM_REGISTER_URL}
-              className="w-full border-none"
-              style={{ height: "520px" }}
-              title="Zoom Meeting Registration"
-              allow="clipboard-write"
-            />
-          </div>
+          <a
+            href={ZOOM_REGISTER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "registration", page_path: "/webinar" })}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-primary text-primary-foreground font-semibold text-lg hover:bg-primary/90 transition-colors"
+          >
+            <Video className="w-5 h-5" /> Register on Zoom <ArrowRight className="w-5 h-5" />
+          </a>
+          <p className="text-muted-foreground/60 text-sm mt-4">You'll receive a confirmation email with the Zoom link.</p>
         </div>
       </ScrollSection>
 

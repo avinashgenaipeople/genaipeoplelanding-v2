@@ -66,7 +66,16 @@ function RegistrationForm() {
           <CheckCircle2 className="w-8 h-8 text-green-500" />
         </div>
         <h3 className="font-display text-2xl font-bold text-foreground mb-2">You're Registered!</h3>
-        <p className="text-muted-foreground">Check your email for the Zoom link. See you on March 21st.</p>
+        <p className="text-muted-foreground mb-6">You're all set for March 21st, Saturday at 11:00 AM.</p>
+        <a
+          href="https://zoom.us/j/83125917464"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors"
+        >
+          <Video className="w-5 h-5" /> Join Zoom Meeting
+        </a>
+        <p className="text-muted-foreground/60 text-sm mt-4">Save this link — we'll also send it to your email.</p>
       </div>
     );
   }

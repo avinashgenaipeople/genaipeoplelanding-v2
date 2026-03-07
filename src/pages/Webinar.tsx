@@ -168,7 +168,7 @@ export default function Webinar() {
             href={ZOOM_REGISTER_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "registration", page_path: "/webinar" })}
+            onClick={() => { trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "registration", page_path: "/webinar" }); window.fbq?.("track", "CompleteRegistration"); }}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-primary text-primary-foreground font-semibold text-lg hover:bg-primary/90 transition-colors"
           >
             <Video className="w-5 h-5" /> Register on Zoom <ArrowRight className="w-5 h-5" />

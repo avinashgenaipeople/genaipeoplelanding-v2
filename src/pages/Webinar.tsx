@@ -23,9 +23,9 @@ function ScrollSection({ children, className, delay = 0 }: { children: React.Rea
 
 /* ── Data ────────────────────────────────────────────────────── */
 const whatYoullSee = [
-  { icon: Zap, title: "See an AI Agent Build a Real App — Live", desc: "Watch Claude Code take a plain English prompt and turn it into a working application — planning, coding, debugging, and deploying in real time." },
-  { icon: Eye, title: "Understand How Agentic AI Actually Works", desc: "This isn't autocomplete. Claude Code reasons about architecture, calls tools, writes tests, and iterates — like a senior developer would. See the paradigm shift firsthand." },
-  { icon: Rocket, title: "Discover Why Your Java Skills Are Your Edge", desc: "Your understanding of design patterns, APIs, and system architecture is exactly what AI agent development demands. See how the skills you already have map to this new world." },
+  { icon: Zap, title: "Blank Screen → Deployed App in 60 Minutes", desc: "Jerry will build a complete application live using Claude Code — from project setup to deployment. No pre-written code. No shortcuts. You'll see every step." },
+  { icon: Eye, title: "Build Along on Your Own Machine", desc: "This isn't a sit-and-watch session. Follow along step-by-step and build the same app on your machine. Walk away with a real project you built yourself." },
+  { icon: Rocket, title: "See Why Senior Devs Are Switching to AI Tools", desc: "Your experience with architecture, APIs, and system design makes you the perfect candidate for AI-powered development. See how Claude Code amplifies the skills you already have." },
 ];
 
 const thisIsForYou = [
@@ -47,7 +47,7 @@ export default function Webinar() {
         className="block w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
       >
         <p className="text-sm sm:text-base font-semibold">
-          Live Workshop for Senior Java Devs: See How AI Agents Are Changing Software Development — Register Free →
+          Live Workshop: Watch Jerry Kurian Build a Complete App Using Claude Code in 60 Minutes — Register Free →
         </p>
       </a>
 
@@ -59,8 +59,8 @@ export default function Webinar() {
           </span>
 
           <h1 className="mt-4 font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground leading-tight">
-            Claude Code Workshop:{" "}
-            <span className="text-primary">Discover How AI Agents Are Changing the Game</span>
+            Watch &amp; Build Along:{" "}
+            <span className="text-primary">A Complete App in 60 Minutes with Claude Code</span>
           </h1>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-muted-foreground mt-6">
@@ -72,8 +72,8 @@ export default function Webinar() {
           </div>
 
           <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            A live session for Senior Java Developers. Watch an AI agentic system build a real application from scratch —{" "}
-            <span className="text-foreground font-medium">planning, coding, debugging, and deploying — all in 60 minutes.</span>
+            Jerry Kurian, founder of GenAI People, will live-build an end-to-end application using Claude Code —{" "}
+            <span className="text-foreground font-medium">from blank screen to deployed app. Follow along and build yours too.</span>
           </p>
 
           <a
@@ -93,10 +93,10 @@ export default function Webinar() {
         <div className="container max-w-5xl">
           <SectionLabel>What You'll See</SectionLabel>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            This isn't another AI hype session.
+            Not a demo. A real build session.
           </h2>
           <p className="text-muted-foreground mb-10 max-w-lg text-lg">
-            You'll see an agentic AI system architect and ship a real application — live.
+            Watch Jerry build it. Then build it yourself — live, alongside him.
           </p>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -147,7 +147,7 @@ export default function Webinar() {
               <h3 className="font-display text-2xl font-bold text-foreground mb-1">Jerry Kurian</h3>
               <p className="text-primary text-sm font-medium mb-4">Founder &amp; Chief Mentor, GenAI People</p>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                25+ years in tech. Previously Director of Engineering at an AI company. When ChatGPT launched, Jerry saw that agentic AI systems would fundamentally change how software gets built. He founded GenAI People to help senior Java developers navigate this shift — and has since mentored 150+ engineers into AI roles at companies like Target, Oracle, Infosys, and Verizon.
+                25+ years in tech. Previously Director of Engineering at an AI company. Jerry uses Claude Code daily to build real products and has mentored 150+ senior developers into AI roles at companies like Target, Oracle, Infosys, and Verizon. In this session, he'll build a complete app from scratch — live — so you can see exactly how it's done.
               </p>
               <a
                 href="https://www.linkedin.com/in/jerryk/"
@@ -185,8 +185,8 @@ export default function Webinar() {
       {/* Closing */}
       <ScrollSection className="py-10 px-4">
         <p className="container max-w-2xl text-center font-display text-2xl sm:text-3xl font-bold text-foreground">
-          The developers who understand AI agents today will lead the teams of tomorrow.{" "}
-          <span className="text-primary">See it for yourself.</span>
+          60 minutes. One complete app. Built live with Claude Code.{" "}
+          <span className="text-primary">Watch it. Build it. Ship it.</span>
         </p>
       </ScrollSection>
     </div>

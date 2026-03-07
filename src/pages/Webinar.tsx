@@ -75,10 +75,13 @@ export default function Webinar() {
           </p>
 
           <a
-            href="#register"
+            href={ZOOM_REGISTER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => { trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "hero", page_path: "/webinar" }); window.fbq?.("track", "CompleteRegistration"); }}
             className="inline-flex items-center gap-2 mt-8 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors"
           >
-            Reserve Your Spot <ArrowRight className="w-4 h-4" />
+            Register on Zoom <ArrowRight className="w-4 h-4" />
           </a>
         </div>
       </section>

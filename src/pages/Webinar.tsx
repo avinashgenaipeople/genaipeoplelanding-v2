@@ -83,10 +83,22 @@ export default function Webinar() {
             onClick={() => { trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "hero", page_path: "/webinar" }); window.fbq?.("track", "CompleteRegistration"); }}
             className="inline-flex items-center gap-2 mt-8 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors"
           >
-            Register on Zoom <ArrowRight className="w-4 h-4" />
+            Register Free — Build Your First AI App Saturday <ArrowRight className="w-4 h-4" />
           </a>
         </div>
       </section>
+
+      {/* Agitation */}
+      <ScrollSection className="py-10 px-4 bg-section-alt">
+        <div className="container max-w-3xl text-center">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            The world changed. Most senior devs are still catching up.
+          </h2>
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Junior developers are shipping full-stack apps in hours using AI tools. Meanwhile, experienced engineers — the ones with 10+ years of Java, microservices, and system design — are watching from the sidelines. Not because they lack skill. Because no one showed them how their skills apply to this new world. <span className="text-foreground font-medium">This session changes that.</span>
+          </p>
+        </div>
+      </ScrollSection>
 
       {/* What You'll See */}
       <ScrollSection className="py-10 px-4">
@@ -162,6 +174,29 @@ export default function Webinar() {
         </div>
       </ScrollSection>
 
+      {/* What You'll Walk Away With */}
+      <ScrollSection className="py-10 px-4">
+        <div className="container max-w-3xl">
+          <SectionLabel>Your Takeaway</SectionLabel>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-8">
+            After 60 minutes, you'll have:
+          </h2>
+          <div className="space-y-4">
+            {[
+              "A fully working app you built yourself using Claude Code",
+              "A clear understanding of how AI agentic systems actually write, debug, and deploy code",
+              "Confidence that your Java and backend skills are an advantage — not a liability",
+              "A recording to rewatch and reference anytime",
+            ].map((item, i) => (
+              <div key={i} className="glass-card flex items-start gap-4 p-5">
+                <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                <p className="text-foreground text-lg">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </ScrollSection>
+
       {/* Registration CTA */}
       <ScrollSection className="py-16 px-4 bg-section-alt" delay={0}>
         <div id="register" className="container max-w-xl scroll-mt-8 text-center">
@@ -176,9 +211,9 @@ export default function Webinar() {
             onClick={() => { trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "registration", page_path: "/webinar" }); window.fbq?.("track", "CompleteRegistration"); }}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-primary text-primary-foreground font-semibold text-lg hover:bg-primary/90 transition-colors"
           >
-            <Video className="w-5 h-5" /> Register on Zoom <ArrowRight className="w-5 h-5" />
+            <Video className="w-5 h-5" /> Save My Spot — It's Free <ArrowRight className="w-5 h-5" />
           </a>
-          <p className="text-muted-foreground/60 text-sm mt-4">You'll receive a confirmation email with the Zoom link.</p>
+          <p className="text-muted-foreground/60 text-sm mt-4">Zoom has a 200-person cap — once it's full, registration closes. Can't make it live? Register anyway to get the recording.</p>
         </div>
       </ScrollSection>
 

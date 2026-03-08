@@ -52,18 +52,18 @@ export default function Webinar() {
       </a>
 
       {/* Hero */}
-      <section className="px-4 pt-16 pb-12 bg-hero-pattern">
+      <section className="px-4 pt-10 pb-8 bg-hero-pattern">
         <div className="container max-w-4xl text-center">
-          <span className="highlight-pill text-sm font-semibold tracking-widest uppercase mb-6 inline-block">
+          <span className="highlight-pill text-sm font-semibold tracking-widest uppercase mb-4 inline-block">
             Live on Zoom
           </span>
 
-          <h1 className="mt-4 font-display text-5xl sm:text-6xl md:text-7xl font-bold text-foreground leading-tight">
+          <h1 className="mt-2 font-display text-5xl sm:text-6xl md:text-7xl font-bold text-foreground leading-tight">
             Senior Java Devs:{" "}
             <span className="text-primary">Watch &amp; Build a Complete App in 60 Minutes with Claude Code</span>
           </h1>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 mt-8">
+          <div className="flex flex-wrap items-center justify-center gap-6 mt-5">
             <span className="flex items-center gap-2 text-lg font-semibold text-foreground"><Calendar className="w-5 h-5 text-primary" /> March 21st</span>
             <span className="text-border text-xl">|</span>
             <span className="flex items-center gap-2 text-lg font-semibold text-foreground"><Clock className="w-5 h-5 text-primary" /> Saturday, 10:45 AM IST</span>
@@ -71,7 +71,7 @@ export default function Webinar() {
             <span className="flex items-center gap-2 text-lg font-semibold text-foreground"><Video className="w-5 h-5 text-primary" /> Live on Zoom</span>
           </div>
 
-          <p className="mt-6 text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-4 text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Jerry Kurian, founder of GenAI People, will live-build an end-to-end application using Claude Code —{" "}
             <span className="text-foreground font-medium">from blank screen to deployed app. Follow along and build yours too.</span>
           </p>
@@ -81,7 +81,7 @@ export default function Webinar() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => { trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "hero", page_path: "/webinar" }); window.fbq?.("track", "CompleteRegistration"); }}
-            className="inline-flex items-center gap-2 mt-8 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 mt-6 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors"
           >
             Register Free — Build Your First AI App Saturday <ArrowRight className="w-4 h-4" />
           </a>
@@ -89,9 +89,9 @@ export default function Webinar() {
       </section>
 
       {/* Agitation */}
-      <ScrollSection className="py-10 px-4 bg-section-alt">
+      <ScrollSection className="py-6 px-4 bg-section-alt">
         <div className="container max-w-3xl text-center">
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-6">
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-4">
             The world changed. Most senior devs are still catching up.
           </h2>
           <p className="text-muted-foreground text-xl leading-relaxed">
@@ -101,13 +101,13 @@ export default function Webinar() {
       </ScrollSection>
 
       {/* What You'll See */}
-      <ScrollSection className="py-10 px-4">
+      <ScrollSection className="py-6 px-4">
         <div className="container max-w-5xl">
           <SectionLabel>What You'll See</SectionLabel>
           <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-4">
             Not a demo. A real build session.
           </h2>
-          <p className="text-muted-foreground mb-10 max-w-lg text-xl">
+          <p className="text-muted-foreground mb-6 max-w-lg text-xl">
             Watch Jerry build it. Then build it yourself — live, alongside him.
           </p>
 
@@ -126,14 +126,14 @@ export default function Webinar() {
       </ScrollSection>
 
       {/* This Is For You If */}
-      <ScrollSection className="py-10 px-4 bg-section-alt">
+      <ScrollSection className="py-6 px-4 bg-section-alt">
         <div className="container max-w-3xl">
           <SectionLabel>Is This For You?</SectionLabel>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-10">
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-6">
             This Is For You If…
           </h2>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {thisIsForYou.map((item, i) => (
               <div key={i} className="glass-card flex items-start gap-4 p-5">
                 <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
@@ -145,11 +145,11 @@ export default function Webinar() {
       </ScrollSection>
 
       {/* About the Presenter */}
-      <ScrollSection className="py-10 px-4">
+      <ScrollSection className="py-6 px-4">
         <div className="container max-w-5xl">
           <SectionLabel>Your Host</SectionLabel>
 
-          <div className="glass-card p-8 md:p-10 flex flex-col md:flex-row gap-8 items-center md:items-start">
+          <div className="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center md:items-start">
             <img
               src="/jerry-kurian.jpeg"
               alt="Jerry Kurian"
@@ -175,13 +175,13 @@ export default function Webinar() {
       </ScrollSection>
 
       {/* What You'll Walk Away With */}
-      <ScrollSection className="py-10 px-4">
+      <ScrollSection className="py-6 px-4">
         <div className="container max-w-3xl">
           <SectionLabel>Your Takeaway</SectionLabel>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-8">
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-6">
             After 60 minutes, you'll have:
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {[
               "A fully working app you built yourself using Claude Code",
               "A clear understanding of how AI agentic systems actually write, debug, and deploy code",
@@ -198,11 +198,11 @@ export default function Webinar() {
       </ScrollSection>
 
       {/* Registration CTA */}
-      <ScrollSection className="py-16 px-4 bg-section-alt" delay={0}>
+      <ScrollSection className="py-10 px-4 bg-section-alt" delay={0}>
         <div id="register" className="container max-w-xl scroll-mt-8 text-center">
           <SectionLabel>Register</SectionLabel>
           <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-2">Register Now</h2>
-          <p className="text-muted-foreground mb-8">Free for senior developers. 60 minutes. Zero fluff.</p>
+          <p className="text-muted-foreground mb-6">Free for senior developers. 60 minutes. Zero fluff.</p>
 
           <a
             href={ZOOM_REGISTER_URL}
@@ -218,7 +218,7 @@ export default function Webinar() {
       </ScrollSection>
 
       {/* Closing */}
-      <ScrollSection className="py-10 px-4">
+      <ScrollSection className="py-6 px-4">
         <p className="container max-w-2xl text-center font-display text-2xl sm:text-3xl font-bold text-foreground">
           60 minutes. One complete app. Built live with Claude Code.{" "}
           <span className="text-primary">Watch it. Build it. Ship it.</span>

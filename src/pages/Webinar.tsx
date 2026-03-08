@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Calendar, Clock, Video, Zap, Eye, Rocket, CheckCircle2, Linkedin, ArrowRight } from "lucide-react";
 
 /* ── Zoom Registration Embed ───────────────────────────────── */
-const ZOOM_REGISTER_URL = "https://us06web.zoom.us/meeting/register/OCNaS8fCTP2e4DzsPdILXA";
+const ZOOM_REGISTER_URL = "https://us06web.zoom.us/meeting/register/r8NyOJ5kSkOMvgKocIzVoQ";
 
 /* ── Animated Section wrapper ───────────────────────────────── */
 function ScrollSection({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {

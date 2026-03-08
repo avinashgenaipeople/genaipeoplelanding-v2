@@ -1,87 +1,98 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
-import { Video, ExternalLink, Calendar, Clock } from "lucide-react";
+import { Video } from "lucide-react";
 
-/* ── Zoom Registration Embed ────────────────────────────────── */
 const ZOOM_REGISTER_URL =
   "https://us06web.zoom.us/meeting/register/r8NyOJ5kSkOMvgKocIzVoQ";
 
+const REDIRECT_DELAY = 4000; // ms before redirect
+
 export default function WebinarMeeting() {
-  /* Fire Facebook CompleteRegistration + page view on mount */
+  const [step, setStep] = useState(0); // 0→logo, 1→text, 2→redirect msg
+
   useEffect(() => {
+    // Fire pixel + analytics immediately
     window.fbq?.("track", "CompleteRegistration");
-    trackEvent("webinar_meeting_view", {
-      page_path: "/webinar/meeting",
-    });
+    trackEvent("webinar_meeting_view", { page_path: "/webinar/meeting" });
+
+    // Animation sequence
+    const t1 = setTimeout(() => setStep(1), 600);
+    const t2 = setTimeout(() => setStep(2), 2000);
+    const t3 = setTimeout(() => {
+      window.location.href = ZOOM_REGISTER_URL;
+    }, REDIRECT_DELAY);
+
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, []);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      {/* Header bar */}
-      <header className="w-full bg-primary text-primary-foreground py-3 px-4">
-        <div className="container max-w-6xl flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Video className="w-5 h-5" />
-            <span className="font-semibold text-sm sm:text-base">
-              GenAI People — Live Workshop with Jerry Kurian
-            </span>
-          </div>
-          <div className="hidden sm:flex items-center gap-4 text-sm">
-            <span className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4" /> March 21st
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4" /> 10:45 AM IST
-            </span>
+    <div className="min-h-screen bg-[#0b5cff] flex items-center justify-center px-4 overflow-hidden">
+      <div className="text-center text-white max-w-lg">
+
+        {/* Zoom logo + pulse ring */}
+        <div className="relative mx-auto w-28 h-28 mb-8">
+          {/* Pulse rings */}
+          <span className="absolute inset-0 rounded-full bg-white/10 animate-[ping_2s_ease-out_infinite]" />
+          <span className="absolute inset-2 rounded-full bg-white/10 animate-[ping_2s_ease-out_0.4s_infinite]" />
+          {/* Icon circle */}
+          <div
+            className="relative z-10 w-28 h-28 rounded-full bg-white flex items-center justify-center shadow-2xl transition-transform duration-700"
+            style={{ transform: step >= 0 ? "scale(1)" : "scale(0)" }}
+          >
+            <Video className="w-14 h-14 text-[#0b5cff]" strokeWidth={1.5} />
           </div>
         </div>
-      </header>
 
-      {/* Zoom embed area */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 py-6">
-        <div className="w-full max-w-5xl">
-          {/* Embedded Zoom registration */}
-          <div className="relative w-full rounded-xl overflow-hidden border border-border shadow-lg bg-white" style={{ minHeight: "600px" }}>
-            <iframe
-              src={ZOOM_REGISTER_URL}
-              className="w-full h-full absolute inset-0"
-              style={{ minHeight: "600px" }}
-              allow="fullscreen; clipboard-write"
-              sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-              title="Zoom Registration — GenAI People Workshop"
+        {/* Title */}
+        <h1
+          className="text-2xl sm:text-3xl font-bold mb-3 transition-all duration-700"
+          style={{
+            opacity: step >= 1 ? 1 : 0,
+            transform: step >= 1 ? "translateY(0)" : "translateY(20px)",
+          }}
+        >
+          This webinar is hosted on Zoom
+        </h1>
+
+        {/* Subtitle */}
+        <p
+          className="text-white/80 text-lg mb-10 transition-all duration-700 delay-200"
+          style={{
+            opacity: step >= 1 ? 1 : 0,
+            transform: step >= 1 ? "translateY(0)" : "translateY(20px)",
+          }}
+        >
+          Live Workshop with Jerry Kurian — March 21st, 10:45 AM IST
+        </p>
+
+        {/* Redirect message + loader */}
+        <div
+          className="transition-all duration-500"
+          style={{ opacity: step >= 2 ? 1 : 0 }}
+        >
+          <p className="text-white/90 font-medium mb-4">
+            Taking you to Zoom to register…
+          </p>
+
+          {/* Progress bar */}
+          <div className="mx-auto w-48 h-1.5 rounded-full bg-white/20 overflow-hidden">
+            <div
+              className="h-full bg-white rounded-full transition-all ease-linear"
+              style={{
+                width: step >= 2 ? "100%" : "0%",
+                transitionDuration: `${REDIRECT_DELAY - 2000}ms`,
+              }}
             />
           </div>
 
-          {/* Fallback: direct registration link */}
-          <div className="mt-4 text-center space-y-3">
-            <p className="text-muted-foreground text-sm">
-              If the form doesn't load above, register directly:
-            </p>
-            <a
-              href={ZOOM_REGISTER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() =>
-                trackEvent("cta_click", {
-                  cta_label: "register_zoom_fallback",
-                  cta_section: "meeting",
-                  page_path: "/webinar/meeting",
-                })
-              }
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors"
-            >
-              <ExternalLink className="w-4 h-4" /> Register on Zoom
-            </a>
-          </div>
+          <a
+            href={ZOOM_REGISTER_URL}
+            className="inline-block mt-6 text-white/60 text-sm underline underline-offset-2 hover:text-white transition-colors"
+          >
+            Click here if you're not redirected
+          </a>
         </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="py-4 px-4 text-center border-t border-border">
-        <p className="text-muted-foreground text-xs">
-          &copy; {new Date().getFullYear()} GenAI People. All rights reserved.
-        </p>
-      </footer>
+      </div>
     </div>
   );
 }

@@ -59,8 +59,8 @@ export default function Webinar() {
           </span>
 
           <h1 className="mt-4 font-display text-5xl sm:text-6xl md:text-7xl font-bold text-foreground leading-tight">
-            Watch &amp; Build Along:{" "}
-            <span className="text-primary">A Complete App in 60 Minutes with Claude Code</span>
+            Senior Java Devs:{" "}
+            <span className="text-primary">Watch &amp; Build a Complete App in 60 Minutes with Claude Code</span>
           </h1>
 
           <div className="flex flex-wrap items-center justify-center gap-6 mt-8">

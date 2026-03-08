@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Calendar, Clock, Video, Zap, Eye, Rocket, CheckCircle2, Linkedin, ArrowRight } from "lucide-react";
 
 /* ── Zoom Registration Embed ───────────────────────────────── */
-const ZOOM_REGISTER_URL = "https://us06web.zoom.us/meeting/register/r8NyOJ5kSkOMvgKocIzVoQ";
+const MEETING_PAGE_URL = "/webinar/meeting";
 
 /* ── Animated Section wrapper ───────────────────────────────── */
 function ScrollSection({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -77,10 +77,8 @@ export default function Webinar() {
           </p>
 
           <a
-            href={ZOOM_REGISTER_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => { trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "hero", page_path: "/webinar" }); window.fbq?.("track", "CompleteRegistration"); }}
+            href={MEETING_PAGE_URL}
+            onClick={() => trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "hero", page_path: "/webinar" })}
             className="inline-flex items-center gap-2 mt-6 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors"
           >
             Register Free — Build Your First AI App Saturday <ArrowRight className="w-4 h-4" />
@@ -205,10 +203,8 @@ export default function Webinar() {
           <p className="text-muted-foreground mb-6">Free for senior developers. 60 minutes. Zero fluff.</p>
 
           <a
-            href={ZOOM_REGISTER_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => { trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "registration", page_path: "/webinar" }); window.fbq?.("track", "CompleteRegistration"); }}
+            href={MEETING_PAGE_URL}
+            onClick={() => trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "registration", page_path: "/webinar" })}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-primary text-primary-foreground font-semibold text-lg hover:bg-primary/90 transition-colors"
           >
             <Video className="w-5 h-5" /> Save My Spot — It's Free <ArrowRight className="w-5 h-5" />

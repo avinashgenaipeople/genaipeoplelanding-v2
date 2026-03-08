@@ -58,7 +58,7 @@ export default function Webinar() {
             Live on Zoom
           </span>
 
-          <h1 className="mt-2 font-display text-5xl sm:text-6xl md:text-7xl font-bold text-foreground leading-tight">
+          <h1 className="mt-2 font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight">
             Senior Java Devs:{" "}
             <span className="text-primary">Build a Full App in 60 Min with Claude Code</span>
           </h1>

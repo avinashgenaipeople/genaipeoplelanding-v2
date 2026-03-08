@@ -54,24 +54,24 @@ export default function Webinar() {
       {/* Hero */}
       <section className="px-4 pt-16 pb-12 bg-hero-pattern">
         <div className="container max-w-4xl text-center">
-          <span className="highlight-pill text-xs font-semibold tracking-widest uppercase mb-6 inline-block">
-            Live Workshop
+          <span className="highlight-pill text-sm font-semibold tracking-widest uppercase mb-6 inline-block">
+            Live on Zoom
           </span>
 
-          <h1 className="mt-4 font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground leading-tight">
+          <h1 className="mt-4 font-display text-5xl sm:text-6xl md:text-7xl font-bold text-foreground leading-tight">
             Watch &amp; Build Along:{" "}
             <span className="text-primary">A Complete App in 60 Minutes with Claude Code</span>
           </h1>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 text-muted-foreground mt-6">
-            <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-primary" /> March 21st</span>
-            <span className="text-border">|</span>
-            <span className="flex items-center gap-2"><Clock className="w-4 h-4 text-primary" /> Saturday, 10:45 AM</span>
-            <span className="text-border">|</span>
-            <span className="flex items-center gap-2"><Video className="w-4 h-4 text-primary" /> Live on Zoom</span>
+          <div className="flex flex-wrap items-center justify-center gap-6 mt-8">
+            <span className="flex items-center gap-2 text-lg font-semibold text-foreground"><Calendar className="w-5 h-5 text-primary" /> March 21st</span>
+            <span className="text-border text-xl">|</span>
+            <span className="flex items-center gap-2 text-lg font-semibold text-foreground"><Clock className="w-5 h-5 text-primary" /> Saturday, 10:45 AM IST</span>
+            <span className="text-border text-xl">|</span>
+            <span className="flex items-center gap-2 text-lg font-semibold text-foreground"><Video className="w-5 h-5 text-primary" /> Live on Zoom</span>
           </div>
 
-          <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-6 text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Jerry Kurian, founder of GenAI People, will live-build an end-to-end application using Claude Code —{" "}
             <span className="text-foreground font-medium">from blank screen to deployed app. Follow along and build yours too.</span>
           </p>
@@ -91,10 +91,10 @@ export default function Webinar() {
       {/* Agitation */}
       <ScrollSection className="py-10 px-4 bg-section-alt">
         <div className="container max-w-3xl text-center">
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-6">
             The world changed. Most senior devs are still catching up.
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-muted-foreground text-xl leading-relaxed">
             Junior developers are shipping full-stack apps in hours using AI tools. Meanwhile, experienced engineers — the ones with 10+ years of Java, microservices, and system design — are watching from the sidelines. Not because they lack skill. Because no one showed them how their skills apply to this new world. <span className="text-foreground font-medium">This session changes that.</span>
           </p>
         </div>
@@ -104,10 +104,10 @@ export default function Webinar() {
       <ScrollSection className="py-10 px-4">
         <div className="container max-w-5xl">
           <SectionLabel>What You'll See</SectionLabel>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-4">
             Not a demo. A real build session.
           </h2>
-          <p className="text-muted-foreground mb-10 max-w-lg text-lg">
+          <p className="text-muted-foreground mb-10 max-w-lg text-xl">
             Watch Jerry build it. Then build it yourself — live, alongside him.
           </p>
 
@@ -129,7 +129,7 @@ export default function Webinar() {
       <ScrollSection className="py-10 px-4 bg-section-alt">
         <div className="container max-w-3xl">
           <SectionLabel>Is This For You?</SectionLabel>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-10">
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-10">
             This Is For You If…
           </h2>
 
@@ -178,7 +178,7 @@ export default function Webinar() {
       <ScrollSection className="py-10 px-4">
         <div className="container max-w-3xl">
           <SectionLabel>Your Takeaway</SectionLabel>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-8">
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-8">
             After 60 minutes, you'll have:
           </h2>
           <div className="space-y-4">
@@ -201,7 +201,7 @@ export default function Webinar() {
       <ScrollSection className="py-16 px-4 bg-section-alt" delay={0}>
         <div id="register" className="container max-w-xl scroll-mt-8 text-center">
           <SectionLabel>Register</SectionLabel>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-2">Register Now</h2>
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-2">Register Now</h2>
           <p className="text-muted-foreground mb-8">Free for senior developers. 60 minutes. Zero fluff.</p>
 
           <a

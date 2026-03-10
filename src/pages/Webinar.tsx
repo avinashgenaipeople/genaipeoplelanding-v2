@@ -47,7 +47,7 @@ export default function Webinar() {
         className="block w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
       >
         <p className="text-sm sm:text-base font-semibold">
-          Live Workshop: Watch Jerry Kurian Build a Complete App Using Claude Code in 60 Minutes — Register Free →
+          🔥 Senior Java Devs: See a Full App Built with Claude Code in 60 Min — Live Workshop, Register Free →
         </p>
       </a>
 

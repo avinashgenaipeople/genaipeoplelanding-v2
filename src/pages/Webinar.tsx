@@ -1,8 +1,33 @@
+import { useState, useEffect } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { SectionLabel } from "@/components/ui/section-label";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
-import { Calendar, Clock, Video, Zap, Eye, Rocket, CheckCircle2, Linkedin, ArrowRight } from "lucide-react";
+import { Calendar, Clock, Video, Zap, Eye, Rocket, CheckCircle2, Linkedin, ArrowRight, Users, Gift } from "lucide-react";
+
+/* ── Countdown Timer ─────────────────────────────────────── */
+function CountdownTimer() {
+  const target = new Date("2026-03-21T10:45:00+05:30").getTime();
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => { const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id); }, []);
+  const diff = Math.max(0, target - now);
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  return (
+    <div className="flex items-center justify-center gap-3 mt-4">
+      {[{ v: d, l: "Days" }, { v: h, l: "Hours" }, { v: m, l: "Min" }, { v: s, l: "Sec" }].map(({ v, l }) => (
+        <div key={l} className="text-center">
+          <div className="bg-primary/10 border border-primary/20 rounded-lg px-3 py-2 min-w-[56px]">
+            <span className="font-mono text-2xl font-bold text-primary">{String(v).padStart(2, "0")}</span>
+          </div>
+          <span className="text-xs text-muted-foreground mt-1 block">{l}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 /* ── Zoom Registration Embed ───────────────────────────────── */
 const MEETING_PAGE_URL = "/webinar/meeting";
@@ -47,21 +72,40 @@ export default function Webinar() {
         className="block w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
       >
         <p className="text-sm sm:text-base font-semibold">
-          🔥 Senior Java Devs: See a Full App Built with Claude Code in 60 Min — Live Workshop, Register Free →
+          🔥 Worth ₹1,999 — <span className="underline">FREE</span> for Senior Java Devs | Build a Full App with Claude Code in 60 Min → Claim Your Seat
         </p>
       </a>
 
       {/* Hero */}
       <section className="px-4 pt-10 pb-8 bg-hero-pattern">
         <div className="container max-w-4xl text-center">
-          <span className="highlight-pill text-sm font-semibold tracking-widest uppercase mb-4 inline-block">
-            Live on Zoom
-          </span>
+          {/* Value anchor pill */}
+          <div className="inline-flex items-center gap-2 mb-4">
+            <span className="highlight-pill text-sm font-semibold tracking-widest uppercase">
+              Live on Zoom
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-sm font-bold tracking-wide uppercase">
+              <Gift className="w-4 h-4" /> ₹1,999 — FREE Today
+            </span>
+          </div>
 
           <h1 className="mt-2 font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight">
             Senior Java Devs:{" "}
             <span className="text-primary">Build a Full App in 60 Min with Claude Code</span>
           </h1>
+
+          {/* Social proof bar */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mt-4">
+            <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <Users className="w-4 h-4 text-primary" />
+              150+ senior devs mentored
+            </span>
+            <span className="text-border">|</span>
+            <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <Users className="w-4 h-4 text-primary" />
+              <span className="font-semibold text-orange-400">Almost Full!</span> Limited to 200 seats
+            </span>
+          </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6 mt-5">
             <span className="flex items-center gap-2 text-lg font-semibold text-foreground"><Calendar className="w-5 h-5 text-primary" /> March 21st</span>
@@ -76,13 +120,17 @@ export default function Webinar() {
             <span className="text-foreground font-medium">from blank screen to deployed app. Follow along and build yours too.</span>
           </p>
 
+          {/* Countdown */}
+          <CountdownTimer />
+
           <a
             href={MEETING_PAGE_URL}
             onClick={() => trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "hero", page_path: "/webinar" })}
-            className="inline-flex items-center gap-2 mt-6 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 mt-6 px-8 py-4 rounded-lg bg-primary text-primary-foreground font-bold text-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
           >
-            Register Free — Build Your First AI App Saturday <ArrowRight className="w-4 h-4" />
+            🎯 Register FREE — Only a Few Seats Left <ArrowRight className="w-5 h-5" />
           </a>
+          <p className="text-muted-foreground/60 text-xs mt-2">100% Free. No credit card. No catch.</p>
         </div>
       </section>
 
@@ -172,25 +220,39 @@ export default function Webinar() {
         </div>
       </ScrollSection>
 
-      {/* What You'll Walk Away With */}
+      {/* What You Get FREE — Value Stack */}
       <ScrollSection className="py-6 px-4">
         <div className="container max-w-3xl">
-          <SectionLabel>Your Takeaway</SectionLabel>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-6">
-            After 60 minutes, you'll have:
+          <SectionLabel>What You Get</SectionLabel>
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-2">
+            Everything You Get — <span className="text-green-400">100% FREE</span>
           </h2>
+          <p className="text-muted-foreground text-lg mb-6">Total value: <span className="line-through text-muted-foreground/60">₹1,999</span> → <span className="text-green-400 font-bold">FREE for you today</span></p>
           <div className="space-y-3">
             {[
-              "A fully working app you built yourself using Claude Code",
-              "A clear understanding of how AI agentic systems actually write, debug, and deploy code",
-              "Confidence that your Java and backend skills are an advantage — not a liability",
-              "A recording to rewatch and reference anytime",
+              { text: "60-min live build session — watch a full app get built from scratch", value: "₹999" },
+              { text: "Build along on your own machine — walk away with a real project", value: "₹499" },
+              { text: "Full recording to rewatch and reference anytime", value: "₹299" },
+              { text: "Understanding of how your Java skills translate to AI development", value: "₹199" },
+              { text: "Confidence that you can build with AI tools — not just watch demos", value: "Priceless" },
             ].map((item, i) => (
               <div key={i} className="glass-card flex items-start gap-4 p-5">
-                <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
-                <p className="text-foreground text-lg">{item}</p>
+                <CheckCircle2 className="w-6 h-6 text-green-400 flex-shrink-0 mt-0.5" />
+                <div className="flex-1 flex items-start justify-between gap-4">
+                  <p className="text-foreground text-lg">{item.text}</p>
+                  <span className="text-muted-foreground/60 text-sm font-mono whitespace-nowrap line-through">{item.value}</span>
+                </div>
               </div>
             ))}
+          </div>
+          <div className="mt-6 text-center">
+            <a
+              href={MEETING_PAGE_URL}
+              onClick={() => trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "value_stack", page_path: "/webinar" })}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-green-500 text-white font-bold text-lg hover:bg-green-600 transition-colors"
+            >
+              🎁 Get It All FREE — Register Now <ArrowRight className="w-5 h-5" />
+            </a>
           </div>
         </div>
       </ScrollSection>
@@ -199,17 +261,23 @@ export default function Webinar() {
       <ScrollSection className="py-10 px-4 bg-section-alt" delay={0}>
         <div id="register" className="container max-w-xl scroll-mt-8 text-center">
           <SectionLabel>Register</SectionLabel>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-2">Register Now</h2>
-          <p className="text-muted-foreground mb-6">Free for senior developers. 60 minutes. Zero fluff.</p>
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-2">
+            <span className="line-through text-muted-foreground/40 text-3xl sm:text-4xl">₹1,999</span>{" "}
+            FREE for You
+          </h2>
+          <p className="text-muted-foreground mb-2">60 minutes. Zero fluff. 100% free for senior developers.</p>
+          <p className="text-orange-400 font-semibold text-sm mb-4 animate-pulse">⚡ Only a few seats remaining — Zoom is capped at 200</p>
+
+          <CountdownTimer />
 
           <a
             href={MEETING_PAGE_URL}
             onClick={() => trackEvent("cta_click", { cta_label: "register_zoom", cta_section: "registration", page_path: "/webinar" })}
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-primary text-primary-foreground font-semibold text-lg hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 mt-6 px-8 py-4 rounded-lg bg-primary text-primary-foreground font-bold text-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
           >
-            <Video className="w-5 h-5" /> Save My Spot — It's Free <ArrowRight className="w-5 h-5" />
+            <Video className="w-5 h-5" /> Claim Your FREE Spot Now <ArrowRight className="w-5 h-5" />
           </a>
-          <p className="text-muted-foreground/60 text-sm mt-4">Zoom has a 200-person cap — once it's full, registration closes. Can't make it live? Register anyway to get the recording.</p>
+          <p className="text-muted-foreground/60 text-sm mt-4">No credit card required. Can't make it live? Register anyway to get the free recording.</p>
         </div>
       </ScrollSection>
 

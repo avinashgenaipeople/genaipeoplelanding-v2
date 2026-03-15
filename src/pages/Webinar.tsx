@@ -3,7 +3,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { SectionLabel } from "@/components/ui/section-label";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
-import { Calendar, Clock, Video, Zap, Eye, Rocket, CheckCircle2, Linkedin, ArrowRight, Users, Gift } from "lucide-react";
+import { Calendar, Clock, Video, Zap, Eye, Rocket, CheckCircle2, Linkedin, ArrowRight, Users } from "lucide-react";
 
 /* ── Countdown Timer ─────────────────────────────────────── */
 function CountdownTimer() {
@@ -72,7 +72,7 @@ export default function Webinar() {
         className="block w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
       >
         <p className="text-sm sm:text-base font-semibold">
-          🔥 Worth ₹1,999 — <span className="underline">FREE</span> for Senior Java Devs | Build a Full App with Claude Code in 60 Min → Claim Your Seat
+          🔥 Senior Java Devs | Build a Full App with Claude Code in 60 Min → Claim Your Seat
         </p>
       </a>
 
@@ -83,9 +83,6 @@ export default function Webinar() {
           <div className="inline-flex items-center gap-2 mb-4">
             <span className="highlight-pill text-sm font-semibold tracking-widest uppercase">
               Live on Zoom
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-sm font-bold tracking-wide uppercase">
-              <Gift className="w-4 h-4" /> ₹1,999 — FREE Today
             </span>
           </div>
 
@@ -227,7 +224,7 @@ export default function Webinar() {
           <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-2">
             Everything You Get — <span className="text-green-400">100% FREE</span>
           </h2>
-          <p className="text-muted-foreground text-lg mb-6">Total value: <span className="line-through text-muted-foreground/60">₹1,999</span> → <span className="text-green-400 font-bold">FREE for you today</span></p>
+          <p className="text-muted-foreground text-lg mb-6"><span className="text-green-400 font-bold">100% FREE for senior developers</span></p>
           <div className="space-y-3">
             {[
               { text: "60-min live build session — watch a full app get built from scratch", value: "₹999" },
@@ -262,8 +259,7 @@ export default function Webinar() {
         <div id="register" className="container max-w-xl scroll-mt-8 text-center">
           <SectionLabel>Register</SectionLabel>
           <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-2">
-            <span className="line-through text-muted-foreground/40 text-3xl sm:text-4xl">₹1,999</span>{" "}
-            FREE for You
+            Register Now — It's FREE
           </h2>
           <p className="text-muted-foreground mb-2">60 minutes. Zero fluff. 100% free for senior developers.</p>
           <p className="text-orange-400 font-semibold text-sm mb-4 animate-pulse">⚡ Only a few seats remaining — Zoom is capped at 200</p>

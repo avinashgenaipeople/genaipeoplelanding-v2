@@ -143,7 +143,7 @@ function V1HeroSection() {
           <div className="text-center">
             <h1 className="font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
               Senior <span className="text-primary">Java Developers</span> Use Your Java Skills to Land a{" "}
-              <span className="text-primary">High-Paying AI Job (30L–70L)</span>
+              <span className="text-primary">High-Paying AI Job</span>
             </h1>
 
             {/* Video thumbnail */}

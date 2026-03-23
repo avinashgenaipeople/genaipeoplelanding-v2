@@ -7,7 +7,7 @@ import { Calendar, Clock, Video, Zap, Eye, Rocket, CheckCircle2, Linkedin, Arrow
 
 /* ── Countdown Timer ─────────────────────────────────────── */
 function CountdownTimer() {
-  const target = new Date("2026-03-21T10:45:00+05:30").getTime();
+  const target = new Date("2026-03-28T10:45:00+05:30").getTime();
   const [now, setNow] = useState(Date.now());
   useEffect(() => { const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id); }, []);
   const diff = Math.max(0, target - now);

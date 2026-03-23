@@ -10,17 +10,17 @@ import { ArrowRight, Star, ChevronLeft, ChevronRight } from "lucide-react";
 /* ── V4 Secrets (Hormozi-optimized) ──────────────────────────────── */
 const secrets = [
   {
-    title: "Secret #1",
+    title: "The Market",
     subtitle: "Companies are hiring senior devs for AI roles — at 30–70L.",
     text: "Hiring managers don't want juniors who learned AI from a bootcamp. They want engineers who've shipped production systems and can now build with AI. That's you. And the market is paying 30–70L for exactly this profile.",
   },
   {
-    title: "Secret #2",
+    title: "Your Edge",
     subtitle: "Your 8+ years of Java? That's the part AI can't replace.",
     text: "System design. Production debugging. Enterprise architecture. These are the exact skills AI companies are hiring for — and they can't train a junior to have them. Your decade of experience is the moat. AI just makes it 10x more valuable.",
   },
   {
-    title: "Secret #3",
+    title: "The Shift",
     subtitle: "Speed is the new seniority — and companies are paying a premium for it.",
     text: "Engineers using AI-augmented workflows ship in 3 days what used to take 3 weeks. Companies are restructuring comp bands around this speed. The ones who can do it are getting 30–70L offers. The window is open now.",
   },
@@ -169,10 +169,10 @@ function V4TestimonialsSection() {
 
         {/* CTA */}
         <p className="mt-8 text-xl sm:text-2xl text-center text-muted-foreground">
-          They started exactly where you are. The only difference? They watched the 28-minute training.
+          They were senior Java devs — just like you. The free training is where they started.
         </p>
         <div className="mt-4 text-center">
-          <CTAButton size="large" section="testimonials">Start My AI Career Roadmap (Free)</CTAButton>
+          <CTAButton size="large" section="testimonials">Start My Free 90-Day Roadmap</CTAButton>
         </div>
       </div>
     </section>
@@ -327,7 +327,7 @@ function V4HeroSection() {
             </p>
 
             <div className="mt-9">
-              <CTAButton size="default" section="hero">Get the 90-Day AI Career Roadmap (Free — 28 min)</CTAButton>
+              <CTAButton size="default" section="hero">Get the Free 90-Day Roadmap</CTAButton>
               <p className="mt-3 text-sm text-muted-foreground/70">150+ senior Java devs in the program. Completely free. Starts playing instantly.</p>
             </div>
           </div>
@@ -353,7 +353,7 @@ function V4ProblemSection() {
             Senior Java Devs Are Moving Into{" "}
             <span className="text-primary">AI Architect Roles at 30–70L</span> — With Skills They Already Have.
           </h2>
-          <CTAButton size="default" section="problem_top">Get the 90-Day AI Career Roadmap (Free)</CTAButton>
+          <CTAButton size="default" section="problem_top">Get the Free 90-Day Roadmap</CTAButton>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 mt-10 mb-10">
@@ -375,7 +375,7 @@ function V4ProblemSection() {
         <p className="text-2xl sm:text-3xl text-foreground mb-6">
           See the exact <span className="text-primary font-semibold">90-day roadmap</span> 150+ Java devs are already using — <span className="text-primary font-semibold">free</span>.
         </p>
-        <CTAButton size="default" section="problem_bottom">Get My AI Career Roadmap (Free — 28 min)</CTAButton>
+        <CTAButton size="default" section="problem_bottom">Get the Free 90-Day Roadmap</CTAButton>
       </div>
     </section>
   );
@@ -400,7 +400,7 @@ function V4FinalCTASection() {
             Your personalised <span className="text-primary">90-day AI career roadmap</span> starts with one 28-minute video. 150+ Java devs are already inside.
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            Step 1: Watch the free 28-min training. Step 2: Get your personalised roadmap to a 50L+ AI Architect role. That's it.
+            <strong>Step 1:</strong> Watch the free 28-min training. <strong>Step 2:</strong> Get your personalised roadmap to a 30–70L AI Architect role. That's it.
           </p>
         </div>
 
@@ -411,7 +411,7 @@ function V4FinalCTASection() {
           style={{ transitionDelay: "300ms" }}
         >
           <CTAButton size="large" section="final_cta" className="text-lg px-10 py-5">
-            Start My 90-Day Roadmap (Free)
+            Start My Free 90-Day Roadmap
           </CTAButton>
         </div>
 

@@ -3,7 +3,7 @@ import { trackEvent } from "@/lib/analytics";
 import { Video } from "lucide-react";
 
 const ZOOM_REGISTER_URL =
-  "https://us06web.zoom.us/meeting/register/r8NyOJ5kSkOMvgKocIzVoQ";
+  "https://us06web.zoom.us/meeting/register/KLzl0QNZTfurDEiwkvMMoQ";
 
 const REDIRECT_DELAY = 4000; // ms before redirect
 

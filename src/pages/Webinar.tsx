@@ -105,7 +105,7 @@ export default function Webinar() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6 mt-5">
-            <span className="flex items-center gap-2 text-lg font-semibold text-foreground"><Calendar className="w-5 h-5 text-primary" /> March 21st</span>
+            <span className="flex items-center gap-2 text-lg font-semibold text-foreground"><Calendar className="w-5 h-5 text-primary" /> March 28th</span>
             <span className="text-border text-xl">|</span>
             <span className="flex items-center gap-2 text-lg font-semibold text-foreground"><Clock className="w-5 h-5 text-primary" /> Saturday, 10:45 AM IST</span>
             <span className="text-border text-xl">|</span>

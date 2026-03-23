@@ -11,8 +11,8 @@ import { ArrowRight, Star, ChevronLeft, ChevronRight } from "lucide-react";
 const secrets = [
   {
     title: "Secret #1",
-    subtitle: "Senior devs are landing 50L+ offers — and companies are fighting for them.",
-    text: "Hiring managers don't want juniors who learned AI from a bootcamp. They want engineers who've shipped production systems and can now build with AI. That's you. And the market is paying 50–70L to prove it.",
+    subtitle: "Companies are hiring senior devs for AI roles — at 30–70L.",
+    text: "Hiring managers don't want juniors who learned AI from a bootcamp. They want engineers who've shipped production systems and can now build with AI. That's you. And the market is paying 30–70L for exactly this profile.",
   },
   {
     title: "Secret #2",
@@ -21,8 +21,8 @@ const secrets = [
   },
   {
     title: "Secret #3",
-    subtitle: "Speed is the new seniority — and it pays 2–3x your current CTC.",
-    text: "Engineers using AI-augmented workflows ship in 3 days what used to take 3 weeks. Companies are restructuring comp bands around this. The ones who can do it? 50–70L. The ones who can't? Stuck at 15–20L wondering what happened.",
+    subtitle: "Speed is the new seniority — and companies are paying a premium for it.",
+    text: "Engineers using AI-augmented workflows ship in 3 days what used to take 3 weeks. Companies are restructuring comp bands around this speed. The ones who can do it are getting 30–70L offers. The window is open now.",
   },
 ];
 
@@ -32,13 +32,13 @@ const v4Testimonials = [
     quote:
       "In my current company, an AI team was formed, and someone from management noticed my LinkedIn posts and contacted me. I was invited to join the AI team, got a good salary hike, and moved to work in AI — all thanks to the steps I took through this course. They show us the path, and I walked it.",
     name: "Punyakeerthi BL",
-    role: "Senior Software Engineer → AI Team Lead",
+    role: "Senior Software Engineer",
   },
   {
     quote:
       "The GenAI Mentorship Program transformed my career — helping me move to a Senior Associate role at Standard Chartered. The hands-on projects and personal branding support equipped me with real-world GenAI skills, boosted my visibility, and accelerated my professional growth.",
     name: "Sureshkumar Mani",
-    role: "Senior Developer → Senior Associate, Standard Chartered",
+    role: "Senior Developer",
   },
   {
     quote:
@@ -99,7 +99,7 @@ function V4TestimonialsSection() {
           <div>
             <SectionLabel>Proof It Works</SectionLabel>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-              150+ Senior Java Devs Made the Switch. Here's What Changed.
+              150+ Senior Java Devs Are Making the Switch. Here's What's Happening.
             </h2>
           </div>
 
@@ -215,7 +215,7 @@ function V4StickyDesktopHeader() {
         </span>
         <div className="flex items-center gap-4">
           <span className="text-base text-muted-foreground">
-            Java Dev → AI Architect (50L+) in 90 Days
+            Java Dev → AI Architect (30–70L)
           </span>
           <CTAButton size="small" section="sticky_desktop" showSubtext={false}>Get the Free Roadmap</CTAButton>
         </div>
@@ -286,7 +286,7 @@ function V4HeroSection() {
         className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
       >
         <p className="text-sm sm:text-base font-semibold">
-          Free 28-Min Training: How Senior Java Devs Are Landing 50L+ AI Roles in 90 Days
+          Free 28-Min Training: How Senior Java Devs Are Preparing for 30–70L AI Roles
         </p>
       </button>
 
@@ -294,9 +294,9 @@ function V4HeroSection() {
         <div className="container max-w-5xl">
           <div className="text-center">
             <h1 className="font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
-              Senior Java Devs Are Becoming{" "}
-              <span className="text-primary">AI Architects</span> at{" "}
-              <span className="text-primary">50–70L</span> — In 90 Days. No New Degree Required.
+              Senior Java Devs Are Building Their Path to{" "}
+              <span className="text-primary">AI Architect</span> Roles at{" "}
+              <span className="text-primary">30–70L</span> — No New Degree Required.
             </h1>
 
             {/* Video thumbnail */}
@@ -323,12 +323,12 @@ function V4HeroSection() {
             </div>
 
             <p className="mt-9 text-lg sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-              150+ senior Java devs have already used this system to land AI roles — average offer: 52L. Most did it in under 90 days. No new degree. No new cert. Just the skills you already have, deployed differently.
+              150+ senior Java devs are inside this program, building their path to AI roles paying 30–70L. No new degree. No new cert. Just the skills you already have, deployed differently.
             </p>
 
             <div className="mt-9">
               <CTAButton size="default" section="hero">Get the 90-Day AI Career Roadmap (Free — 28 min)</CTAButton>
-              <p className="mt-3 text-sm text-muted-foreground/70">Watched by 150+ senior Java devs this month. Completely free. Starts playing instantly.</p>
+              <p className="mt-3 text-sm text-muted-foreground/70">150+ senior Java devs in the program. Completely free. Starts playing instantly.</p>
             </div>
           </div>
         </div>
@@ -347,11 +347,11 @@ function V4ProblemSection() {
         <div className="border-t border-border pt-8">
           <SectionLabel>Why This Works</SectionLabel>
           <p className="text-base sm:text-lg font-semibold text-foreground/85 mb-4">
-            3 reasons senior Java devs are getting hired as AI Architects — at 50L+ — in under 90 days.
+            3 reasons the market is shifting toward senior Java devs for AI Architect roles at 30–70L.
           </p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Senior Java Devs Are Landing{" "}
-            <span className="text-primary">AI Architect Roles at 50–70L</span> — With Skills They Already Have.
+            Senior Java Devs Are Moving Into{" "}
+            <span className="text-primary">AI Architect Roles at 30–70L</span> — With Skills They Already Have.
           </h2>
           <CTAButton size="default" section="problem_top">Get the 90-Day AI Career Roadmap (Free)</CTAButton>
         </div>
@@ -373,7 +373,7 @@ function V4ProblemSection() {
         </div>
 
         <p className="text-2xl sm:text-3xl text-foreground mb-6">
-          You've seen why it works. Now get the exact <span className="text-primary font-semibold">90-day roadmap</span> 150+ Java devs are already following — <span className="text-primary font-semibold">free</span>.
+          See the exact <span className="text-primary font-semibold">90-day roadmap</span> 150+ Java devs are already using — <span className="text-primary font-semibold">free</span>.
         </p>
         <CTAButton size="default" section="problem_bottom">Get My AI Career Roadmap (Free — 28 min)</CTAButton>
       </div>
@@ -397,7 +397,7 @@ function V4FinalCTASection() {
           }`}
         >
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-            Your personalised <span className="text-primary">90-day AI career roadmap</span> starts with one 28-minute video. 150+ Java devs already have theirs.
+            Your personalised <span className="text-primary">90-day AI career roadmap</span> starts with one 28-minute video. 150+ Java devs are already inside.
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
             Step 1: Watch the free 28-min training. Step 2: Get your personalised roadmap to a 50L+ AI Architect role. That's it.
@@ -421,7 +421,7 @@ function V4FinalCTASection() {
           }`}
           style={{ transitionDelay: "700ms" }}
         >
-          Joined by 150+ senior Java devs this month. Takes 28 minutes. Plays instantly.
+          150+ senior Java devs already inside. Takes 28 minutes. Plays instantly.
         </p>
       </div>
     </section>
@@ -436,7 +436,7 @@ const LpV4 = () => {
     trackEvent("page_view_lp_v4", { page_path: window.location.pathname });
     setFormHeader({
       title: "Your 90-Day AI Career Roadmap Is Ready",
-      subtitle: "Plays immediately — the same training 150+ Java devs used to land 50L+ AI roles",
+      subtitle: "Plays immediately — the same training 150+ senior Java devs are using to prepare for AI roles",
     });
   }, []);
 

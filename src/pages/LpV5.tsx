@@ -187,7 +187,7 @@ function V5HeroSection() {
             </div>
 
             <p className="mt-9 text-lg sm:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-              Senior QA engineers are going from stuck at 12–15L to leading GenAI initiatives at 25–40L+ — without switching to a dev role or starting over.
+              Senior QA engineers are going from stuck at 10–20L to leading GenAI initiatives at 30–50L — without switching to a dev role or starting over.
             </p>
 
             <div className="mt-9">
@@ -249,7 +249,7 @@ function V5PillarsSection() {
       <div className="container max-w-5xl text-center">
         <SectionLabel>The Roadmap</SectionLabel>
         <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-          What Actually Works — The <span className="text-primary">3 Pillars</span> That Took QA Pros From Stuck to <span className="text-primary">25–40L+</span>
+          What Actually Works — The <span className="text-primary">3 Pillars</span> That Took QA Pros From Stuck to <span className="text-primary">30–50L</span>
         </h2>
 
         <div className="grid md:grid-cols-3 gap-6 mt-10 mb-10">
@@ -280,9 +280,9 @@ function V5SocialProofSection() {
   const { ref, isVisible } = useScrollAnimation();
 
   const results = [
-    { name: "Punya", from: "Job Support Engineer", to: "Member of Technical Staff", salary: "13L → 32L", note: "Same company. No job switch." },
-    { name: "Rakesh", from: "Basic Java", to: "Leading GenAI Projects", salary: "12L → 23L", note: "Now pulled into projects across departments." },
-    { name: "Soumya", from: "QA Background", to: "Leading AI Testing Initiatives", salary: "Significant hike", note: "Built her own AI-driven testing solution from scratch." },
+    { name: "Punya", from: "Job Support Engineer", to: "Member of Technical Staff", salary: "13L → 32L", note: "Same company. No job switch. Salary nearly tripled." },
+    { name: "Rakesh", from: "Basic Java", to: "Leading GenAI Projects", salary: "12L → 23L", note: "Now pulled into GenAI projects across departments." },
+    { name: "Soumya", from: "QA Background", to: "Leading AI Testing Initiatives", salary: "Moved to 30L+", note: "Built her own AI-driven testing solution from scratch." },
   ];
 
   return (

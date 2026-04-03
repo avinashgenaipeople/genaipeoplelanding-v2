@@ -13,6 +13,7 @@ import LpV2 from "./pages/LpV2";
 import LpV1 from "./pages/LpV1";
 import LpV3 from "./pages/LpV3";
 import LpV4 from "./pages/LpV4";
+import LpV5 from "./pages/LpV5";
 
 const Analytics = lazy(() => import("./pages/Analytics"));
 const Webinar = lazy(() => import("./pages/Webinar"));
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/lp-v2" element={<LpV2 />} />
             <Route path="/lp-v3" element={<LpV3 />} />
             <Route path="/lp-v4" element={<LpV4 />} />
+            <Route path="/lp-v5" element={<LpV5 />} />
             <Route path="/analytics" element={<Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}><Analytics /></Suspense>} />
             <Route path="/webinar" element={<Suspense fallback={null}><Webinar /></Suspense>} />
             <Route path="/webinar/meeting" element={<Suspense fallback={null}><WebinarMeeting /></Suspense>} />

@@ -63,7 +63,7 @@ function V2StickyDesktopHeader() {
         </span>
         <div className="flex items-center gap-4">
           <span className="text-base text-muted-foreground">
-            Senior Java Dev → AI Architect (30–70L)
+            Senior Java Dev → AI Architect
           </span>
           <CTAButton size="small" section="sticky_desktop" showSubtext={false}>Get Instant Access</CTAButton>
         </div>

@@ -134,7 +134,7 @@ function V2HeroSection() {
         className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
       >
         <p className="text-sm sm:text-base font-semibold">
-          Free Video: How Senior Java Devs Use Their Skills to Land 30–70L AI Jobs
+          Free Video: How Senior Java Devs Use Their Skills to Land High-Paying AI Jobs
         </p>
       </button>
 
@@ -143,7 +143,7 @@ function V2HeroSection() {
           <div className="text-center">
             <h1 className="mt-7 font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
               Senior Java Developers Use Your Java Skills to Land a{" "}
-              <span className="text-primary">High-Paying AI Job (30L–70L)</span>
+              <span className="text-primary">High-Paying AI Job</span>
             </h1>
 
             <div className="mt-8 glass-card max-w-none sm:max-w-4xl overflow-hidden -mx-[calc(1rem+24px)] sm:mx-auto rounded-none sm:rounded-xl">

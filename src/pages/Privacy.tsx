@@ -1,6 +1,12 @@
+import { PageMeta } from "@/components/PageMeta";
+
 export default function Privacy() {
   return (
     <main className="min-h-screen bg-background px-4 py-12">
+      <PageMeta
+        title="GenAI People | Privacy Policy"
+        description="GenAI People privacy policy. Learn how we collect, use, and protect your personal information."
+      />
       <div className="container max-w-3xl">
         <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-6">
           Privacy Policy

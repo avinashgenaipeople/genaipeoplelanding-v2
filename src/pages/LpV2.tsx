@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PageMeta } from "@/components/PageMeta";
 import { CTAButton } from "@/components/ui/cta-button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
@@ -307,6 +308,10 @@ const LpV2 = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageMeta
+        title="GenAI People | Senior Java Dev → AI Architect — Free Training"
+        description="Senior Java Developers: use your Java foundation to land high-paying AI jobs. Watch the free 28-minute training and see how experienced engineers are becoming AI architects."
+      />
       <V2HeroSection />
       <V2ProblemSection />
       <TestimonialsSection />

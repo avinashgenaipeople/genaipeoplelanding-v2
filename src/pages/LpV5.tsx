@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PageMeta } from "@/components/PageMeta";
 import { CTAButton } from "@/components/ui/cta-button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
@@ -378,6 +379,10 @@ const LpV5 = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageMeta
+        title="GenAI People | QA Professionals: Transition to GenAI Engineering"
+        description="QA professionals: AI is automating testing — but it's creating new roles too. Become GenAI native, build real projects, and get visible. Book your free strategy call."
+      />
       <V5HeroSection />
       <V5MistakesSection />
       <V5PillarsSection />

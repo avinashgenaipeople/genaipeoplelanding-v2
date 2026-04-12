@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { PageMeta } from "@/components/PageMeta";
 import { CTAButton } from "@/components/ui/cta-button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { Footer } from "@/components/sections/Footer";
@@ -442,6 +443,10 @@ const LpV4 = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageMeta
+        title="GenAI People | Senior Java Devs: Companies Are Hiring for AI Roles Now"
+        description="Senior Java Developers with 10+ years: companies are actively hiring experienced engineers for AI roles. Your system design and production experience is exactly what they need. Watch the free training."
+      />
       <V4HeroSection />
       <V4ProblemSection />
       <V4TestimonialsSection />

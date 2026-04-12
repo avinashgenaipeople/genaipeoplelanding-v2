@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { PageMeta } from "@/components/PageMeta";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ProblemSection } from "@/components/sections/ProblemSection";
 import { EmpathySection } from "@/components/sections/EmpathySection";
@@ -22,6 +23,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageMeta
+        title="GenAI People | Java to GenAI Career Sprint for Senior Developers"
+        description="Senior Java Developers: transition from Java to high-paying GenAI roles. 6-month career sprint with mentoring, real projects, and a personalised roadmap. 500+ developers already inside."
+      />
       <HeroSection />
       <RolesSection />
       <ProblemSection />

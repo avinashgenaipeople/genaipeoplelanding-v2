@@ -1,6 +1,12 @@
+import { PageMeta } from "@/components/PageMeta";
+
 export default function Terms() {
   return (
     <main className="min-h-screen bg-background px-4 py-12">
+      <PageMeta
+        title="GenAI People | Terms of Use"
+        description="GenAI People terms of use. Educational and informational content related to career mentoring for software developers."
+      />
       <div className="container max-w-3xl">
         <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-6">
           Terms of Use

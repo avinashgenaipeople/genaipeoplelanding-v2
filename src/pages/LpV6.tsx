@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PageMeta } from "@/components/PageMeta";
 import { CTAButton } from "@/components/ui/cta-button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
@@ -443,6 +444,10 @@ const LpV6 = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageMeta
+        title="GenAI People | AI Agents Are Here — Senior Java Devs, Who Governs Them?"
+        description="52,000 tech jobs gone in 90 days. AI agents now build, test, and deploy autonomously. Senior Java Developers: your systems thinking is the foundation. Watch the free 27-min training."
+      />
       <V6HeroSection />
       <V6ContextSection />
       <V6BlindSpotsSection />

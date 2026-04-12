@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { PageMeta } from "@/components/PageMeta";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { SectionLabel } from "@/components/ui/section-label";
 import { trackEvent } from "@/lib/analytics";
@@ -65,6 +66,10 @@ const thisIsForYou = [
 export default function Webinar() {
   return (
     <div className="min-h-screen bg-background">
+      <PageMeta
+        title="GenAI People | Live Workshop: Build a Full App in 60 Min with Claude Code"
+        description="Senior Java Devs: watch Jerry Kurian build a complete app live using Claude Code. Follow along on your machine. Free live workshop on Zoom."
+      />
       {/* Sumo bar */}
       <a
         href="#register"

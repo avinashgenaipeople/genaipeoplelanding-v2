@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PageMeta } from "@/components/PageMeta";
 import { trackEvent } from "@/lib/analytics";
 import { Video } from "lucide-react";
 
@@ -27,6 +28,10 @@ export default function WebinarMeeting() {
 
   return (
     <div className="min-h-screen bg-[#0b5cff] flex items-center justify-center px-4 overflow-hidden">
+      <PageMeta
+        title="GenAI People | Joining Workshop on Zoom"
+        description="Redirecting you to the GenAI People live workshop on Zoom. Build a full app in 60 minutes with Claude Code."
+      />
       <div className="text-center text-white max-w-lg">
 
         {/* Zoom logo + pulse ring */}

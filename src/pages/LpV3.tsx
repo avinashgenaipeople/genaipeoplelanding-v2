@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { PageMeta } from "@/components/PageMeta";
 import { CTAButton } from "@/components/ui/cta-button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
@@ -331,6 +332,10 @@ const LpV3 = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageMeta
+        title="GenAI People | Engineers Who Think Like Entrepreneurs Dominate AI"
+        description="Senior Java Developers: the engineers who win in AI aren't the fastest coders — they're the ones who think like entrepreneurs. Watch the free training and learn the shift."
+      />
       <HeroV3 />
       <ShiftSection />
       <LeverageSection />

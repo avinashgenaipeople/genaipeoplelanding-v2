@@ -747,10 +747,7 @@ const LpV7 = () => {
           q6: answers[6] || "",
           q7: value,
         });
-        // FB: CompleteRegistration — user finished all quiz questions
-        if (typeof window.fbq === "function") {
-          window.fbq("track", "CompleteRegistration", { content_name: "LpV7 Quiz" });
-        }
+        // CompleteRegistration moved to handleSubmit — only fires for hot leads
       }
     }, 200);
   }, [answers]);
@@ -791,13 +788,13 @@ const LpV7 = () => {
     // FB: Contact — user submitted their details
     const isHot =
       (answers[2] === "5_10" || answers[2] === "10_plus") &&
-      answers[3] === "java" &&
       (answers[6] === "immediately" || answers[6] === "1_3_months") &&
       answers[7] === "yes";
 
     if (typeof window.fbq === "function") {
       window.fbq("track", "Contact", { content_name: "LpV7 Quiz Funnel" });
       if (isHot) {
+        window.fbq("track", "CompleteRegistration", { content_name: "LpV7 Hot Lead" });
         window.fbq("track", "InitiateCheckout", { content_name: "LpV7 Hot Lead" });
       }
     }

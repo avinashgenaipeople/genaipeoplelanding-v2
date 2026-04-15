@@ -5,6 +5,7 @@ import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { Footer } from "@/components/sections/Footer";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { trackEvent } from "@/lib/analytics";
+import { getAllParams } from "@/lib/utm";
 import { ArrowRight, ArrowLeft, X, CheckCircle2, Play } from "lucide-react";
 
 /* ── Quiz Questions ──────────────────────────────────────────────── */
@@ -801,6 +802,7 @@ const LpV7 = () => {
 
     // POST lead to LeadConnector webhook (fire-and-forget)
     const label = (q: number) => ANSWER_LABELS[q]?.[answers[q]] ?? answers[q] ?? "";
+    const urlParams = getAllParams();
     fetch(WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -817,6 +819,21 @@ const LpV7 = () => {
         quiz_call_interest: label(7),
         quiz_source: "lp-v7",
         quiz_lead_score: isHot ? "hot" : "warm",
+        // URL/attribution params from landing — flattened for CRM field mapping
+        utm_source: urlParams.utm_source ?? "",
+        utm_medium: urlParams.utm_medium ?? "",
+        utm_campaign: urlParams.utm_campaign ?? "",
+        utm_term: urlParams.utm_term ?? "",
+        utm_content: urlParams.utm_content ?? "",
+        utm_adname: urlParams.utm_adname ?? "",
+        utm_adid: urlParams.utm_adid ?? "",
+        utm_placement: urlParams.utm_placement ?? "",
+        utm_ad_account: urlParams.utm_ad_account ?? "",
+        utm_id: urlParams.utm_id ?? "",
+        fbclid: urlParams.fbclid ?? "",
+        gclid: urlParams.gclid ?? "",
+        // Full param bag for anything not flattened above
+        url_params: urlParams,
       }),
     }).catch(() => {});
 

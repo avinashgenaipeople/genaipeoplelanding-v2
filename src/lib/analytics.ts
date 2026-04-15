@@ -30,6 +30,10 @@ export function trackEvent(eventName: string, params: EventParams = {}) {
   if (supabase) {
     const utm = getUtmParams();
     const urlParams = getAllParams();
+    // Merge event params (excluding ones already stored in dedicated columns)
+    // into url_params so quiz answers and other custom fields persist.
+    const { page_path: _p, cta_section: _s, cta_label: _l, ...extraParams } = params;
+    const mergedParams = { ...urlParams, ...extraParams };
     supabase
       .from("analytics_events")
       .insert({
@@ -42,7 +46,7 @@ export function trackEvent(eventName: string, params: EventParams = {}) {
         utm_campaign: utm.utm_campaign ?? null,
         utm_term: utm.utm_term ?? null,
         utm_content: utm.utm_content ?? null,
-        url_params: Object.keys(urlParams).length > 0 ? urlParams : {},
+        url_params: Object.keys(mergedParams).length > 0 ? mergedParams : {},
       })
       .then(({ error }) => {
         if (error && import.meta.env.DEV) {

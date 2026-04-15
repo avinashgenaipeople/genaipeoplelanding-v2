@@ -102,6 +102,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return mediumMap.get(m)!;
   };
 
+  // 5. Quiz answer breakdown — { [questionId]: { [answerValue]: count } }
+  const quizAnswers: Record<string, Record<string, number>> = {};
+
   // Collect distinct values for filter dropdowns
   const pageSet = new Set<string>();
   const sourceSet = new Set<string>();
@@ -200,6 +203,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         m.submits++;
         totalSubmits++;
         break;
+      case "quiz_answer": {
+        const qId = up.question_id ? String(up.question_id) : null;
+        const ans = up.answer ? String(up.answer) : null;
+        if (qId && ans) {
+          if (!quizAnswers[qId]) quizAnswers[qId] = {};
+          quizAnswers[qId][ans] = (quizAnswers[qId][ans] ?? 0) + 1;
+        }
+        break;
+      }
     }
   }
 
@@ -231,6 +243,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     utmSources,
     byMedium,
     daily,
+    quizAnswers,
     filterOptions: {
       pages: [...pageSet].sort(),
       sources: [...sourceSet].sort(),

@@ -64,14 +64,60 @@ type Filters = {
   utm_id: string;
 };
 
+type QuizAnswers = Record<string, Record<string, number>>;
+
 type AnalyticsData = {
   summary: Summary;
   funnel: FunnelRow[];
   utmSources: UtmRow[];
   byMedium: MediumRow[];
   daily: DailyRow[];
+  quizAnswers: QuizAnswers;
   filterOptions: FilterOptions;
 };
+
+// Quiz questions + answer labels — mirrors LpV7.tsx for readable analytics display
+const QUIZ_META: { id: number; question: string; options: { value: string; label: string }[] }[] = [
+  { id: 1, question: "Are you currently working as a software developer?", options: [
+    { value: "yes_fulltime", label: "Yes, full-time" },
+    { value: "yes_looking", label: "Yes, but looking for a change" },
+    { value: "no_laid_off", label: "No, I was recently laid off" },
+    { value: "no_different", label: "No, I'm in a different role" },
+  ]},
+  { id: 2, question: "Years of professional development experience?", options: [
+    { value: "lt_3", label: "Less than 3 years" },
+    { value: "3_5", label: "3-5 years" },
+    { value: "5_10", label: "5-10 years" },
+    { value: "10_plus", label: "10+ years" },
+  ]},
+  { id: 3, question: "Primary programming language?", options: [
+    { value: "java", label: "Java" },
+    { value: "python", label: "Python" },
+    { value: "js_ts", label: "JavaScript / TypeScript" },
+    { value: "csharp", label: "C# / .NET" },
+    { value: "other", label: "Other" },
+  ]},
+  { id: 4, question: "Have you used AI tools in daily work?", options: [
+    { value: "yes_regularly", label: "Yes, regularly" },
+    { value: "tried_few", label: "Tried a few times" },
+    { value: "no", label: "No, not yet" },
+  ]},
+  { id: 5, question: "What concerns you most about AI's impact?", options: [
+    { value: "automated", label: "Role could be automated" },
+    { value: "falling_behind", label: "Falling behind devs using AI" },
+    { value: "no_path", label: "Don't know how to transition" },
+    { value: "want_growth", label: "Not concerned — want to grow" },
+  ]},
+  { id: 6, question: "How soon would you start an AI role?", options: [
+    { value: "immediately", label: "Immediately" },
+    { value: "1_3_months", label: "Within 1-3 months" },
+    { value: "exploring", label: "Just exploring" },
+  ]},
+  { id: 7, question: "Open to a free strategy call?", options: [
+    { value: "yes", label: "Yes, let's do it" },
+    { value: "maybe", label: "Maybe — learn more first" },
+  ]},
+];
 
 const DAYS_OPTIONS = [1, 7, 14, 30, 90] as const;
 
@@ -218,7 +264,7 @@ export default function Analytics() {
   }
 
   // --- Dashboard ---
-  const { summary, funnel, utmSources, byMedium, daily } = data!;
+  const { summary, funnel, utmSources, byMedium, daily, quizAnswers = {} } = data!;
 
   // Build cost-per-submit by joining byMedium (submits) with metaAdsets (spend)
   const adsetSpendMap = new Map(metaAdsets.map((a) => [a.adsetId, a]));
@@ -523,6 +569,47 @@ export default function Analytics() {
               ))}
             </tbody>
           </table>
+        </section>
+
+        {/* Quiz answer breakdown */}
+        <section className="bg-white rounded-lg shadow p-4 mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">Quiz Answer Breakdown</h2>
+          {Object.keys(quizAnswers).length === 0 ? (
+            <p className="text-gray-500">No quiz answers recorded in this period.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {QUIZ_META.map((q) => {
+                const counts = quizAnswers[String(q.id)] || {};
+                const chartData = q.options.map((opt) => ({
+                  label: opt.label,
+                  value: opt.value,
+                  count: counts[opt.value] || 0,
+                }));
+                const total = chartData.reduce((s, r) => s + r.count, 0);
+                return (
+                  <div key={q.id} className="border rounded-md p-3">
+                    <div className="text-xs text-gray-500 mb-1">Q{q.id} · {total} answers</div>
+                    <h3 className="text-sm font-medium text-gray-900 mb-2">{q.question}</h3>
+                    {total === 0 ? (
+                      <p className="text-xs text-gray-400">No answers yet.</p>
+                    ) : (
+                      <ResponsiveContainer width="100%" height={Math.max(120, chartData.length * 36)}>
+                        <BarChart data={chartData} layout="vertical" margin={{ left: 8, right: 16, top: 4, bottom: 4 }}>
+                          <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                          <XAxis type="number" tick={{ fontSize: 11 }} allowDecimals={false} />
+                          <YAxis type="category" dataKey="label" tick={{ fontSize: 11 }} width={160} />
+                          <Tooltip
+                            formatter={(value: number) => [`${value} (${pct(value, total)})`, "Answers"]}
+                          />
+                          <Bar dataKey="count" fill="#6366f1" radius={[0, 4, 4, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </section>
 
         {/* Daily trend chart */}

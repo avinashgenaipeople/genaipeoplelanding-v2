@@ -5,7 +5,7 @@ import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { Footer } from "@/components/sections/Footer";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { trackEvent } from "@/lib/analytics";
-import { ArrowRight, ArrowLeft, X, CheckCircle2 } from "lucide-react";
+import { ArrowRight, ArrowLeft, X, CheckCircle2, Play } from "lucide-react";
 
 /* ── Quiz Questions ──────────────────────────────────────────────── */
 const QUIZ_QUESTIONS = [
@@ -78,7 +78,52 @@ const QUIZ_QUESTIONS = [
   },
 ];
 
-const SYNAMATE_FORM_URL = "https://share.synamate.com/widget/form/TW7vEwm553MbqKYmfMPP";
+const WEBHOOK_URL =
+  "https://services.leadconnectorhq.com/hooks/HADyq7BakZrOyu15lic7/webhook-trigger/e5a21b54-2012-479a-a948-233c0c543245";
+
+const TRAINING_URL = "https://learning.genaipeople.com/training-70";
+
+const ANSWER_LABELS: Record<string, Record<string, string>> = {
+  1: {
+    yes_fulltime: "Yes, full-time",
+    yes_looking: "Yes, but looking for a change",
+    no_laid_off: "No, I was recently laid off",
+    no_different: "No, I'm in a different role",
+  },
+  2: {
+    lt_3: "Less than 3 years",
+    "3_5": "3-5 years",
+    "5_10": "5-10 years",
+    "10_plus": "10+ years",
+  },
+  3: {
+    java: "Java",
+    python: "Python",
+    js_ts: "JavaScript / TypeScript",
+    csharp: "C# / .NET",
+    other: "Other",
+  },
+  4: {
+    yes_regularly: "Yes, regularly",
+    tried_few: "I've tried them a few times",
+    no: "No, not yet",
+  },
+  5: {
+    automated: "My role could be automated or eliminated",
+    falling_behind: "I'm falling behind developers who use AI",
+    no_path: "I dont know how to transition",
+    want_growth: "I'm not concerned — I just want to grow",
+  },
+  6: {
+    immediately: "Immediately",
+    "1_3_months": "Within the next 1-3 months",
+    exploring: "I'm just exploring for now",
+  },
+  7: {
+    yes: "Yes",
+    maybe: "Maybe",
+  },
+};
 
 /* ── V1 Content Data ─────────────────────────────────────────────── */
 const secrets = [
@@ -98,6 +143,92 @@ const secrets = [
     text: "The engineers getting promoted now ship in days what used to take weeks. AI is their multiplier, and companies are paying 30–70L for it.",
   },
 ];
+
+const REDIRECT_DELAY = 4000;
+
+/* ── Transition Screen (step 9) ──────────────────────────────────── */
+function TransitionScreen({ name }: { name: string }) {
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    // FB: Lead pixel — fires before redirect
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "Lead", { content_name: "LpV7 Quiz Funnel" });
+    }
+    trackEvent("quiz_redirect_training", { page_path: window.location.pathname });
+
+    const t1 = setTimeout(() => setStep(1), 500);
+    const t2 = setTimeout(() => setStep(2), 1500);
+    const t3 = setTimeout(() => {
+      window.location.href = TRAINING_URL;
+    }, REDIRECT_DELAY);
+
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, []);
+
+  return (
+    <div className="text-center">
+      {/* Play icon with pulse */}
+      <div className="relative mx-auto w-20 h-20 mb-6">
+        <span className="absolute inset-0 rounded-full bg-primary/20 animate-[ping_2s_ease-out_infinite]" />
+        <span className="absolute inset-2 rounded-full bg-primary/15 animate-[ping_2s_ease-out_0.4s_infinite]" />
+        <div
+          className="relative z-10 w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center transition-transform duration-700"
+          style={{ transform: step >= 0 ? "scale(1)" : "scale(0)" }}
+        >
+          <Play className="w-9 h-9 text-primary ml-1" fill="currentColor" />
+        </div>
+      </div>
+
+      {/* Title */}
+      <h2
+        className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-2 transition-all duration-700"
+        style={{
+          opacity: step >= 1 ? 1 : 0,
+          transform: step >= 1 ? "translateY(0)" : "translateY(20px)",
+        }}
+      >
+        Loading Your Free Training{name ? `, ${name.split(" ")[0]}` : ""}...
+      </h2>
+
+      {/* Subtitle */}
+      <p
+        className="text-white/60 text-lg mb-8 transition-all duration-700 delay-200"
+        style={{
+          opacity: step >= 1 ? 1 : 0,
+          transform: step >= 1 ? "translateY(0)" : "translateY(20px)",
+        }}
+      >
+        28-minute video on how senior devs transition into AI
+      </p>
+
+      {/* Progress bar + redirect message */}
+      <div
+        className="transition-all duration-500"
+        style={{ opacity: step >= 2 ? 1 : 0 }}
+      >
+        <p className="text-white/80 font-medium mb-4">
+          Taking you to the video now...
+        </p>
+        <div className="mx-auto w-48 h-1.5 rounded-full bg-white/10 overflow-hidden">
+          <div
+            className="h-full bg-primary rounded-full transition-all ease-linear"
+            style={{
+              width: step >= 2 ? "100%" : "0%",
+              transitionDuration: `${REDIRECT_DELAY - 1500}ms`,
+            }}
+          />
+        </div>
+        <a
+          href={TRAINING_URL}
+          className="inline-block mt-6 text-white/40 text-sm underline underline-offset-2 hover:text-white/70 transition-colors"
+        >
+          Click here if you're not redirected
+        </a>
+      </div>
+    </div>
+  );
+}
 
 /* ── Quiz Overlay ────────────────────────────────────────────────── */
 function QuizOverlay({
@@ -271,38 +402,12 @@ function QuizOverlay({
           </div>
         )}
 
-        {/* Step 9: Thank you */}
+        {/* Step 9: Transition screen → redirect to training video */}
         {currentStep === 9 && (
-          <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/20 mb-6">
-              <CheckCircle2 className="w-10 h-10 text-primary" />
-            </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-3">
-              Thank you, {contactInfo.name}!
-            </h2>
-            <p className="text-white/60 text-lg mb-8">
-              We've received your details. Our team will reach out shortly to schedule your free strategy call.
-            </p>
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-8 py-3 rounded-full bg-primary text-primary-foreground text-base font-semibold hover:bg-primary/90 transition-colors"
-            >
-              Close
-            </button>
-          </div>
+          <TransitionScreen name={contactInfo.name} />
         )}
       </div>
 
-      {/* Hidden Synamate iframe for form submission (rendered on step 9) */}
-      {currentStep === 9 && (
-        <iframe
-          src={`${SYNAMATE_FORM_URL}?first_name=${encodeURIComponent(contactInfo.name)}&email=${encodeURIComponent(contactInfo.email)}&phone=${encodeURIComponent(contactInfo.phone)}`}
-          className="absolute w-0 h-0 opacity-0 pointer-events-none"
-          title="form-submit"
-          tabIndex={-1}
-        />
-      )}
     </div>
   );
 }
@@ -612,6 +717,10 @@ const LpV7 = () => {
     setContactInfo({ name: "", email: "", phone: "" });
     setIsSubmitting(false);
     trackEvent("quiz_open", { page_path: window.location.pathname });
+    // FB: ViewContent — user engaged with quiz
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "ViewContent", { content_name: "LpV7 Quiz" });
+    }
   }, []);
 
   const closeQuiz = useCallback(() => {
@@ -638,6 +747,10 @@ const LpV7 = () => {
           q6: answers[6] || "",
           q7: value,
         });
+        // FB: CompleteRegistration — user finished all quiz questions
+        if (typeof window.fbq === "function") {
+          window.fbq("track", "CompleteRegistration", { content_name: "LpV7 Quiz" });
+        }
       }
     }, 200);
   }, [answers]);
@@ -667,18 +780,50 @@ const LpV7 = () => {
       ...Object.fromEntries(Object.entries(answers).map(([k, v]) => [`q${k}`, v])),
     });
     trackEvent("lead_form_submit", {
-      form_id: "TW7vEwm553MbqKYmfMPP",
+      form_id: "lp-v7-quiz",
       form_name: "LpV7 Quiz Funnel",
       page_path: window.location.pathname,
     });
     if (typeof window.gtag === "function") {
       window.gtag("event", "generate_lead", { currency: "INR", value: 1 });
     }
+
+    // FB: Contact — user submitted their details
+    const isHot =
+      (answers[2] === "5_10" || answers[2] === "10_plus") &&
+      answers[3] === "java" &&
+      (answers[6] === "immediately" || answers[6] === "1_3_months") &&
+      answers[7] === "yes";
+
     if (typeof window.fbq === "function") {
-      window.fbq("track", "Lead", { content_name: "LpV7 Quiz Funnel" });
+      window.fbq("track", "Contact", { content_name: "LpV7 Quiz Funnel" });
+      if (isHot) {
+        window.fbq("track", "InitiateCheckout", { content_name: "LpV7 Hot Lead" });
+      }
     }
 
-    // Move to thank you (hidden Synamate iframe loads there)
+    // POST lead to LeadConnector webhook (fire-and-forget)
+    const label = (q: number) => ANSWER_LABELS[q]?.[answers[q]] ?? answers[q] ?? "";
+    fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: contactInfo.name,
+        email: contactInfo.email,
+        phone: contactInfo.phone,
+        quiz_current_role: label(1),
+        quiz_experience: label(2),
+        quiz_language: label(3),
+        quiz_ai_usage: label(4),
+        quiz_concern: label(5),
+        quiz_readiness: label(6),
+        quiz_call_interest: label(7),
+        quiz_source: "lp-v7",
+        quiz_lead_score: isHot ? "hot" : "warm",
+      }),
+    }).catch(() => {});
+
+    // Move to transition screen
     setCurrentStep(9);
     setIsSubmitting(false);
   }, [contactInfo, answers]);

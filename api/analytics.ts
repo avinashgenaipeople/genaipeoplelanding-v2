@@ -168,6 +168,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       case "page_view_lp_v1":
       case "page_view_lp_v2":
       case "page_view_lp_v3":
+      case "page_view_lp_v4":
+      case "page_view_lp_v5":
+      case "page_view_lp_v6":
+      case "page_view_lp_v7":
         f.views++;
         u.views++;
         d.views++;
@@ -182,6 +186,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         totalClicks++;
         break;
       case "lead_form_open":
+      case "quiz_open":
         f.opens++;
         u.opens++;
         d.opens++;

@@ -69,7 +69,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     // Fetch account-level data and adset-level data concurrently
-    const [accountResults, adsetResults, adsetTodayResults] = await Promise.all([
+    const [accountResults, adsetResults, adsetTodayResults, dailySpendResults] = await Promise.all([
       // Account-level: info + today + month (parallelized per account)
       Promise.all(
         accountIds.map(async (actId) => {
@@ -152,6 +152,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }>;
         })
       ),
+      // Account-level daily spend breakdown (runs concurrently)
+      Promise.all(
+        accountIds.map(async (actId) => {
+          const dailyInsights = await metaGet(`${actId}/insights`, {
+            fields: "spend",
+            time_range: JSON.stringify({ since: adsetSinceStr, until: nowIST }),
+            time_increment: "1",
+            limit: "500",
+          });
+          return (dailyInsights.data ?? []) as Array<{
+            date_start: string;
+            spend: string;
+          }>;
+        })
+      ),
     ]);
 
     // Build today spend lookup by adset ID
@@ -169,7 +184,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       clicks: a.clicks,
     }));
 
-    return res.status(200).json({ accounts: accountResults, adsets });
+    // Aggregate daily spend across all accounts
+    const dailySpendMap = new Map<string, number>();
+    for (const row of dailySpendResults.flat()) {
+      const date = row.date_start; // YYYY-MM-DD
+      dailySpendMap.set(date, (dailySpendMap.get(date) ?? 0) + Number(row.spend));
+    }
+    const dailySpend = [...dailySpendMap.entries()]
+      .map(([date, spend]) => ({ date, spend: spend.toFixed(2) }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    return res.status(200).json({ accounts: accountResults, adsets, dailySpend });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Unknown Meta API error";
     return res.status(502).json({ error: message });

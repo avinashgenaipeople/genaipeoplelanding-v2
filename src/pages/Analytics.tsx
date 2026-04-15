@@ -36,6 +36,8 @@ type MetaAdset = {
   clicks: string;
 };
 
+type MetaDailySpend = { date: string; spend: string };
+
 type MediumRow = { medium: string; views: number; clicks: number; opens: number; submits: number };
 
 type FilterOptions = {
@@ -90,6 +92,7 @@ export default function Analytics() {
   // Meta Ads state
   const [metaData, setMetaData] = useState<MetaAccount[] | null>(null);
   const [metaAdsets, setMetaAdsets] = useState<MetaAdset[]>([]);
+  const [metaDailySpend, setMetaDailySpend] = useState<MetaDailySpend[]>([]);
   const [metaLoading, setMetaLoading] = useState(false);
   const [metaError, setMetaError] = useState("");
 
@@ -117,6 +120,7 @@ export default function Analytics() {
       const json = await res.json();
       setMetaData(json.accounts);
       setMetaAdsets(json.adsets ?? []);
+      setMetaDailySpend(json.dailySpend ?? []);
     } catch (e: unknown) {
       setMetaError(e instanceof Error ? e.message : "Unknown error");
     } finally {
@@ -237,6 +241,15 @@ export default function Analytics() {
     })
     .filter((r) => r.spend > 0 || r.submits > 0)
     .sort((a, b) => b.spend - a.spend);
+
+  // Build cost-per-submit by day: join daily submits with Meta daily spend
+  const dailySpendMap = new Map(metaDailySpend.map((d) => [d.date, Number(d.spend)]));
+  const costPerSubmitDaily = (daily ?? []).map((d) => {
+    const spend = dailySpendMap.get(d.date) ?? 0;
+    const cps = d.submits > 0 && spend > 0 ? spend / d.submits : 0;
+    return { date: d.date, spend, submits: d.submits, views: d.views, costPerSubmit: cps };
+  }).filter((d) => d.spend > 0 || d.submits > 0)
+    .sort((a, b) => b.date.localeCompare(a.date)); // newest first
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
@@ -397,6 +410,51 @@ export default function Analytics() {
                       <td className="py-2 pr-4 text-right text-gray-900">{totalViews}</td>
                       <td className="py-2 pr-4 text-right text-gray-900">{totalSubs}</td>
                       <td className="py-2 text-right text-gray-900">{totalCps > 0 ? `₹${totalCps.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "–"}</td>
+                    </tr>
+                  );
+                })()}
+              </tbody>
+            </table>
+          </section>
+        )}
+
+        {/* Cost per Submit per Day */}
+        {costPerSubmitDaily.length > 0 && (
+          <section className="bg-white rounded-lg shadow p-4 mb-8 overflow-x-auto">
+            <h2 className="text-lg font-semibold text-gray-900 mb-1">Cost per Submit (by Day)</h2>
+            <p className="text-xs text-gray-400 mb-3">Meta daily ad spend matched with form submits per day</p>
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="border-b text-gray-500">
+                  <th className="py-2 pr-4">Date</th>
+                  <th className="py-2 pr-4 text-right">Spend</th>
+                  <th className="py-2 pr-4 text-right">Views</th>
+                  <th className="py-2 pr-4 text-right">Submits</th>
+                  <th className="py-2 text-right">Cost / Submit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {costPerSubmitDaily.map((r) => (
+                  <tr key={r.date} className="border-b last:border-0">
+                    <td className="py-2 pr-4 font-mono text-gray-900">{r.date}</td>
+                    <td className="py-2 pr-4 text-right text-gray-900">₹{r.spend.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td className="py-2 pr-4 text-right text-gray-900">{r.views}</td>
+                    <td className="py-2 pr-4 text-right text-gray-900 font-semibold">{r.submits}</td>
+                    <td className="py-2 text-right font-bold text-gray-900">{r.costPerSubmit > 0 ? `₹${r.costPerSubmit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "–"}</td>
+                  </tr>
+                ))}
+                {costPerSubmitDaily.length > 1 && (() => {
+                  const totalSpend = costPerSubmitDaily.reduce((s, r) => s + r.spend, 0);
+                  const totalViews = costPerSubmitDaily.reduce((s, r) => s + r.views, 0);
+                  const totalSubs = costPerSubmitDaily.reduce((s, r) => s + r.submits, 0);
+                  const avgCps = totalSubs > 0 ? totalSpend / totalSubs : 0;
+                  return (
+                    <tr className="border-t-2 border-gray-300 font-bold">
+                      <td className="py-2 pr-4 text-gray-900">Average</td>
+                      <td className="py-2 pr-4 text-right text-gray-900">₹{totalSpend.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                      <td className="py-2 pr-4 text-right text-gray-900">{totalViews}</td>
+                      <td className="py-2 pr-4 text-right text-gray-900">{totalSubs}</td>
+                      <td className="py-2 text-right text-gray-900">{avgCps > 0 ? `₹${avgCps.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "–"}</td>
                     </tr>
                   );
                 })()}

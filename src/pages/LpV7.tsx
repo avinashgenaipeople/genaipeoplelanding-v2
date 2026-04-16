@@ -365,7 +365,7 @@ function QuizOverlay({
                 Great news — you're a strong fit!
               </h2>
               <p className="text-white/60 text-lg">
-                Enter your details and we'll reach out with your personalised roadmap.
+                Enter your details to get instant access to the 28-min video explaining the transition from Senior Dev into an AI Engineer.
               </p>
             </div>
             <form

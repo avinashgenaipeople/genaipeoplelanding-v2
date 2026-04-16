@@ -306,9 +306,22 @@ function QuizOverlay({
         {/* Step 1-7: Questions */}
         {question && (
           <div className="text-center">
-            <p className="text-white/50 text-sm mb-6 font-medium">
-              Question {currentStep} of 7
-            </p>
+            {/* Step 1 intro header — sets context */}
+            {currentStep === 1 && (
+              <div className="mb-6">
+                <p className="text-primary text-sm font-semibold tracking-wide uppercase mb-2">
+                  60-Second Career Quiz
+                </p>
+                <p className="text-white/60 text-base leading-relaxed max-w-md mx-auto">
+                  Answer 7 quick questions and we'll tell you if you qualify for a high-paying AI role.
+                </p>
+              </div>
+            )}
+            {currentStep > 1 && (
+              <p className="text-white/50 text-sm mb-6 font-medium">
+                Question {currentStep} of 7
+              </p>
+            )}
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-8">
               {question.question}
             </h2>

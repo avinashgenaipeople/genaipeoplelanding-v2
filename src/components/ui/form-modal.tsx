@@ -35,7 +35,7 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
     }
   }, [open]);
 
-  const fireSubmitOnce = () => {
+  const fireSubmitOnce = (method: string) => {
     if (submitFiredRef.current) return;
     submitFiredRef.current = true;
 
@@ -43,6 +43,7 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
       form_id: "TW7vEwm553MbqKYmfMPP",
       form_name: "LFMVP Optin -Improved",
       page_path: window.location.pathname,
+      detection_method: method,
     });
     if (typeof window.gtag === "function") {
       window.gtag("event", "generate_lead", {
@@ -57,20 +58,28 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
     }
   };
 
-  // Listen for Synamate form submission via postMessage
+  // Listen for Synamate/GHL form submission via postMessage
   useEffect(() => {
     if (!open) return;
 
     const handleMessage = (event: MessageEvent) => {
+      // Only trust messages from Synamate / GHL origins
+      const origin = event.origin || "";
+      const trustedOrigin =
+        origin.includes("synamate.com") ||
+        origin.includes("leadconnectorhq.com") ||
+        origin.includes("gohighlevel.com") ||
+        origin.includes("msgsndr.com");
+
       // Normalise: Synamate may send an object OR a JSON string
       let data = event.data;
       if (typeof data === "string") {
         try { data = JSON.parse(data); } catch { /* keep as string */ }
       }
 
-      // Dev: log every postMessage to catch Synamate's array-based protocol
+      // Dev: log every postMessage to catch protocol changes
       if (import.meta.env.DEV) {
-        console.log("[postMessage]", event.origin, data);
+        console.log("[postMessage]", origin, data);
       }
 
       // Resize iframe if Synamate sends height via iFrameSizer protocol
@@ -90,22 +99,35 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
         if (h && h > 100) setIframeHeight(h);
       }
 
-      // Synamate sends array-based postMessages:
-      // ["set-sticky-contacts", ...] fires when a lead form is submitted
+      // Only check submit signals from trusted origins
+      if (!trustedOrigin) return;
+
+      // GHL / Synamate known submit postMessage formats:
+      // - ["set-sticky-contacts", ...] — contact saved after form submit
+      // - ["formSubmitted", ...] / ["form-submitted", ...] — direct submit signal
+      // - { type: "form:submit" | "form_submitted" } — object-based
+      // - { event: "form_submit" } / { action: "submit" } — alternate object shapes
+      // - plain string "form:submit" / "form_submitted" / "submit"
       const isSubmit =
-        (Array.isArray(data) && data[0] === "set-sticky-contacts") ||
+        (Array.isArray(data) &&
+          (data[0] === "set-sticky-contacts" ||
+           data[0] === "formSubmitted" ||
+           data[0] === "form-submitted" ||
+           data[0] === "form_submitted")) ||
         (typeof data === "object" &&
           data !== null &&
           !Array.isArray(data) &&
           (data.type === "form:submit" ||
             data.type === "form_submitted" ||
+            data.type === "formSubmitted" ||
             data.event === "form_submit" ||
+            data.event === "formSubmitted" ||
             data.action === "submit")) ||
         (typeof data === "string" &&
-          (data === "form:submit" || data === "form_submitted" || data === "submit"));
+          (data === "form:submit" || data === "form_submitted" || data === "formSubmitted" || data === "submit"));
 
       if (isSubmit) {
-        fireSubmitOnce();
+        fireSubmitOnce("postMessage");
       }
     };
 
@@ -158,7 +180,7 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
                 setLoadCount((prev) => {
                   const next = prev + 1;
                   // First load = form page; subsequent loads = form submitted → thank-you page
-                  if (next >= 2) fireSubmitOnce();
+                  if (next >= 2) fireSubmitOnce("iframe_reload");
                   return next;
                 });
               }}

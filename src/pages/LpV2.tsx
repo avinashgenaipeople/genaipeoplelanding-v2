@@ -135,7 +135,7 @@ function V2HeroSection() {
         className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
       >
         <p className="text-sm sm:text-base font-semibold">
-          Free Video: How Senior Java Devs Use Their Skills to Land High-Paying AI Jobs
+          Free Video: How Senior Java Devs Are Landing 30–70L AI Jobs (Without Another Certificate)
         </p>
       </button>
 

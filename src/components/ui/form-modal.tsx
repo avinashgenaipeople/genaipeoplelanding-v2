@@ -21,7 +21,6 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
   const formUrl = useMemo(() => buildFormUrl(), []);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [iframeHeight, setIframeHeight] = useState(500);
-  const [loadCount, setLoadCount] = useState(0);
   const submitFiredRef = React.useRef(false);
 
   // Reset on open (not close) — resetting on close triggers a state change
@@ -30,7 +29,6 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
     if (open) {
       setIframeLoaded(false);
       setIframeHeight(500);
-      setLoadCount(0);
       submitFiredRef.current = false;
     }
   }, [open]);
@@ -177,12 +175,9 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
               title="LFMVP Optin -Improved"
               onLoad={() => {
                 setIframeLoaded(true);
-                setLoadCount((prev) => {
-                  const next = prev + 1;
-                  // First load = form page; subsequent loads = form submitted → thank-you page
-                  if (next >= 2) fireSubmitOnce("iframe_reload");
-                  return next;
-                });
+                // Note: iframe_reload fallback removed — Synamate does 2 loads
+                // on initial render (form + config reload) which caused false
+                // submit detection. We now rely solely on postMessage signals.
               }}
             />
           </div>

@@ -144,7 +144,7 @@ function V2HeroSection() {
           <div className="text-center">
             <h1 className="mt-7 font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
               Senior Java Developers Use Your Java Skills to Land a{" "}
-              <span className="text-primary">High-Paying AI Job</span>
+              <span className="text-primary">30–70L AI Job</span>
             </h1>
 
             <div className="mt-8 glass-card max-w-none sm:max-w-4xl overflow-hidden -mx-[calc(1rem+24px)] sm:mx-auto rounded-none sm:rounded-xl">

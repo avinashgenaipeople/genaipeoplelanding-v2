@@ -71,9 +71,9 @@ const QUIZ_QUESTIONS = [
   },
   {
     id: 7,
-    question: "Would you be open to a free strategy call to map your transition?",
+    question: "Would you like a personalised roadmap for your AI transition?",
     options: [
-      { label: "Yes, let's do it", value: "yes" },
+      { label: "Yes, show me", value: "yes" },
       { label: "Maybe — I'd like to learn more first", value: "maybe" },
     ],
   },
@@ -313,7 +313,7 @@ function QuizOverlay({
                   60-Second Career Quiz
                 </p>
                 <p className="text-white/60 text-base leading-relaxed max-w-md mx-auto">
-                  Answer 7 quick questions and we'll tell you if you qualify for a high-paying AI role.
+                  Answer 7 quick questions to find out if you qualify for a 30–70L AI role — and get your personalised roadmap.
                 </p>
               </div>
             )}
@@ -355,14 +355,19 @@ function QuizOverlay({
         )}
 
         {/* Step 8: Name + Phone form */}
-        {currentStep === 8 && (
+        {currentStep === 8 && (() => {
+          const isHotLead =
+            (answers[2] === "5_10" || answers[2] === "10_plus") &&
+            (answers[6] === "immediately" || answers[6] === "1_3_months") &&
+            answers[7] === "yes";
+          return (
           <div className="text-center">
             <div className="mb-8">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
                 <CheckCircle2 className="w-8 h-8 text-primary" />
               </div>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-2">
-                Great news — you're a strong fit!
+                {isHotLead ? "Great news — you're a strong fit!" : "Great — let's get you started!"}
               </h2>
               <p className="text-white/60 text-lg">
                 Enter your details to get instant access to the 28-min video explaining the transition from Senior Dev into an AI Engineer.
@@ -401,7 +406,7 @@ function QuizOverlay({
                 disabled={isSubmitting}
                 className="w-full px-6 py-4 rounded-full bg-primary text-primary-foreground text-lg font-bold shadow-lg hover:bg-primary/90 transition-colors disabled:opacity-50 inline-flex items-center justify-center gap-2"
               >
-                {isSubmitting ? "Submitting…" : "Get My Roadmap"}
+                {isSubmitting ? "Submitting…" : "Watch the Free Training"}
                 {!isSubmitting && <ArrowRight className="w-5 h-5" />}
               </button>
             </form>
@@ -414,7 +419,8 @@ function QuizOverlay({
               Back
             </button>
           </div>
-        )}
+          );
+        })()}
 
         {/* Step 9: Transition screen → redirect to training video */}
         {currentStep === 9 && (
@@ -531,7 +537,7 @@ function V7StickyMobileBar({ openQuiz }: { openQuiz: () => void }) {
         }}
       >
         <span className="text-lg font-medium text-foreground">
-          Are you AI-ready?
+          Qualify for 30–70L AI roles
         </span>
         <button
           type="button"
@@ -564,7 +570,7 @@ function V7HeroSection({ openQuiz }: { openQuiz: () => void }) {
         className="w-full bg-primary text-primary-foreground py-2.5 px-4 text-center cursor-pointer hover:bg-primary/90 transition-colors"
       >
         <p className="text-sm sm:text-base font-semibold">
-          Free Video: How Senior Java Devs Are Landing High-Paying AI Jobs (Without Another Certificate)
+          Free Video: How Senior Java Devs Are Landing 30–70L AI Jobs (Without Another Certificate)
         </p>
       </button>
 
@@ -573,7 +579,7 @@ function V7HeroSection({ openQuiz }: { openQuiz: () => void }) {
           <div className="text-center">
             <h1 className="font-display text-xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-5xl mx-auto">
               Senior <span className="text-primary">Java Developers</span> Use Your Java Skills to Land a{" "}
-              <span className="text-primary">High-Paying AI Job</span>
+              <span className="text-primary">30–70L AI Job</span>
             </h1>
 
             {/* Video thumbnail */}
@@ -625,7 +631,7 @@ function V7ProblemSection({ openQuiz }: { openQuiz: () => void }) {
         <div className="border-t border-border pt-8">
           <SectionLabel>Video Highlights</SectionLabel>
           <p className="text-base sm:text-lg font-semibold text-foreground/85 mb-4">
-            Watch the 3 secrets to future-proofing your salary and your skillset.
+            3 secrets to future-proofing your salary and your skillset.
           </p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
             How Senior Java Devs Are Landing{" "}
@@ -680,10 +686,10 @@ function V7FinalCTASection({ openQuiz }: { openQuiz: () => void }) {
           }`}
         >
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-            Ready to <span className="text-primary">land a high-paying AI role</span>? Take the quiz, then let's build your plan.
+            Ready to <span className="text-primary">land a 30–70L AI role</span>? Take the quiz, then get your roadmap.
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            7 quick questions to see if you're a fit. Then book a call with Jerry and get a personalised roadmap.
+            7 quick questions to see if you're a fit. Then get instant access to the 28-min training.
           </p>
         </div>
 

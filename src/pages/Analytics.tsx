@@ -88,7 +88,8 @@ const QUIZ_META: { id: number; question: string; options: { value: string; label
     { value: "lt_3", label: "Less than 3 years" },
     { value: "3_5", label: "3-5 years" },
     { value: "5_10", label: "5-10 years" },
-    { value: "10_plus", label: "10+ years" },
+    { value: "10_15", label: "10-15 years" },
+    { value: "15_plus", label: "15+ years" },
   ]},
   { id: 3, question: "Primary programming language?", options: [
     { value: "java", label: "Java" },

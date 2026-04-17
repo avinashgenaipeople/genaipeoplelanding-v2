@@ -17,7 +17,8 @@ const QUIZ_QUESTIONS = [
     { label: "Less than 3 years", value: "lt_3" },
     { label: "3–5 years", value: "3_5" },
     { label: "5–10 years", value: "5_10" },
-    { label: "10+ years", value: "10_plus" },
+    { label: "10–15 years", value: "10_15" },
+    { label: "15+ years", value: "15_plus" },
   ]},
   { id: 3, question: "What is your primary programming language?", options: [
     { label: "Java", value: "java" },
@@ -55,7 +56,7 @@ const TRAINING_URL = "https://learning.genaipeople.com/training-70";
 
 const ANSWER_LABELS: Record<string, Record<string, string>> = {
   1: { yes_fulltime: "Yes, full-time", yes_looking: "Yes, but looking for a change", no_laid_off: "No, I was recently laid off", no_different: "No, I'm in a different role" },
-  2: { lt_3: "Less than 3 years", "3_5": "3-5 years", "5_10": "5-10 years", "10_plus": "10+ years" },
+  2: { lt_3: "Less than 3 years", "3_5": "3-5 years", "5_10": "5-10 years", "10_15": "10-15 years", "15_plus": "15+ years" },
   3: { java: "Java", python: "Python", js_ts: "JavaScript / TypeScript", csharp: "C# / .NET", other: "Other" },
   4: { yes_regularly: "Yes, regularly", tried_few: "I've tried them a few times", no: "No, not yet" },
   5: { automated: "My role could be automated or eliminated", falling_behind: "I'm falling behind developers who use AI", no_path: "I dont know how to transition", want_growth: "I'm not concerned — I just want to grow" },
@@ -154,9 +155,9 @@ function QuizOverlay({
           <div className="text-center">
             {currentStep === 1 ? (
               <div className="mb-6">
-                <p className="text-primary text-sm font-semibold tracking-wide uppercase mb-2">60-Second Career Quiz</p>
+                <p className="text-primary text-sm font-semibold tracking-wide uppercase mb-2">Your AI Career Roadmap</p>
                 <p className="text-white/60 text-base leading-relaxed max-w-md mx-auto">
-                  Answer 7 quick questions to find out if you qualify for a 30–70L AI role — and get your personalised roadmap.
+                  Answer 7 quick questions so we can personalise your roadmap — then get instant access to the 28-min training.
                 </p>
               </div>
             ) : (
@@ -185,7 +186,7 @@ function QuizOverlay({
 
         {currentStep === 8 && (() => {
           const isHotLead =
-            (answers[2] === "5_10" || answers[2] === "10_plus") &&
+            (answers[2] === "5_10" || answers[2] === "10_15" || answers[2] === "15_plus") &&
             (answers[6] === "immediately" || answers[6] === "1_3_months") &&
             answers[7] === "yes";
           return (
@@ -301,7 +302,7 @@ export default function LpV2Short() {
     }
 
     const isHot =
-      (answers[2] === "5_10" || answers[2] === "10_plus") &&
+      (answers[2] === "5_10" || answers[2] === "10_15" || answers[2] === "15_plus") &&
       (answers[6] === "immediately" || answers[6] === "1_3_months") &&
       answers[7] === "yes";
 
@@ -341,8 +342,8 @@ export default function LpV2Short() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] flex flex-col">
       <PageMeta
-        title="GenAI People | 60-Second Quiz — Do You Qualify for a 30–70L AI Role?"
-        description="Senior Java Developers: take the 60-second quiz to find out if you qualify for high-paying AI roles. No credit card. No strings."
+        title="GenAI People | Get Your AI Career Roadmap — Senior Java Devs"
+        description="Senior Java Developers: watch the 28-min free training that shows how experienced devs are landing 30-70L AI roles. No credit card. No strings."
       />
 
       <main className="flex-1 flex items-center justify-center px-4 py-12">
@@ -362,23 +363,23 @@ export default function LpV2Short() {
           </p>
 
           <p className="text-base sm:text-lg text-white/70 font-medium mb-8">
-            Take the 60-second quiz to find out if you qualify.
+            Watch the 28-min free training that shows how senior devs are making this transition.
           </p>
 
           <button
             type="button"
             onClick={() => {
-              trackEvent("cta_click", { cta_label: "Find Out If You Qualify", cta_section: "hero", page_path: window.location.pathname });
+              trackEvent("cta_click", { cta_label: "Get Your AI Career Roadmap", cta_section: "hero", page_path: window.location.pathname });
               openQuiz();
             }}
             className="inline-flex items-center gap-2 px-10 py-5 bg-primary text-primary-foreground text-lg sm:text-xl font-bold rounded-full shadow-[0_0_30px_rgba(99,102,241,0.4)] hover:bg-primary/90 hover:shadow-[0_0_40px_rgba(99,102,241,0.5)] transition-all duration-200"
           >
-            Find Out If You Qualify
+            Get Your AI Career Roadmap
             <ArrowRight className="w-5 h-5" />
           </button>
 
           <p className="mt-4 text-sm text-white/40">
-            60-second quiz. No credit card. No strings.
+            Quick quiz + free 28-min training. No credit card. No strings.
           </p>
         </div>
       </main>

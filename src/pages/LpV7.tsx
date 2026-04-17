@@ -27,7 +27,8 @@ const QUIZ_QUESTIONS = [
       { label: "Less than 3 years", value: "lt_3" },
       { label: "3–5 years", value: "3_5" },
       { label: "5–10 years", value: "5_10" },
-      { label: "10+ years", value: "10_plus" },
+      { label: "10–15 years", value: "10_15" },
+      { label: "15+ years", value: "15_plus" },
     ],
   },
   {
@@ -95,7 +96,8 @@ const ANSWER_LABELS: Record<string, Record<string, string>> = {
     lt_3: "Less than 3 years",
     "3_5": "3-5 years",
     "5_10": "5-10 years",
-    "10_plus": "10+ years",
+    "10_15": "10-15 years",
+    "15_plus": "15+ years",
   },
   3: {
     java: "Java",
@@ -357,7 +359,7 @@ function QuizOverlay({
         {/* Step 8: Name + Phone form */}
         {currentStep === 8 && (() => {
           const isHotLead =
-            (answers[2] === "5_10" || answers[2] === "10_plus") &&
+            (answers[2] === "5_10" || answers[2] === "10_15" || answers[2] === "15_plus") &&
             (answers[6] === "immediately" || answers[6] === "1_3_months") &&
             answers[7] === "yes";
           return (
@@ -807,7 +809,7 @@ const LpV7 = () => {
 
     // FB: Contact — user submitted their details
     const isHot =
-      (answers[2] === "5_10" || answers[2] === "10_plus") &&
+      (answers[2] === "5_10" || answers[2] === "10_15" || answers[2] === "15_plus") &&
       (answers[6] === "immediately" || answers[6] === "1_3_months") &&
       answers[7] === "yes";
 

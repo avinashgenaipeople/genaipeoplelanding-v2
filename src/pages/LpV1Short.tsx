@@ -38,9 +38,9 @@ export default function LpV1Short() {
 
           {/* Headline */}
           <h1 className="font-display text-2xl sm:text-4xl md:text-[3.25rem] font-extrabold text-white leading-[1.15] mb-6">
-            How Senior Java Devs Are Landing{" "}
-            <span className="text-amber-400">30–70L AI Jobs</span>{" "}
-            <span className="text-white/90">(And How You Can Copy Their Exact Playbook)*</span>
+            Senior Java Devs: Land a{" "}
+            <span className="text-amber-400">30–70L AI Role</span> in 6 Months
+            — Using the Skills You Already Have
           </h1>
 
           {/* Divider */}

@@ -1,0 +1,402 @@
+import { useEffect, useState, useCallback } from "react";
+import { PageMeta } from "@/components/PageMeta";
+import { trackEvent } from "@/lib/analytics";
+import { getAllParams } from "@/lib/utm";
+import { ArrowRight, ArrowLeft, X, CheckCircle2 } from "lucide-react";
+import { Link } from "react-router-dom";
+
+/* ── Quiz Questions (same as LpV7) ──────────────────────────────── */
+const QUIZ_QUESTIONS = [
+  { id: 1, question: "Are you currently working as a software developer?", options: [
+    { label: "Yes, full-time", value: "yes_fulltime" },
+    { label: "Yes, but looking for a change", value: "yes_looking" },
+    { label: "No, I was recently laid off", value: "no_laid_off" },
+    { label: "No, I'm in a different role", value: "no_different" },
+  ]},
+  { id: 2, question: "How many years of professional development experience do you have?", options: [
+    { label: "Less than 3 years", value: "lt_3" },
+    { label: "3–5 years", value: "3_5" },
+    { label: "5–10 years", value: "5_10" },
+    { label: "10+ years", value: "10_plus" },
+  ]},
+  { id: 3, question: "What is your primary programming language?", options: [
+    { label: "Java", value: "java" },
+    { label: "Python", value: "python" },
+    { label: "JavaScript / TypeScript", value: "js_ts" },
+    { label: "C# / .NET", value: "csharp" },
+    { label: "Other", value: "other" },
+  ]},
+  { id: 4, question: "Have you used any AI tools (like ChatGPT, Copilot, or Claude) in your daily work?", options: [
+    { label: "Yes, regularly", value: "yes_regularly" },
+    { label: "I've tried them a few times", value: "tried_few" },
+    { label: "No, not yet", value: "no" },
+  ]},
+  { id: 5, question: "What concerns you most about AI's impact on your career?", options: [
+    { label: "My role could be automated or eliminated", value: "automated" },
+    { label: "I'm falling behind developers who use AI", value: "falling_behind" },
+    { label: "I don't know how to transition into AI roles", value: "no_path" },
+    { label: "I'm not concerned — I just want to grow", value: "want_growth" },
+  ]},
+  { id: 6, question: "If there were a clear path to an AI role, how soon would you want to start?", options: [
+    { label: "Immediately — I'm ready now", value: "immediately" },
+    { label: "Within the next 1–3 months", value: "1_3_months" },
+    { label: "I'm just exploring for now", value: "exploring" },
+  ]},
+  { id: 7, question: "Would you like a personalised roadmap for your AI transition?", options: [
+    { label: "Yes, show me", value: "yes" },
+    { label: "Maybe — I'd like to learn more first", value: "maybe" },
+  ]},
+];
+
+const WEBHOOK_URL =
+  "https://services.leadconnectorhq.com/hooks/HADyq7BakZrOyu15lic7/webhook-trigger/e5a21b54-2012-479a-a948-233c0c543245";
+
+const TRAINING_URL = "https://learning.genaipeople.com/training-70";
+
+const ANSWER_LABELS: Record<string, Record<string, string>> = {
+  1: { yes_fulltime: "Yes, full-time", yes_looking: "Yes, but looking for a change", no_laid_off: "No, I was recently laid off", no_different: "No, I'm in a different role" },
+  2: { lt_3: "Less than 3 years", "3_5": "3-5 years", "5_10": "5-10 years", "10_plus": "10+ years" },
+  3: { java: "Java", python: "Python", js_ts: "JavaScript / TypeScript", csharp: "C# / .NET", other: "Other" },
+  4: { yes_regularly: "Yes, regularly", tried_few: "I've tried them a few times", no: "No, not yet" },
+  5: { automated: "My role could be automated or eliminated", falling_behind: "I'm falling behind developers who use AI", no_path: "I dont know how to transition", want_growth: "I'm not concerned — I just want to grow" },
+  6: { immediately: "Immediately", "1_3_months": "Within the next 1-3 months", exploring: "I'm just exploring for now" },
+  7: { yes: "Yes", maybe: "Maybe" },
+};
+
+const REDIRECT_DELAY = 4000;
+
+/* ── Transition Screen ──────────────────────────────────────────── */
+function TransitionScreen({ name }: { name: string }) {
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "Lead", { content_name: "LpV2Short Quiz Funnel" });
+    }
+    trackEvent("quiz_redirect_training", { page_path: window.location.pathname });
+
+    const t1 = setTimeout(() => setStep(1), 500);
+    const t2 = setTimeout(() => setStep(2), 1500);
+    const t3 = setTimeout(() => {
+      window.location.href = TRAINING_URL;
+    }, REDIRECT_DELAY);
+
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, []);
+
+  const firstName = name.split(" ")[0];
+
+  return (
+    <div className="text-center">
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
+        <CheckCircle2 className="w-8 h-8 text-primary" />
+      </div>
+      <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-2"
+          style={{ opacity: step >= 0 ? 1 : 0, transition: "opacity 0.5s" }}>
+        Loading Your Free Training{firstName ? `, ${firstName}` : ""}...
+      </h2>
+      <p className="text-white/60 text-lg mb-6" style={{ opacity: step >= 1 ? 1 : 0, transition: "opacity 0.5s" }}>
+        28-minute video on how senior devs transition into AI
+      </p>
+      <div style={{ opacity: step >= 2 ? 1 : 0, transition: "opacity 0.5s" }}>
+        <div className="w-48 h-1.5 bg-white/10 rounded-full mx-auto overflow-hidden">
+          <div className="h-full bg-primary rounded-full animate-pulse" style={{ width: "60%" }} />
+        </div>
+        <p className="text-white/40 text-sm mt-3">Taking you to the video now...</p>
+        <a href={TRAINING_URL} className="inline-block mt-6 text-white/40 text-sm underline underline-offset-2 hover:text-white/70 transition-colors">
+          Click here if you're not redirected
+        </a>
+      </div>
+    </div>
+  );
+}
+
+/* ── Quiz Overlay ───────────────────────────────────────────────── */
+function QuizOverlay({
+  isOpen, currentStep, answers, contactInfo, isSubmitting,
+  onSelectAnswer, onBack, onClose, onContactChange, onSubmit,
+}: {
+  isOpen: boolean; currentStep: number; answers: Record<number, string>;
+  contactInfo: { name: string; email: string; phone: string }; isSubmitting: boolean;
+  onSelectAnswer: (qId: number, value: string) => void;
+  onBack: () => void; onClose: () => void;
+  onContactChange: (field: "name" | "email" | "phone", value: string) => void;
+  onSubmit: () => void;
+}) {
+  useEffect(() => {
+    if (isOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+      return () => { document.body.style.position = ""; document.body.style.top = ""; document.body.style.width = ""; window.scrollTo(0, scrollY); };
+    }
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  const question = currentStep >= 1 && currentStep <= 7 ? QUIZ_QUESTIONS[currentStep - 1] : null;
+  const progressPercent = currentStep <= 7 ? (currentStep / 7) * 100 : 100;
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={onClose} />
+      <button type="button" onClick={onClose} className="absolute top-4 right-4 z-10 text-white/60 hover:text-white transition-colors" aria-label="Close quiz">
+        <X className="w-8 h-8" />
+      </button>
+      {currentStep <= 7 && (
+        <div className="absolute top-0 left-0 right-0 h-1 bg-white/10">
+          <div className="h-full bg-primary transition-all duration-300" style={{ width: `${progressPercent}%` }} />
+        </div>
+      )}
+      <div className="relative z-10 w-full max-w-xl mx-4 animate-in fade-in zoom-in-95 duration-200">
+        {question && (
+          <div className="text-center">
+            {currentStep === 1 ? (
+              <div className="mb-6">
+                <p className="text-primary text-sm font-semibold tracking-wide uppercase mb-2">60-Second Career Quiz</p>
+                <p className="text-white/60 text-base leading-relaxed max-w-md mx-auto">
+                  Answer 7 quick questions to find out if you qualify for a 30–70L AI role — and get your personalised roadmap.
+                </p>
+              </div>
+            ) : (
+              <p className="text-white/50 text-sm mb-6 font-medium">Question {currentStep} of 7</p>
+            )}
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-8">{question.question}</h2>
+            <div className="space-y-3">
+              {question.options.map((opt) => (
+                <button key={opt.value} type="button" onClick={() => onSelectAnswer(question.id, opt.value)}
+                  className={`w-full text-left px-6 py-4 rounded-xl text-lg font-medium transition-all duration-200 border ${
+                    answers[question.id] === opt.value
+                      ? "bg-primary/20 border-primary text-white"
+                      : "bg-card/10 border-white/10 text-white hover:border-primary/50 hover:bg-card/20"
+                  }`}>
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            {currentStep > 1 && (
+              <button type="button" onClick={onBack} className="mt-6 inline-flex items-center gap-1.5 text-white/50 hover:text-white transition-colors text-sm">
+                <ArrowLeft className="w-4 h-4" /> Back
+              </button>
+            )}
+          </div>
+        )}
+
+        {currentStep === 8 && (() => {
+          const isHotLead =
+            (answers[2] === "5_10" || answers[2] === "10_plus") &&
+            (answers[6] === "immediately" || answers[6] === "1_3_months") &&
+            answers[7] === "yes";
+          return (
+          <div className="text-center">
+            <div className="mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
+                <CheckCircle2 className="w-8 h-8 text-primary" />
+              </div>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-2">
+                {isHotLead ? "Great news — you're a strong fit!" : "Great — let's get you started!"}
+              </h2>
+              <p className="text-white/60 text-lg">
+                Enter your details to get instant access to the 28-min video explaining the transition from Senior Dev into an AI Engineer.
+              </p>
+            </div>
+            <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4 max-w-sm mx-auto">
+              <input type="text" placeholder="Full name" value={contactInfo.name}
+                onChange={(e) => onContactChange("name", e.target.value)} required
+                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+              <input type="email" placeholder="Email address" value={contactInfo.email}
+                onChange={(e) => onContactChange("email", e.target.value)} required
+                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+              <input type="tel" placeholder="Phone number" value={contactInfo.phone}
+                onChange={(e) => onContactChange("phone", e.target.value)} required
+                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+              <button type="submit" disabled={isSubmitting}
+                className="w-full px-6 py-4 rounded-full bg-primary text-primary-foreground text-lg font-bold shadow-lg hover:bg-primary/90 transition-colors disabled:opacity-50 inline-flex items-center justify-center gap-2">
+                {isSubmitting ? "Submitting…" : "Watch the Free Training"}
+                {!isSubmitting && <ArrowRight className="w-5 h-5" />}
+              </button>
+            </form>
+            <button type="button" onClick={onBack} className="mt-6 inline-flex items-center gap-1.5 text-white/50 hover:text-white transition-colors text-sm">
+              <ArrowLeft className="w-4 h-4" /> Back
+            </button>
+          </div>
+          );
+        })()}
+
+        {currentStep === 9 && <TransitionScreen name={contactInfo.name} />}
+      </div>
+    </div>
+  );
+}
+
+/* ── Page Component ─────────────────────────────────────────────── */
+export default function LpV2Short() {
+  const [quizOpen, setQuizOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [contactInfo, setContactInfo] = useState({ name: "", email: "", phone: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    trackEvent("page_view_lp_v2_short", { page_path: window.location.pathname });
+  }, []);
+
+  const openQuiz = useCallback(() => {
+    setQuizOpen(true);
+    setCurrentStep(1);
+    setAnswers({});
+    setContactInfo({ name: "", email: "", phone: "" });
+    setIsSubmitting(false);
+    trackEvent("quiz_open", { page_path: window.location.pathname });
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "ViewContent", { content_name: "LpV2Short Quiz" });
+    }
+  }, []);
+
+  const closeQuiz = useCallback(() => {
+    if (currentStep < 9) trackEvent("quiz_close", { last_step: currentStep, page_path: window.location.pathname });
+    setQuizOpen(false);
+  }, [currentStep]);
+
+  const selectAnswer = useCallback((questionId: number, value: string) => {
+    setAnswers((prev) => ({ ...prev, [questionId]: value }));
+    trackEvent("quiz_answer", { question_id: questionId, answer: value, step: questionId, page_path: window.location.pathname });
+    setTimeout(() => {
+      setCurrentStep((prev) => prev + 1);
+      if (questionId === 7) {
+        trackEvent("quiz_completed", {
+          page_path: window.location.pathname,
+          q1: answers[1] || "", q2: answers[2] || "", q3: answers[3] || "",
+          q4: answers[4] || "", q5: answers[5] || "", q6: answers[6] || "", q7: value,
+        });
+      }
+    }, 200);
+  }, [answers]);
+
+  const goBack = useCallback(() => {
+    if (currentStep > 1) setCurrentStep((prev) => prev - 1);
+    else closeQuiz();
+  }, [currentStep, closeQuiz]);
+
+  const handleContactChange = useCallback((field: "name" | "email" | "phone", value: string) => {
+    setContactInfo((prev) => ({ ...prev, [field]: value }));
+  }, []);
+
+  const handleSubmit = useCallback(async () => {
+    if (!contactInfo.name.trim() || !contactInfo.email.trim() || !contactInfo.phone.trim()) return;
+    setIsSubmitting(true);
+
+    trackEvent("quiz_form_submit", {
+      name: contactInfo.name, email: contactInfo.email, phone: contactInfo.phone,
+      page_path: window.location.pathname,
+      ...Object.fromEntries(Object.entries(answers).map(([k, v]) => [`q${k}`, v])),
+    });
+    trackEvent("lead_form_submit", {
+      form_id: "lp-v2-short-quiz", form_name: "LpV2Short Quiz Funnel",
+      page_path: window.location.pathname,
+    });
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "generate_lead", { currency: "INR", value: 1 });
+    }
+
+    const isHot =
+      (answers[2] === "5_10" || answers[2] === "10_plus") &&
+      (answers[6] === "immediately" || answers[6] === "1_3_months") &&
+      answers[7] === "yes";
+
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "Contact", { content_name: "LpV2Short Quiz Funnel" });
+      if (isHot) {
+        window.fbq("track", "CompleteRegistration", { content_name: "LpV2Short Hot Lead" });
+        window.fbq("track", "InitiateCheckout", { content_name: "LpV2Short Hot Lead" });
+      }
+    }
+
+    const label = (q: number) => ANSWER_LABELS[q]?.[answers[q]] ?? answers[q] ?? "";
+    const urlParams = getAllParams();
+    fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: contactInfo.name, email: contactInfo.email, phone: contactInfo.phone,
+        quiz_current_role: label(1), quiz_experience: label(2), quiz_language: label(3),
+        quiz_ai_usage: label(4), quiz_concern: label(5), quiz_readiness: label(6),
+        quiz_call_interest: label(7), quiz_source: "lp-v2-short",
+        quiz_lead_score: isHot ? "hot" : "warm",
+        utm_source: urlParams.utm_source ?? "", utm_medium: urlParams.utm_medium ?? "",
+        utm_campaign: urlParams.utm_campaign ?? "", utm_term: urlParams.utm_term ?? "",
+        utm_content: urlParams.utm_content ?? "", utm_adname: urlParams.utm_adname ?? "",
+        utm_adid: urlParams.utm_adid ?? "", utm_placement: urlParams.utm_placement ?? "",
+        utm_ad_account: urlParams.utm_ad_account ?? "", utm_id: urlParams.utm_id ?? "",
+        fbclid: urlParams.fbclid ?? "", gclid: urlParams.gclid ?? "",
+        url_params: urlParams,
+      }),
+    }).catch(() => {});
+
+    setCurrentStep(9);
+    setIsSubmitting(false);
+  }, [contactInfo, answers]);
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] flex flex-col">
+      <PageMeta
+        title="GenAI People | 60-Second Quiz — Do You Qualify for a 30–70L AI Role?"
+        description="Senior Java Developers: take the 60-second quiz to find out if you qualify for high-paying AI roles. No credit card. No strings."
+      />
+
+      <main className="flex-1 flex items-center justify-center px-4 py-12">
+        <div className="max-w-3xl text-center">
+          <p className="text-sm sm:text-base font-semibold text-white/60 tracking-wide mb-6">
+            ***For Senior Java Developers ONLY***
+          </p>
+
+          <h1 className="font-display text-2xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+            How Senior Java Devs Are Landing{" "}
+            <span className="text-primary">30–70L AI Jobs</span>{" "}
+            (And How You Can Copy Their Exact Playbook)*
+          </h1>
+
+          <p className="text-lg sm:text-xl text-primary font-semibold mb-8">
+            Without starting over, collecting another certificate, or mass-applying to 100s of jobs
+          </p>
+
+          <p className="text-base sm:text-lg text-white/70 font-medium mb-8">
+            Take the 60-second quiz to find out if you qualify.
+          </p>
+
+          <button
+            type="button"
+            onClick={() => {
+              trackEvent("cta_click", { cta_label: "Find Out If You Qualify", cta_section: "hero", page_path: window.location.pathname });
+              openQuiz();
+            }}
+            className="inline-flex items-center gap-2 px-10 py-5 bg-primary text-primary-foreground text-lg sm:text-xl font-bold rounded-full shadow-[0_0_30px_rgba(99,102,241,0.4)] hover:bg-primary/90 hover:shadow-[0_0_40px_rgba(99,102,241,0.5)] transition-all duration-200"
+          >
+            Find Out If You Qualify
+            <ArrowRight className="w-5 h-5" />
+          </button>
+
+          <p className="mt-4 text-sm text-white/40">
+            60-second quiz. No credit card. No strings.
+          </p>
+        </div>
+      </main>
+
+      <footer className="py-4 px-4 text-center border-t border-white/5">
+        <p className="text-xs text-white/30">
+          © {new Date().getFullYear()} GenAI People ·{" "}
+          <Link to="/privacy" className="hover:text-white/50 transition-colors">Privacy</Link>{" · "}
+          <Link to="/terms" className="hover:text-white/50 transition-colors">Terms</Link>
+        </p>
+      </footer>
+
+      <QuizOverlay
+        isOpen={quizOpen} currentStep={currentStep} answers={answers}
+        contactInfo={contactInfo} isSubmitting={isSubmitting}
+        onSelectAnswer={selectAnswer} onBack={goBack} onClose={closeQuiz}
+        onContactChange={handleContactChange} onSubmit={handleSubmit}
+      />
+    </div>
+  );
+}

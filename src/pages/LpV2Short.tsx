@@ -89,8 +89,8 @@ function TransitionScreen({ name }: { name: string }) {
 
   return (
     <div className="text-center">
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
-        <CheckCircle2 className="w-8 h-8 text-primary" />
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-400/20 mb-4">
+        <CheckCircle2 className="w-8 h-8 text-amber-400" />
       </div>
       <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-2"
           style={{ opacity: step >= 0 ? 1 : 0, transition: "opacity 0.5s" }}>
@@ -101,7 +101,7 @@ function TransitionScreen({ name }: { name: string }) {
       </p>
       <div style={{ opacity: step >= 2 ? 1 : 0, transition: "opacity 0.5s" }}>
         <div className="w-48 h-1.5 bg-white/10 rounded-full mx-auto overflow-hidden">
-          <div className="h-full bg-primary rounded-full animate-pulse" style={{ width: "60%" }} />
+          <div className="h-full bg-amber-400 rounded-full animate-pulse" style={{ width: "60%" }} />
         </div>
         <p className="text-white/40 text-sm mt-3">Taking you to the video now...</p>
         <a href={TRAINING_URL} className="inline-block mt-6 text-white/40 text-sm underline underline-offset-2 hover:text-white/70 transition-colors">
@@ -147,7 +147,7 @@ function QuizOverlay({
       </button>
       {currentStep <= 7 && (
         <div className="absolute top-0 left-0 right-0 h-1 bg-white/10">
-          <div className="h-full bg-primary transition-all duration-300" style={{ width: `${progressPercent}%` }} />
+          <div className="h-full bg-amber-400 transition-all duration-300" style={{ width: `${progressPercent}%` }} />
         </div>
       )}
       <div className="relative z-10 w-full max-w-xl mx-4 animate-in fade-in zoom-in-95 duration-200">
@@ -155,7 +155,7 @@ function QuizOverlay({
           <div className="text-center">
             {currentStep === 1 ? (
               <div className="mb-6">
-                <p className="text-primary text-sm font-semibold tracking-wide uppercase mb-2">Your AI Career Roadmap</p>
+                <p className="text-amber-400 text-sm font-semibold tracking-wide uppercase mb-2">Your AI Career Roadmap</p>
                 <p className="text-white/60 text-base leading-relaxed max-w-md mx-auto">
                   Answer 7 quick questions so we can personalise your roadmap — then get instant access to the 28-min training.
                 </p>
@@ -169,8 +169,8 @@ function QuizOverlay({
                 <button key={opt.value} type="button" onClick={() => onSelectAnswer(question.id, opt.value)}
                   className={`w-full text-left px-6 py-4 rounded-xl text-lg font-medium transition-all duration-200 border ${
                     answers[question.id] === opt.value
-                      ? "bg-primary/20 border-primary text-white"
-                      : "bg-card/10 border-white/10 text-white hover:border-primary/50 hover:bg-card/20"
+                      ? "bg-amber-400/20 border-amber-400 text-white"
+                      : "bg-card/10 border-white/10 text-white hover:border-amber-400/50 hover:bg-card/20"
                   }`}>
                   {opt.label}
                 </button>
@@ -192,8 +192,8 @@ function QuizOverlay({
           return (
           <div className="text-center">
             <div className="mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
-                <CheckCircle2 className="w-8 h-8 text-primary" />
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-400/20 mb-4">
+                <CheckCircle2 className="w-8 h-8 text-amber-400" />
               </div>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-2">
                 {isHotLead ? "Great news — you're a strong fit!" : "Great — let's get you started!"}
@@ -205,15 +205,16 @@ function QuizOverlay({
             <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4 max-w-sm mx-auto">
               <input type="text" placeholder="Full name" value={contactInfo.name}
                 onChange={(e) => onContactChange("name", e.target.value)} required
-                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors" />
               <input type="email" placeholder="Email address" value={contactInfo.email}
                 onChange={(e) => onContactChange("email", e.target.value)} required
-                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors" />
               <input type="tel" placeholder="Phone number" value={contactInfo.phone}
                 onChange={(e) => onContactChange("phone", e.target.value)} required
-                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors" />
               <button type="submit" disabled={isSubmitting}
-                className="w-full px-6 py-4 rounded-full bg-primary text-primary-foreground text-lg font-bold shadow-lg hover:bg-primary/90 transition-colors disabled:opacity-50 inline-flex items-center justify-center gap-2">
+                className="w-full px-6 py-4 rounded-full text-gray-900 text-lg font-bold shadow-lg transition-all duration-300 disabled:opacity-50 inline-flex items-center justify-center gap-2"
+                style={{ background: "linear-gradient(135deg, #FBBF24, #F59E0B)", boxShadow: "0 0 20px rgba(251, 191, 36, 0.3)" }}>
                 {isSubmitting ? "Submitting…" : "Watch the Free Training"}
                 {!isSubmitting && <ArrowRight className="w-5 h-5" />}
               </button>
@@ -340,7 +341,7 @@ export default function LpV2Short() {
   }, [contactInfo, answers]);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ background: "radial-gradient(ellipse at 50% 0%, #1a1a2e 0%, #0a0a0a 60%)" }}>
       <PageMeta
         title="GenAI People | Get Your AI Career Roadmap — Senior Java Devs"
         description="Senior Java Developers: watch the 28-min free training that shows how experienced devs are landing 30-70L AI roles. No credit card. No strings."
@@ -348,21 +349,23 @@ export default function LpV2Short() {
 
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="max-w-3xl text-center">
-          <p className="text-sm sm:text-base font-semibold text-white/60 tracking-wide mb-6">
-            ***For Senior Java Developers ONLY***
+          <p className="text-sm sm:text-base font-bold tracking-[0.2em] uppercase mb-8 text-amber-400/80">
+            For Senior Java Developers ONLY
           </p>
 
-          <h1 className="font-display text-2xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+          <h1 className="font-display text-2xl sm:text-4xl md:text-[3.25rem] font-extrabold text-white leading-[1.15] mb-6">
             How Senior Java Devs Are Landing{" "}
-            <span className="text-primary">30–70L AI Jobs</span>{" "}
-            (And How You Can Copy Their Exact Playbook)*
+            <span className="text-amber-400">30–70L AI Jobs</span>{" "}
+            <span className="text-white/90">(And How You Can Copy Their Exact Playbook)*</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-primary font-semibold mb-8">
+          <div className="w-16 h-0.5 bg-amber-400/40 mx-auto my-6" />
+
+          <p className="text-lg sm:text-xl text-amber-200/90 font-medium mb-8 leading-relaxed">
             Without starting over, collecting another certificate, or mass-applying to 100s of jobs
           </p>
 
-          <p className="text-base sm:text-lg text-white/70 font-medium mb-8">
+          <p className="text-base sm:text-lg text-white/60 mb-10">
             Watch the 28-min free training that shows how senior devs are making this transition.
           </p>
 
@@ -372,20 +375,26 @@ export default function LpV2Short() {
               trackEvent("cta_click", { cta_label: "Get Your AI Career Roadmap", cta_section: "hero", page_path: window.location.pathname });
               openQuiz();
             }}
-            className="inline-flex items-center gap-2 px-10 py-5 bg-primary text-primary-foreground text-lg sm:text-xl font-bold rounded-full shadow-[0_0_30px_rgba(99,102,241,0.4)] hover:bg-primary/90 hover:shadow-[0_0_40px_rgba(99,102,241,0.5)] transition-all duration-200"
+            className="group inline-flex items-center gap-2.5 px-10 py-5 text-lg sm:text-xl font-bold rounded-full transition-all duration-300 text-gray-900"
+            style={{
+              background: "linear-gradient(135deg, #FBBF24, #F59E0B)",
+              boxShadow: "0 0 30px rgba(251, 191, 36, 0.3), 0 4px 20px rgba(0,0,0,0.4)",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 50px rgba(251, 191, 36, 0.5), 0 4px 24px rgba(0,0,0,0.5)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 30px rgba(251, 191, 36, 0.3), 0 4px 20px rgba(0,0,0,0.4)"; }}
           >
             Get Your AI Career Roadmap
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
 
-          <p className="mt-4 text-sm text-white/40">
+          <p className="mt-5 text-sm text-white/35">
             Quick quiz + free 28-min training. No credit card. No strings.
           </p>
         </div>
       </main>
 
       <footer className="py-4 px-4 text-center border-t border-white/5">
-        <p className="text-xs text-white/30">
+        <p className="text-xs text-white/25">
           © {new Date().getFullYear()} GenAI People ·{" "}
           <Link to="/privacy" className="hover:text-white/50 transition-colors">Privacy</Link>{" · "}
           <Link to="/terms" className="hover:text-white/50 transition-colors">Terms</Link>

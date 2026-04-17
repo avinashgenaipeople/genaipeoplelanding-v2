@@ -5,6 +5,7 @@ import { trackEvent } from "@/lib/analytics";
 interface FormModalHeader {
   title: string;
   subtitle: string;
+  theme?: "default" | "amber";
 }
 
 interface FormModalContextType {
@@ -31,7 +32,7 @@ export function FormModalProvider({ children }: { children: ReactNode }) {
   return (
     <FormModalContext.Provider value={{ openFormModal, setFormHeader }}>
       {children}
-      <FormModal open={isOpen} onOpenChange={setIsOpen} title={header.title} subtitle={header.subtitle} />
+      <FormModal open={isOpen} onOpenChange={setIsOpen} title={header.title} subtitle={header.subtitle} theme={header.theme} />
     </FormModalContext.Provider>
   );
 }

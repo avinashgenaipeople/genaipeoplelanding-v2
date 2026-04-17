@@ -15,9 +15,10 @@ interface FormModalProps {
   onOpenChange: (open: boolean) => void;
   title?: string;
   subtitle?: string;
+  theme?: "default" | "amber";
 }
 
-export function FormModal({ open, onOpenChange, title = "Watch the Free Training", subtitle = "Get instant access to the 28-min roadmap" }: FormModalProps) {
+export function FormModal({ open, onOpenChange, title = "Watch the Free Training", subtitle = "Get instant access to the 28-min roadmap", theme = "default" }: FormModalProps) {
   const formUrl = useMemo(() => buildFormUrl(), []);
   const [iframeReady, setIframeReady] = useState(false);
   const [iframeHeight, setIframeHeight] = useState(500);
@@ -146,14 +147,22 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-xl w-full p-0 overflow-hidden rounded-xl max-h-[90vh] flex flex-col border-2 border-primary/30 shadow-[0_0_30px_rgba(99,102,241,0.2)] bg-white">
+        <DialogContent className={`max-w-xl w-full p-0 overflow-hidden rounded-xl max-h-[90vh] flex flex-col border-2 bg-white ${
+          theme === "amber"
+            ? "border-amber-400/30 shadow-[0_0_30px_rgba(251,191,36,0.2)]"
+            : "border-primary/30 shadow-[0_0_30px_rgba(99,102,241,0.2)]"
+        }`}>
 
           {/* Header — matches CTA language */}
-          <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-5 shrink-0">
-            <DialogTitle className="text-2xl font-bold text-center text-white">
+          <div className={`px-6 py-5 shrink-0 ${
+            theme === "amber"
+              ? "bg-gradient-to-r from-amber-500 to-amber-400"
+              : "bg-gradient-to-r from-primary to-primary/80"
+          }`}>
+            <DialogTitle className={`text-2xl font-bold text-center ${theme === "amber" ? "text-gray-900" : "text-white"}`}>
               {title}
             </DialogTitle>
-            <p className="text-base text-white/90 text-center mt-1">
+            <p className={`text-base text-center mt-1 ${theme === "amber" ? "text-gray-900/70" : "text-white/90"}`}>
               {subtitle}
             </p>
           </div>

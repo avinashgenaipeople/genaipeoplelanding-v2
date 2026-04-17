@@ -19,17 +19,19 @@ interface FormModalProps {
 
 export function FormModal({ open, onOpenChange, title = "Watch the Free Training", subtitle = "Get instant access to the 28-min roadmap" }: FormModalProps) {
   const formUrl = useMemo(() => buildFormUrl(), []);
-  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [iframeReady, setIframeReady] = useState(false);
   const [iframeHeight, setIframeHeight] = useState(500);
   const submitFiredRef = React.useRef(false);
+  const iframeLoadCountRef = React.useRef(0);
 
   // Reset on open (not close) — resetting on close triggers a state change
   // during Radix's exit animation which causes a React insertBefore crash.
   useEffect(() => {
     if (open) {
-      setIframeLoaded(false);
+      setIframeReady(false);
       setIframeHeight(500);
       submitFiredRef.current = false;
+      iframeLoadCountRef.current = 0;
     }
   }, [open]);
 
@@ -78,6 +80,15 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
       // Dev: log every postMessage to catch protocol changes
       if (import.meta.env.DEV) {
         console.log("[postMessage]", origin, data);
+      }
+
+      // Track Synamate's ["iframeLoaded"] messages — the iframe loads twice
+      // on initial render (form + config reload). Show spinner until 2nd load.
+      if (Array.isArray(data) && data[0] === "iframeLoaded") {
+        iframeLoadCountRef.current += 1;
+        if (iframeLoadCountRef.current >= 2) {
+          setIframeReady(true);
+        }
       }
 
       // Resize iframe if Synamate sends height via iFrameSizer protocol
@@ -149,8 +160,8 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
 
           {/* Iframe + loading spinner */}
           <div className="overflow-y-auto flex-1 relative overflow-x-hidden">
-            {/* Spinner shown until iframe fires onLoad */}
-            {!iframeLoaded && (
+            {/* Spinner shown until Synamate sends 2nd iframeLoaded postMessage */}
+            {!iframeReady && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-white z-10 gap-3">
                 <div className="w-10 h-10 rounded-full border-4 border-primary/20 border-t-primary animate-spin" />
                 <p className="text-sm text-muted-foreground">Loading…</p>
@@ -174,10 +185,9 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
               data-form-id="TW7vEwm553MbqKYmfMPP"
               title="LFMVP Optin -Improved"
               onLoad={() => {
-                setIframeLoaded(true);
-                // Note: iframe_reload fallback removed — Synamate does 2 loads
-                // on initial render (form + config reload) which caused false
-                // submit detection. We now rely solely on postMessage signals.
+                // Fallback: if postMessage-based ready detection doesn't fire
+                // (e.g. ad blockers), show form after 2s timeout on first load.
+                setTimeout(() => setIframeReady(true), 2000);
               }}
             />
           </div>

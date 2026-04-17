@@ -347,48 +347,68 @@ export default function LpV2Short() {
         description="Senior Java Developers: watch the 28-min free training that shows how experienced devs are landing 30-70L AI roles. No credit card. No strings."
       />
 
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="max-w-3xl text-center">
-          <p className="text-sm sm:text-base font-bold tracking-[0.2em] uppercase mb-8 text-amber-400/80">
-            For Senior Java Developers ONLY
-          </p>
+      <main className="flex-1 flex items-center justify-center px-5 sm:px-8 py-10">
+        <div className="max-w-2xl w-full">
+          {/* Qualifier badge */}
+          <div className="flex justify-center mb-10">
+            <span className="inline-block px-5 py-2 rounded-full border border-amber-400/30 bg-amber-400/5 text-amber-400 text-xs sm:text-sm font-bold tracking-[0.15em] uppercase">
+              Senior Java Developers
+            </span>
+          </div>
 
-          <h1 className="font-display text-2xl sm:text-4xl md:text-[3.25rem] font-extrabold text-white leading-[1.15] mb-6">
-            How Senior Java Devs Are Landing{" "}
-            <span className="text-amber-400">30–70L AI Jobs</span>{" "}
-            <span className="text-white/90">(And How You Can Copy Their Exact Playbook)*</span>
+          {/* Headline */}
+          <h1 className="font-display text-center text-[1.75rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold text-white leading-[1.2] mb-4">
+            Land a <span className="text-amber-400">30–70L AI Role</span>
+            <br className="hidden sm:block" /> in 6 Months
           </h1>
-
-          <div className="w-16 h-0.5 bg-amber-400/40 mx-auto my-6" />
-
-          <p className="text-lg sm:text-xl text-amber-200/90 font-medium mb-8 leading-relaxed">
-            Without starting over, collecting another certificate, or mass-applying to 100s of jobs
+          <p className="text-center text-lg sm:text-2xl text-white/50 font-medium mb-10">
+            Using the skills you already have.
           </p>
 
-          <p className="text-base sm:text-lg text-white/60 mb-10">
-            Watch the 28-min free training that shows how senior devs are making this transition.
+          {/* Value props — card style */}
+          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.03] px-6 sm:px-8 py-6 mb-10">
+            <div className="space-y-4">
+              {[
+                "No starting over — your Java experience IS the foundation",
+                "No certificates — companies want builders, not collectors",
+                "150+ senior devs already made this transition",
+              ].map((text, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="text-amber-400 text-lg mt-0.5">✓</span>
+                  <p className="text-[15px] sm:text-[17px] text-white/70 leading-relaxed">{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Action line */}
+          <p className="text-center text-sm sm:text-base text-white/45 mb-6">
+            Quick quiz + free 28-min training to get your personalised roadmap.
           </p>
 
-          <button
-            type="button"
-            onClick={() => {
-              trackEvent("cta_click", { cta_label: "Get Your AI Career Roadmap", cta_section: "hero", page_path: window.location.pathname });
-              openQuiz();
-            }}
-            className="group inline-flex items-center gap-2.5 px-10 py-5 text-lg sm:text-xl font-bold rounded-full transition-all duration-300 text-gray-900"
-            style={{
-              background: "linear-gradient(135deg, #FBBF24, #F59E0B)",
-              boxShadow: "0 0 30px rgba(251, 191, 36, 0.3), 0 4px 20px rgba(0,0,0,0.4)",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 50px rgba(251, 191, 36, 0.5), 0 4px 24px rgba(0,0,0,0.5)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 30px rgba(251, 191, 36, 0.3), 0 4px 20px rgba(0,0,0,0.4)"; }}
-          >
-            Get Your AI Career Roadmap
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
+          {/* CTA */}
+          <div className="flex justify-center">
+            <button
+              type="button"
+              onClick={() => {
+                trackEvent("cta_click", { cta_label: "Get Your AI Career Roadmap", cta_section: "hero", page_path: window.location.pathname });
+                openQuiz();
+              }}
+              className="group inline-flex items-center gap-2.5 px-10 py-5 text-lg sm:text-xl font-bold rounded-full transition-all duration-300 text-gray-900"
+              style={{
+                background: "linear-gradient(135deg, #FBBF24, #F59E0B)",
+                boxShadow: "0 0 30px rgba(251, 191, 36, 0.25), 0 4px 20px rgba(0,0,0,0.4)",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 50px rgba(251, 191, 36, 0.45), 0 4px 24px rgba(0,0,0,0.5)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 30px rgba(251, 191, 36, 0.25), 0 4px 20px rgba(0,0,0,0.4)"; }}
+            >
+              Get Your AI Career Roadmap
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
 
-          <p className="mt-5 text-sm text-white/35">
-            Quick quiz + free 28-min training. No credit card. No strings.
+          <p className="mt-4 text-center text-xs sm:text-sm text-white/30">
+            No credit card. No strings.
           </p>
         </div>
       </main>

@@ -179,6 +179,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       case "page_view_lp_v2_short":
       case "page_view_lp_v3_short":
       case "page_view_lp_v4_short":
+      case "page_view_lp_v5_short":
+      case "page_view_lp_v6_short":
+      case "page_view_lp_v7_short":
         f.views++;
         u.views++;
         d.views++;

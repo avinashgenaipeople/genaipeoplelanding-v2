@@ -19,6 +19,7 @@ import LpV7 from "./pages/LpV7";
 import LpV1Short from "./pages/LpV1Short";
 import LpV2Short from "./pages/LpV2Short";
 import LpV3Short from "./pages/LpV3Short";
+import LpV4Short from "./pages/LpV4Short";
 
 const Analytics = lazy(() => import("./pages/Analytics"));
 const Webinar = lazy(() => import("./pages/Webinar"));
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/lp-v1-short" element={<LpV1Short />} />
             <Route path="/lp-v2-short" element={<LpV2Short />} />
             <Route path="/lp-v3-short" element={<LpV3Short />} />
+            <Route path="/lp-v4-short" element={<LpV4Short />} />
             <Route path="/analytics" element={<Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}><Analytics /></Suspense>} />
             <Route path="/webinar" element={<Suspense fallback={null}><Webinar /></Suspense>} />
             <Route path="/webinar/meeting" element={<Suspense fallback={null}><WebinarMeeting /></Suspense>} />

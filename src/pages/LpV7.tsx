@@ -154,10 +154,8 @@ function TransitionScreen({ name }: { name: string }) {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
-    // FB: Lead pixel — fires before redirect
-    if (typeof window.fbq === "function") {
-      window.fbq("track", "Lead", { content_name: "LpV7 Quiz Funnel" });
-    }
+    // Lead event removed — fires on training page (learning.genaipeople.com)
+    // to avoid duplicate Lead pixels per user.
     trackEvent("quiz_redirect_training", { page_path: window.location.pathname });
 
     const t1 = setTimeout(() => setStep(1), 500);

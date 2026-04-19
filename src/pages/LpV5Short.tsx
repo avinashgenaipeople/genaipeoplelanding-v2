@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useFormModal } from "@/contexts/FormModalContext";
 import { trackEvent } from "@/lib/analytics";
-import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { PageMeta } from "@/components/PageMeta";
 
@@ -12,7 +11,6 @@ export default function LpV5Short() {
     setFormHeader({
       title: "Get Instant Access",
       subtitle: "Enter your info and the 28-min training plays immediately",
-      theme: "amber",
     });
     trackEvent("page_view_lp_v5_short", { page_path: window.location.pathname });
   }, []);
@@ -23,65 +21,55 @@ export default function LpV5Short() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "radial-gradient(ellipse at 50% 0%, #1a1a2e 0%, #0a0a0a 60%)" }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#f5f0eb" }}>
       <PageMeta
         title="GenAI People | Stuck in Maintenance? Your Skills Are Worth More in AI."
-        description="Senior backend developers stuck in maintenance projects: your architecture and system design skills are worth 30-70L in AI roles. Watch the free 28-min training."
+        description="Senior backend developers stuck in maintenance projects: your architecture and system design skills are worth 30-70L in AI roles."
       />
 
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
+      <div className="w-full py-4 text-center" style={{ backgroundColor: "#2563eb" }}>
+        <span className="text-white font-bold text-base sm:text-lg tracking-wide">GenAI People</span>
+      </div>
+
+      <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
         <div className="max-w-3xl text-center">
-          {/* Qualifier */}
-          <p className="text-sm sm:text-base font-bold tracking-[0.2em] uppercase mb-8 text-amber-400/80">
+          <p className="text-sm sm:text-base font-bold tracking-wide uppercase mb-6" style={{ color: "#2563eb" }}>
             Senior Backend Developer Stuck in Maintenance?
           </p>
 
-          {/* Headline */}
-          <h1 className="font-display text-2xl sm:text-4xl md:text-[3.25rem] font-extrabold text-white leading-[1.15] mb-6">
+          <h1 className="text-3xl sm:text-5xl md:text-[3.5rem] font-extrabold leading-[1.15] mb-6" style={{ color: "#1a1a1a" }}>
             Stop Fixing Legacy Code.{" "}
-            <span className="text-amber-400">Start Building the Future.</span>
+            <span style={{ color: "#2563eb" }}>Start Building the Future.</span>
           </h1>
 
-          {/* Divider */}
-          <div className="w-16 h-0.5 bg-amber-400/40 mx-auto my-6" />
-
-          {/* Pain-point sub */}
-          <p className="text-lg sm:text-xl text-amber-200/90 font-medium mb-8 leading-relaxed">
+          <p className="text-lg sm:text-xl font-semibold mb-6 leading-relaxed" style={{ color: "#2563eb" }}>
             Your architecture and system design skills are worth 30–70L in AI roles — not 15L patching someone else's monolith.
           </p>
 
-          {/* Action line */}
-          <p className="text-base sm:text-lg text-white/60 mb-10">
+          <p className="text-base sm:text-lg mb-10" style={{ color: "#555" }}>
             Watch the free 28-min training that shows how 150+ senior devs escaped maintenance and landed AI roles.
           </p>
 
-          {/* CTA */}
           <button
             type="button"
             onClick={handleCTA}
-            className="group inline-flex items-center gap-2.5 px-10 py-5 text-lg sm:text-xl font-bold rounded-full transition-all duration-300 text-gray-900"
-            style={{
-              background: "linear-gradient(135deg, #FBBF24, #F59E0B)",
-              boxShadow: "0 0 30px rgba(251, 191, 36, 0.3), 0 4px 20px rgba(0,0,0,0.4)",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 50px rgba(251, 191, 36, 0.5), 0 4px 24px rgba(0,0,0,0.5)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 30px rgba(251, 191, 36, 0.3), 0 4px 20px rgba(0,0,0,0.4)"; }}
+            className="inline-flex items-center justify-center px-12 py-5 text-xl sm:text-2xl font-extrabold text-white rounded-xl transition-all duration-200 hover:opacity-90"
+            style={{ backgroundColor: "#2563eb", minWidth: 280 }}
           >
             Get Instant Access
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
 
-          <p className="mt-5 text-sm text-white/35">
+          <p className="mt-5 text-sm" style={{ color: "#999" }}>
             Free training. No credit card. No strings.
           </p>
         </div>
       </main>
 
-      <footer className="py-4 px-4 text-center border-t border-white/5">
-        <p className="text-xs text-white/25">
+      <footer className="py-6 px-4 text-center">
+        <p className="text-xs" style={{ color: "#aaa" }}>
           © {new Date().getFullYear()} GenAI People ·{" "}
-          <Link to="/privacy" className="hover:text-white/50 transition-colors">Privacy</Link>{" · "}
-          <Link to="/terms" className="hover:text-white/50 transition-colors">Terms</Link>
+          <Link to="/privacy" className="underline hover:opacity-70">Privacy</Link>{" · "}
+          <Link to="/terms" className="underline hover:opacity-70">Terms</Link>
         </p>
       </footer>
     </div>

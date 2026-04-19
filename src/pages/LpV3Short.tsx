@@ -71,9 +71,7 @@ function TransitionScreen({ name }: { name: string }) {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
-    if (typeof window.fbq === "function") {
-      window.fbq("track", "Lead", { content_name: "LpV3Short GenAI Readiness" });
-    }
+    // Lead event removed — fires on training page to avoid duplicate.
     trackEvent("quiz_redirect_training", { page_path: window.location.pathname });
 
     const t1 = setTimeout(() => setStep(1), 500);
@@ -89,22 +87,22 @@ function TransitionScreen({ name }: { name: string }) {
 
   return (
     <div className="text-center">
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-400/20 mb-4">
-        <CheckCircle2 className="w-8 h-8 text-amber-400" />
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600/10 mb-4">
+        <CheckCircle2 className="w-8 h-8 text-blue-500" />
       </div>
-      <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-2"
+      <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-2"
           style={{ opacity: step >= 0 ? 1 : 0, transition: "opacity 0.5s" }}>
         Loading Your Free Training{firstName ? `, ${firstName}` : ""}...
       </h2>
-      <p className="text-white/60 text-lg mb-6" style={{ opacity: step >= 1 ? 1 : 0, transition: "opacity 0.5s" }}>
+      <p className="text-gray-500 text-lg mb-6" style={{ opacity: step >= 1 ? 1 : 0, transition: "opacity 0.5s" }}>
         28-minute video on how senior devs transition into AI
       </p>
       <div style={{ opacity: step >= 2 ? 1 : 0, transition: "opacity 0.5s" }}>
         <div className="w-48 h-1.5 bg-white/10 rounded-full mx-auto overflow-hidden">
-          <div className="h-full bg-amber-400 rounded-full animate-pulse" style={{ width: "60%" }} />
+          <div className="h-full bg-blue-600 rounded-full animate-pulse" style={{ width: "60%" }} />
         </div>
-        <p className="text-white/40 text-sm mt-3">Taking you to the video now...</p>
-        <a href={TRAINING_URL} className="inline-block mt-6 text-white/40 text-sm underline underline-offset-2 hover:text-white/70 transition-colors">
+        <p className="text-gray-400 text-sm mt-3">Taking you to the video now...</p>
+        <a href={TRAINING_URL} className="inline-block mt-6 text-gray-400 text-sm underline underline-offset-2 hover:text-white/70 transition-colors">
           Click here if you're not redirected
         </a>
       </div>
@@ -141,13 +139,13 @@ function QuizOverlay({
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={onClose} />
-      <button type="button" onClick={onClose} className="absolute top-4 right-4 z-10 text-white/60 hover:text-white transition-colors" aria-label="Close quiz">
+      <div className="absolute inset-0 bg-white/95 backdrop-blur-sm" onClick={onClose} />
+      <button type="button" onClick={onClose} className="absolute top-4 right-4 z-10 text-gray-400 hover:text-gray-700 transition-colors" aria-label="Close quiz">
         <X className="w-8 h-8" />
       </button>
       {currentStep <= 7 && (
-        <div className="absolute top-0 left-0 right-0 h-1 bg-white/10">
-          <div className="h-full bg-amber-400 transition-all duration-300" style={{ width: `${progressPercent}%` }} />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200">
+          <div className="h-full bg-blue-600 transition-all duration-300" style={{ width: `${progressPercent}%` }} />
         </div>
       )}
       <div className="relative z-10 w-full max-w-xl mx-4 animate-in fade-in zoom-in-95 duration-200">
@@ -155,29 +153,29 @@ function QuizOverlay({
           <div className="text-center">
             {currentStep === 1 ? (
               <div className="mb-6">
-                <p className="text-amber-400 text-sm font-semibold tracking-wide uppercase mb-2">GenAI Readiness Check</p>
+                <p className="text-blue-500 text-sm font-semibold tracking-wide uppercase mb-2">GenAI Readiness Check</p>
                 <p className="text-white/60 text-base leading-relaxed max-w-md mx-auto">
                   Answer 7 quick questions to see where you stand — then get instant access to the 28-min GenAI readiness training.
                 </p>
               </div>
             ) : (
-              <p className="text-white/50 text-sm mb-6 font-medium">Question {currentStep} of 7</p>
+              <p className="text-gray-400 text-sm mb-6 font-medium">Question {currentStep} of 7</p>
             )}
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-8">{question.question}</h2>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-8">{question.question}</h2>
             <div className="space-y-3">
               {question.options.map((opt) => (
                 <button key={opt.value} type="button" onClick={() => onSelectAnswer(question.id, opt.value)}
                   className={`w-full text-left px-6 py-4 rounded-xl text-lg font-medium transition-all duration-200 border ${
                     answers[question.id] === opt.value
-                      ? "bg-amber-400/20 border-amber-400 text-white"
-                      : "bg-card/10 border-white/10 text-white hover:border-amber-400/50 hover:bg-card/20"
+                      ? "bg-blue-50 border-blue-500 text-gray-900"
+                      : "bg-white border-gray-200 text-gray-900 hover:border-blue-400 hover:bg-blue-50"
                   }`}>
                   {opt.label}
                 </button>
               ))}
             </div>
             {currentStep > 1 && (
-              <button type="button" onClick={onBack} className="mt-6 inline-flex items-center gap-1.5 text-white/50 hover:text-white transition-colors text-sm">
+              <button type="button" onClick={onBack} className="mt-6 inline-flex items-center gap-1.5 text-gray-400 hover:text-gray-700 transition-colors text-sm">
                 <ArrowLeft className="w-4 h-4" /> Back
               </button>
             )}
@@ -192,34 +190,34 @@ function QuizOverlay({
           return (
           <div className="text-center">
             <div className="mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-400/20 mb-4">
-                <CheckCircle2 className="w-8 h-8 text-amber-400" />
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600/10 mb-4">
+                <CheckCircle2 className="w-8 h-8 text-blue-500" />
               </div>
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-2">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-2">
                 {isHotLead ? "Great news — you're a strong fit!" : "Great — let's get you started!"}
               </h2>
-              <p className="text-white/60 text-lg">
+              <p className="text-gray-500 text-lg">
                 Enter your details to get instant access to the 28-min video explaining the transition from Senior Dev into an AI Engineer.
               </p>
             </div>
             <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4 max-w-sm mx-auto">
               <input type="text" placeholder="Full name" value={contactInfo.name}
                 onChange={(e) => onContactChange("name", e.target.value)} required
-                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors" />
+                className="w-full px-5 py-4 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder:text-gray-400 text-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" />
               <input type="email" placeholder="Email address" value={contactInfo.email}
                 onChange={(e) => onContactChange("email", e.target.value)} required
-                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors" />
+                className="w-full px-5 py-4 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder:text-gray-400 text-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" />
               <input type="tel" placeholder="Phone number" value={contactInfo.phone}
                 onChange={(e) => onContactChange("phone", e.target.value)} required
-                className="w-full px-5 py-4 rounded-xl bg-card/10 border border-white/10 text-white placeholder:text-white/40 text-lg focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors" />
+                className="w-full px-5 py-4 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder:text-gray-400 text-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" />
               <button type="submit" disabled={isSubmitting}
-                className="w-full px-6 py-4 rounded-full text-gray-900 text-lg font-bold shadow-lg transition-all duration-300 disabled:opacity-50 inline-flex items-center justify-center gap-2"
-                style={{ background: "linear-gradient(135deg, #FBBF24, #F59E0B)", boxShadow: "0 0 20px rgba(251, 191, 36, 0.3)" }}>
+                className="w-full px-6 py-4 rounded-xl text-white text-lg font-bold transition-all duration-200 disabled:opacity-50 inline-flex items-center justify-center gap-2 hover:opacity-90"
+                style={{ backgroundColor: "#2563eb" }}>
                 {isSubmitting ? "Submitting…" : "Watch the Free Training"}
                 {!isSubmitting && <ArrowRight className="w-5 h-5" />}
               </button>
             </form>
-            <button type="button" onClick={onBack} className="mt-6 inline-flex items-center gap-1.5 text-white/50 hover:text-white transition-colors text-sm">
+            <button type="button" onClick={onBack} className="mt-6 inline-flex items-center gap-1.5 text-gray-400 hover:text-gray-700 transition-colors text-sm">
               <ArrowLeft className="w-4 h-4" /> Back
             </button>
           </div>
@@ -341,42 +339,44 @@ export default function LpV3Short() {
   }, [contactInfo, answers]);
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "radial-gradient(ellipse at 50% 0%, #1a1a2e 0%, #0a0a0a 60%)" }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#f5f0eb" }}>
       <PageMeta
         title="GenAI People | Are You GenAI-Ready? The Post-Coding Playbook for Java Devs"
         description="AI is rewriting the rules for Java developers. Learn how to contribute through ideas, not just code — and stay ahead in the post-coding world."
       />
 
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
+      <div className="w-full py-4 text-center" style={{ backgroundColor: "#2563eb" }}>
+        <span className="text-white font-bold text-base sm:text-lg tracking-wide">GenAI People</span>
+      </div>
+
+      <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
         <div className="max-w-3xl text-center">
-          <p className="text-lg sm:text-base font-bold tracking-[0.2em] uppercase mb-8 text-amber-400/80">
+          <p className="text-lg sm:text-base font-bold tracking-wide uppercase mb-6" style={{ color: "#2563eb" }}>
             Senior Java Developers
           </p>
 
-          <h1 className="font-display text-2xl sm:text-4xl md:text-[3.25rem] font-extrabold text-white leading-[1.15] mb-6">
+          <h1 className="text-3xl sm:text-5xl md:text-[3.5rem] font-extrabold leading-[1.15] mb-6" style={{ color: "#1a1a1a" }}>
             The Post-Coding Era Is Here.{" "}
-            <span className="text-amber-400">Are You GenAI-Ready?</span>
+            <span style={{ color: "#2563eb" }}>Are You GenAI-Ready?</span>
           </h1>
 
-          <div className="w-16 h-0.5 bg-amber-400/40 mx-auto my-6" />
-
-          <p className="text-lg sm:text-xl text-amber-200/90 font-medium mb-6 leading-relaxed">
+          <p className="text-lg sm:text-xl font-semibold mb-8 leading-relaxed" style={{ color: "#2563eb" }}>
             AI isn't replacing Java developers — it's replacing the ones who only write code.
           </p>
 
           <div className="text-left max-w-xl mx-auto mb-8 space-y-4">
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-1 shrink-0" />
-              <p className="text-base sm:text-lg text-white/65">Learn how to <span className="text-white font-medium">contribute through ideas</span> — architecture, system design, and AI-augmented problem solving</p>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-1 shrink-0" />
-              <p className="text-base sm:text-lg text-white/65">Discover why <span className="text-white font-medium">experienced Java devs have an unfair advantage</span> in the GenAI shift</p>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-1 shrink-0" />
-              <p className="text-base sm:text-lg text-white/65">See the exact <span className="text-white font-medium">28-min roadmap</span> 150+ senior devs used to become GenAI-ready — without starting over</p>
-            </div>
+            {[
+              ["Contribute through ideas", " — architecture, system design, and AI-augmented problem solving"],
+              ["Experienced Java devs have an unfair advantage", " in the GenAI shift"],
+              ["28-min roadmap", " — 150+ senior devs used to become GenAI-ready without starting over"],
+            ].map(([bold, rest], i) => (
+              <div key={i} className="flex items-start gap-3">
+                <span className="text-lg mt-0.5" style={{ color: "#2563eb" }}>✓</span>
+                <p className="text-base sm:text-lg" style={{ color: "#444" }}>
+                  <span className="font-semibold" style={{ color: "#1a1a1a" }}>{bold}</span>{rest}
+                </p>
+              </div>
+            ))}
           </div>
 
           <button
@@ -385,29 +385,23 @@ export default function LpV3Short() {
               trackEvent("cta_click", { cta_label: "Get the GenAI Readiness Roadmap", cta_section: "hero", page_path: window.location.pathname });
               openQuiz();
             }}
-            className="group inline-flex items-center gap-2.5 px-10 py-5 text-lg sm:text-xl font-bold rounded-full transition-all duration-300 text-gray-900"
-            style={{
-              background: "linear-gradient(135deg, #FBBF24, #F59E0B)",
-              boxShadow: "0 0 30px rgba(251, 191, 36, 0.3), 0 4px 20px rgba(0,0,0,0.4)",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 50px rgba(251, 191, 36, 0.5), 0 4px 24px rgba(0,0,0,0.5)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 30px rgba(251, 191, 36, 0.3), 0 4px 20px rgba(0,0,0,0.4)"; }}
+            className="inline-flex items-center justify-center px-12 py-5 text-xl sm:text-2xl font-extrabold text-white rounded-xl transition-all duration-200 hover:opacity-90"
+            style={{ backgroundColor: "#2563eb", minWidth: 280 }}
           >
             Get the GenAI Readiness Roadmap
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
 
-          <p className="mt-5 text-sm text-white/35">
+          <p className="mt-5 text-sm" style={{ color: "#999" }}>
             Quick quiz + free 28-min training. No credit card. No strings.
           </p>
         </div>
       </main>
 
-      <footer className="py-4 px-4 text-center border-t border-white/5">
-        <p className="text-xs text-white/25">
+      <footer className="py-6 px-4 text-center">
+        <p className="text-xs" style={{ color: "#aaa" }}>
           © {new Date().getFullYear()} GenAI People ·{" "}
-          <Link to="/privacy" className="hover:text-white/50 transition-colors">Privacy</Link>{" · "}
-          <Link to="/terms" className="hover:text-white/50 transition-colors">Terms</Link>
+          <Link to="/privacy" className="underline hover:opacity-70">Privacy</Link>{" · "}
+          <Link to="/terms" className="underline hover:opacity-70">Terms</Link>
         </p>
       </footer>
 

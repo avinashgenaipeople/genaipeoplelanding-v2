@@ -52,11 +52,8 @@ export function FormModal({ open, onOpenChange, title = "Watch the Free Training
         value: 1,
       });
     }
-    if (typeof window.fbq === "function") {
-      window.fbq("track", "Lead", {
-        content_name: "LFMVP Optin -Improved",
-      });
-    }
+    // Lead event removed — fires on training page (learning.genaipeople.com)
+    // to avoid duplicate Lead pixels per user.
   };
 
   // Listen for Synamate/GHL form submission via postMessage

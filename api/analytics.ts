@@ -105,6 +105,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 5. Quiz answer breakdown — { [questionId]: { [answerValue]: count } }
   const quizAnswers: Record<string, Record<string, number>> = {};
 
+  // 6. CTA click source breakdown — { [page]: { video_thumbnail: n, cta_button: n, other: n } }
+  const ctaSources: Record<string, Record<string, number>> = {};
+
   // Collect distinct values for filter dropdowns
   const pageSet = new Set<string>();
   const sourceSet = new Set<string>();
@@ -188,13 +191,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         m.views++;
         totalViews++;
         break;
-      case "cta_click":
+      case "cta_click": {
         f.clicks++;
         u.clicks++;
         d.clicks++;
         m.clicks++;
         totalClicks++;
+        const ctaSource = up.cta_section ? String(up.cta_section) : "other";
+        if (!ctaSources[page]) ctaSources[page] = {};
+        ctaSources[page][ctaSource] = (ctaSources[page][ctaSource] ?? 0) + 1;
         break;
+      }
       case "lead_form_open":
       case "quiz_open":
         f.opens++;
@@ -251,6 +258,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     byMedium,
     daily,
     quizAnswers,
+    ctaSources,
     filterOptions: {
       pages: [...pageSet].sort(),
       sources: [...sourceSet].sort(),

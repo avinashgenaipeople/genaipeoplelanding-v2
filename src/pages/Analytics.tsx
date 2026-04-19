@@ -66,6 +66,8 @@ type Filters = {
 
 type QuizAnswers = Record<string, Record<string, number>>;
 
+type CtaSources = Record<string, Record<string, number>>;
+
 type AnalyticsData = {
   summary: Summary;
   funnel: FunnelRow[];
@@ -73,6 +75,7 @@ type AnalyticsData = {
   byMedium: MediumRow[];
   daily: DailyRow[];
   quizAnswers: QuizAnswers;
+  ctaSources: CtaSources;
   filterOptions: FilterOptions;
 };
 
@@ -265,7 +268,7 @@ export default function Analytics() {
   }
 
   // --- Dashboard ---
-  const { summary, funnel, utmSources, byMedium, daily, quizAnswers = {} } = data!;
+  const { summary, funnel, utmSources, byMedium, daily, quizAnswers = {}, ctaSources = {} } = data!;
 
   // Build cost-per-submit by joining byMedium (submits) with metaAdsets (spend)
   const adsetSpendMap = new Map(metaAdsets.map((a) => [a.adsetId, a]));
@@ -570,6 +573,53 @@ export default function Analytics() {
               ))}
             </tbody>
           </table>
+        </section>
+
+        {/* CTA click source breakdown */}
+        <section className="bg-white rounded-lg shadow p-4 mb-8 overflow-x-auto">
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">CTA Click Sources (Video Thumbnail vs Button)</h2>
+          {Object.keys(ctaSources).length === 0 ? (
+            <p className="text-gray-500">No CTA click data in this period.</p>
+          ) : (
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="border-b text-gray-500">
+                  <th className="py-2 pr-4">Page</th>
+                  <th className="py-2 pr-4 text-right">Video Thumbnail</th>
+                  <th className="py-2 pr-4 text-right">CTA Button</th>
+                  <th className="py-2 pr-4 text-right">Other</th>
+                  <th className="py-2 pr-4 text-right">Total</th>
+                  <th className="py-2 text-right">Thumbnail %</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(ctaSources)
+                  .sort(([, a], [, b]) => {
+                    const totalA = Object.values(a).reduce((s, n) => s + n, 0);
+                    const totalB = Object.values(b).reduce((s, n) => s + n, 0);
+                    return totalB - totalA;
+                  })
+                  .map(([page, sources]) => {
+                    const thumb = sources.video_thumbnail || 0;
+                    const btn = sources.cta_button || 0;
+                    const other = Object.entries(sources)
+                      .filter(([k]) => k !== "video_thumbnail" && k !== "cta_button")
+                      .reduce((s, [, n]) => s + n, 0);
+                    const total = thumb + btn + other;
+                    return (
+                      <tr key={page} className="border-b last:border-0">
+                        <td className="py-2 pr-4 font-mono text-gray-900">{page}</td>
+                        <td className="py-2 pr-4 text-right text-gray-900">{thumb}</td>
+                        <td className="py-2 pr-4 text-right text-gray-900">{btn}</td>
+                        <td className="py-2 pr-4 text-right text-gray-900">{other}</td>
+                        <td className="py-2 pr-4 text-right font-semibold text-gray-900">{total}</td>
+                        <td className="py-2 text-right text-gray-600">{pct(thumb, total)}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          )}
         </section>
 
         {/* Quiz answer breakdown */}

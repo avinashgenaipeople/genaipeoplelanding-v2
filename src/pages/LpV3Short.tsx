@@ -381,7 +381,7 @@ export default function LpV3Short() {
 
           <button
             type="button"
-            onClick={() => { trackEvent("cta_click", { cta_label: "video_thumbnail", cta_section: "hero_video", page_path: window.location.pathname }); openQuiz(); }}
+            onClick={() => { trackEvent("cta_click", { cta_label: "Get the GenAI Readiness Roadmap", cta_section: "video_thumbnail", page_path: window.location.pathname }); openQuiz(); }}
             className="group relative w-full max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden cursor-pointer"
             style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.12)" }}
           >
@@ -397,7 +397,7 @@ export default function LpV3Short() {
           <button
             type="button"
             onClick={() => {
-              trackEvent("cta_click", { cta_label: "Get the GenAI Readiness Roadmap", cta_section: "hero", page_path: window.location.pathname });
+              trackEvent("cta_click", { cta_label: "Get the GenAI Readiness Roadmap", cta_section: "cta_button", page_path: window.location.pathname });
               openQuiz();
             }}
             className="inline-flex items-center justify-center px-12 py-5 text-xl sm:text-2xl font-extrabold text-white rounded-xl transition-all duration-200 hover:opacity-90"

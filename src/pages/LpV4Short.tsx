@@ -15,8 +15,8 @@ export default function LpV4Short() {
     trackEvent("page_view_lp_v4_short", { page_path: window.location.pathname });
   }, []);
 
-  const handleCTA = () => {
-    trackEvent("cta_click", { cta_label: "Get Instant Access", cta_section: "hero", page_path: window.location.pathname });
+  const handleCTA = (source: string) => {
+    trackEvent("cta_click", { cta_label: "Get Instant Access", cta_section: source, page_path: window.location.pathname });
     openFormModal();
   };
 
@@ -50,7 +50,7 @@ export default function LpV4Short() {
           {/* Video thumbnail with play button */}
           <button
             type="button"
-            onClick={handleCTA}
+            onClick={() => handleCTA("video_thumbnail")}
             className="group relative w-full max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden cursor-pointer"
             style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.12)" }}
           >
@@ -69,7 +69,7 @@ export default function LpV4Short() {
 
           <button
             type="button"
-            onClick={handleCTA}
+            onClick={() => handleCTA("cta_button")}
             className="inline-flex items-center justify-center px-12 py-5 text-xl sm:text-2xl font-extrabold text-white rounded-xl transition-all duration-200 hover:opacity-90"
             style={{ backgroundColor: "#2563eb", minWidth: 280 }}
           >

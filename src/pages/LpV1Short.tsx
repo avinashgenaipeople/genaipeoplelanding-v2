@@ -39,7 +39,7 @@ export default function LpV1Short() {
           </p>
 
           <h1 className="text-3xl sm:text-5xl md:text-[3.5rem] font-extrabold leading-[1.15] mb-6" style={{ color: "#1a1a1a" }}>
-            AI Handles the Code. Senior Java Devs Own the Thinking.{" "}
+            Senior Java Devs Own Thinking, AI Handles Coding.{" "}
             <span style={{ color: "#2563eb" }}>That's Worth 30–70L.</span>
           </h1>
 

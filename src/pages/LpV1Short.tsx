@@ -39,19 +39,19 @@ export default function LpV1Short() {
           </p>
 
           <h1 className="text-3xl sm:text-5xl md:text-[3.5rem] font-extrabold leading-[1.15] mb-6" style={{ color: "#1a1a1a" }}>
-            Senior Java Devs Own Thinking, AI Handles Coding.{" "}
-            <span style={{ color: "#2563eb" }}>That's Worth 30–70L.</span>
+            Senior Java Developers — "Learn Python. Get Certified. Start Over."{" "}
+            <span style={{ color: "#2563eb" }}>That's the Worst Advice You'll Hear in 2026.</span>
           </h1>
 
           <p className="text-base sm:text-lg mb-6 leading-relaxed" style={{ color: "#444" }}>
-            In 2026, AI writes boilerplate faster than any human. But it can't architect systems, debug production at 2am, or decide what to build and why. That's 10 years of Java experience — and companies are paying 30–70L for it.
+            The developers landing 30–70L AI roles didn't start over. They repositioned. Architecture, system design, production thinking — AI teams need exactly what you already know.
           </p>
 
           <div className="text-left max-w-xl mx-auto mb-6 space-y-3">
             {[
-              ["Systems thinking + AI orchestration", " — the #1 skill combo companies pay premium for"],
-              ["Your architecture and design patterns", " is the moat AI can't replace"],
-              ["AI is a multiplier for senior devs", " — it makes good engineers 10X, not obsolete"],
+              ["No new language required", " — your Java foundation IS the AI advantage"],
+              ["Certificates impress HR", " — system thinking impresses hiring managers paying 50L+"],
+              ["150+ devs proved it", " — same background, 2–3X salary jump"],
             ].map(([bold, rest], i) => (
               <div key={i} className="flex items-start gap-3">
                 <span className="text-lg mt-0.5" style={{ color: "#2563eb" }}>✓</span>
@@ -79,7 +79,7 @@ export default function LpV1Short() {
           </button>
 
           <p className="text-base sm:text-lg mb-8" style={{ color: "#555" }}>
-            This 28-min training shows exactly how 150+ senior devs repositioned from "Java developer" to "AI-era engineer" — without a single new certificate.
+            This 28-min training shows the exact repositioning playbook. Free. No strings.
           </p>
 
           <button

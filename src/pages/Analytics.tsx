@@ -134,6 +134,7 @@ export default function Analytics() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [days, setDays] = useState<number>(30);
+  const [specificDate, setSpecificDate] = useState<string>("");
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -143,6 +144,9 @@ export default function Analytics() {
   const [metaData, setMetaData] = useState<MetaAccount[] | null>(null);
   const [metaAdsets, setMetaAdsets] = useState<MetaAdset[]>([]);
   const [metaDailySpend, setMetaDailySpend] = useState<MetaDailySpend[]>([]);
+  const [metaPixelEvents, setMetaPixelEvents] = useState<Record<string, { count: number; value: number; costPer: number }>>({});
+  const [metaEventDate, setMetaEventDate] = useState<string>("");
+  const [metaEventDateSpend, setMetaEventDateSpend] = useState<number>(0);
   const [metaLoading, setMetaLoading] = useState(false);
   const [metaError, setMetaError] = useState("");
 
@@ -154,14 +158,14 @@ export default function Analytics() {
   daysRef.current = days;
   filtersRef.current = filters;
 
-  const fetchMetaData = useCallback(async (pw?: string, d?: number) => {
+  const fetchMetaData = useCallback(async (pw?: string, d?: number, date?: string) => {
     setMetaLoading(true);
     setMetaError("");
     try {
       const res = await fetch("/api/meta-ads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: pw ?? password, days: d ?? days }),
+        body: JSON.stringify({ password: pw ?? password, days: d ?? days, specificDate: date || specificDate || undefined }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -171,12 +175,15 @@ export default function Analytics() {
       setMetaData(json.accounts);
       setMetaAdsets(json.adsets ?? []);
       setMetaDailySpend(json.dailySpend ?? []);
+      setMetaPixelEvents(json.pixelEvents ?? {});
+      setMetaEventDate(json.eventDate ?? "");
+      setMetaEventDateSpend(json.eventDateSpend ?? 0);
     } catch (e: unknown) {
       setMetaError(e instanceof Error ? e.message : "Unknown error");
     } finally {
       setMetaLoading(false);
     }
-  }, [password, days]);
+  }, [password, days, specificDate]);
 
   // Auto-refresh every 5 minutes when authenticated
   useEffect(() => {
@@ -320,6 +327,24 @@ export default function Analytics() {
                 {d === 1 ? "Today" : `${d}d`}
               </button>
             ))}
+            <input
+              type="date"
+              value={specificDate}
+              onChange={(e) => {
+                setSpecificDate(e.target.value);
+                fetchMetaData(undefined, undefined, e.target.value);
+              }}
+              className="px-3 py-1 rounded text-sm font-medium bg-white text-gray-700 border border-gray-300"
+              title="Select date for FB events (IST)"
+            />
+            {specificDate && (
+              <button
+                onClick={() => { setSpecificDate(""); fetchMetaData(undefined, undefined, ""); }}
+                className="px-2 py-1 rounded text-sm font-medium bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"
+              >
+                Clear
+              </button>
+            )}
             <button
               onClick={() => { fetchData(); fetchMetaData(); }}
               disabled={loading}
@@ -412,6 +437,46 @@ export default function Analytics() {
           )}
           {metaData && metaData.length === 0 && (
             <p className="text-gray-500 text-sm">No Meta ad accounts found.</p>
+          )}
+        </section>
+
+        {/* FB Pixel Events for date */}
+        <section className="bg-white rounded-lg shadow p-4 mb-8 overflow-x-auto">
+          <h2 className="text-lg font-semibold text-gray-900 mb-1">
+            FB Pixel Events {metaEventDate ? `— ${metaEventDate}` : "— Today"} (IST)
+          </h2>
+          <p className="text-xs text-gray-500 mb-3">
+            Spend: ₹{metaEventDateSpend.toFixed(2)} · Select a date above to change
+          </p>
+          {Object.keys(metaPixelEvents).length === 0 ? (
+            <p className="text-gray-500">No pixel events for this date.</p>
+          ) : (
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="border-b text-gray-500">
+                  <th className="py-2 pr-4">Event</th>
+                  <th className="py-2 pr-4 text-right">Count</th>
+                  <th className="py-2 text-right">Cost per Event</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(metaPixelEvents)
+                  .sort(([, a], [, b]) => b.count - a.count)
+                  .map(([event, data]) => (
+                    <tr key={event} className={`border-b last:border-0 ${
+                      ["offsite_conversion.fb_pixel_lead", "offsite_conversion.fb_pixel_complete_registration", "offsite_conversion.fb_pixel_initiate_checkout", "offsite_conversion.fb_pixel_purchase"].includes(event)
+                        ? "bg-blue-50 font-medium"
+                        : ""
+                    }`}>
+                      <td className="py-2 pr-4 font-mono text-gray-900">{event.replace("offsite_conversion.fb_pixel_", "⚡ ")}</td>
+                      <td className="py-2 pr-4 text-right text-gray-900">{data.count}</td>
+                      <td className="py-2 text-right text-gray-600">
+                        {data.costPer > 0 ? `₹${data.costPer.toFixed(2)}` : "–"}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
           )}
         </section>
 

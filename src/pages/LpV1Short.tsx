@@ -1,23 +1,20 @@
-import { useEffect } from "react";
-import { useFormModal } from "@/contexts/FormModalContext";
+import { useEffect, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { Link } from "react-router-dom";
 import { PageMeta } from "@/components/PageMeta";
+import { LeadFormModal } from "@/components/LeadFormModal";
 
 export default function LpV1Short() {
-  const { openFormModal, setFormHeader } = useFormModal();
+  const [formOpen, setFormOpen] = useState(false);
 
   useEffect(() => {
-    setFormHeader({
-      title: "Get Instant Access",
-      subtitle: "Enter your info and the 28-min training plays immediately",
-    });
     trackEvent("page_view_lp_v1_short", { page_path: window.location.pathname });
   }, []);
 
-  const handleCTA = (source: string) => {
+  const openForm = (source: string) => {
     trackEvent("cta_click", { cta_label: "Watch the Free Training", cta_section: source, page_path: window.location.pathname });
-    openFormModal();
+    trackEvent("lead_form_open", { page_path: window.location.pathname });
+    setFormOpen(true);
   };
 
   return (
@@ -27,7 +24,6 @@ export default function LpV1Short() {
         description="How Senior Java Devs are landing 30-70L AI jobs without starting over. Get instant access to the 28-min free training."
       />
 
-      {/* Header bar */}
       <div className="w-full py-4 text-center" style={{ backgroundColor: "#2563eb" }}>
         <span className="text-white font-bold text-base sm:text-lg tracking-wide">GenAI People</span>
       </div>
@@ -65,7 +61,7 @@ export default function LpV1Short() {
           {/* Video thumbnail with play button */}
           <button
             type="button"
-            onClick={() => handleCTA("video_thumbnail")}
+            onClick={() => openForm("video_thumbnail")}
             className="group relative w-full max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden cursor-pointer"
             style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.12)" }}
           >
@@ -84,7 +80,7 @@ export default function LpV1Short() {
 
           <button
             type="button"
-            onClick={() => handleCTA("cta_button")}
+            onClick={() => openForm("cta_button")}
             className="inline-flex items-center justify-center px-12 py-5 text-xl sm:text-2xl font-extrabold text-white rounded-xl transition-all duration-200 hover:opacity-90"
             style={{ backgroundColor: "#2563eb", minWidth: 280 }}
           >
@@ -104,6 +100,12 @@ export default function LpV1Short() {
           <Link to="/terms" className="underline hover:opacity-70">Terms</Link>
         </p>
       </footer>
+
+      <LeadFormModal
+        open={formOpen}
+        onClose={() => setFormOpen(false)}
+        source="lp-v1-short"
+      />
     </div>
   );
 }

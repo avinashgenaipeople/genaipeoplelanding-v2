@@ -30,7 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { password, days = 30 } = req.body ?? {};
+  const { password, days = 30, specificDate } = req.body ?? {};
 
   if (password !== process.env.ANALYTICS_PASSWORD) {
     return res.status(401).json({ error: "Invalid password" });
@@ -68,8 +68,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    // Determine date range for specific date query
+    const eventDateSince = specificDate ? String(specificDate) : nowIST;
+    const eventDateUntil = specificDate ? String(specificDate) : nowIST;
+
     // Fetch account-level data and adset-level data concurrently
-    const [accountResults, adsetResults, adsetTodayResults, dailySpendResults] = await Promise.all([
+    const [accountResults, adsetResults, adsetTodayResults, dailySpendResults, pixelEventResults] = await Promise.all([
       // Account-level: info + today + month (parallelized per account)
       Promise.all(
         accountIds.map(async (actId) => {
@@ -167,6 +171,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }>;
         })
       ),
+      // Pixel events for specific date (or today) — actions breakdown
+      Promise.all(
+        accountIds.map(async (actId) => {
+          const actionsInsights = await metaGet(`${actId}/insights`, {
+            fields: "spend,actions,action_values,cost_per_action_type",
+            time_range: JSON.stringify({ since: eventDateSince, until: eventDateUntil }),
+            limit: "1",
+          });
+          return {
+            accountId: actId,
+            data: actionsInsights.data?.[0] ?? null,
+          };
+        })
+      ),
     ]);
 
     // Build today spend lookup by adset ID
@@ -194,7 +212,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .map(([date, spend]) => ({ date, spend: spend.toFixed(2) }))
       .sort((a, b) => a.date.localeCompare(b.date));
 
-    return res.status(200).json({ accounts: accountResults, adsets, dailySpend });
+    // Aggregate pixel events across accounts
+    const pixelEvents: Record<string, { count: number; value: number; costPer: number }> = {};
+    let eventDateSpend = 0;
+    for (const result of pixelEventResults) {
+      if (!result.data) continue;
+      eventDateSpend += Number(result.data.spend ?? 0);
+      const actions = result.data.actions as Array<{ action_type: string; value: string }> | undefined;
+      const costPerActions = result.data.cost_per_action_type as Array<{ action_type: string; value: string }> | undefined;
+      if (actions) {
+        for (const action of actions) {
+          if (!pixelEvents[action.action_type]) {
+            pixelEvents[action.action_type] = { count: 0, value: 0, costPer: 0 };
+          }
+          pixelEvents[action.action_type].count += Number(action.value);
+        }
+      }
+      if (costPerActions) {
+        for (const cpa of costPerActions) {
+          if (pixelEvents[cpa.action_type]) {
+            pixelEvents[cpa.action_type].costPer = Number(cpa.value);
+          }
+        }
+      }
+    }
+
+    return res.status(200).json({
+      accounts: accountResults,
+      adsets,
+      dailySpend,
+      pixelEvents,
+      eventDateSpend,
+      eventDate: eventDateSince,
+    });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Unknown Meta API error";
     return res.status(502).json({ error: message });

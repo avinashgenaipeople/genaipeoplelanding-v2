@@ -1,23 +1,20 @@
-import { useEffect } from "react";
-import { useFormModal } from "@/contexts/FormModalContext";
+import { useEffect, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { Link } from "react-router-dom";
 import { PageMeta } from "@/components/PageMeta";
+import { LeadFormModal } from "@/components/LeadFormModal";
 
 export default function LpV6Short() {
-  const { openFormModal, setFormHeader } = useFormModal();
+  const [formOpen, setFormOpen] = useState(false);
 
   useEffect(() => {
-    setFormHeader({
-      title: "Get Instant Access",
-      subtitle: "Enter your info and the 28-min training plays immediately",
-    });
     trackEvent("page_view_lp_v6_short", { page_path: window.location.pathname });
   }, []);
 
-  const handleCTA = (source: string) => {
-    trackEvent("cta_click", { cta_label: "Get Instant Access", cta_section: source, page_path: window.location.pathname });
-    openFormModal();
+  const openForm = (source: string) => {
+    trackEvent("cta_click", { cta_label: "Watch the Free Training", cta_section: source, page_path: window.location.pathname });
+    trackEvent("lead_form_open", { page_path: window.location.pathname });
+    setFormOpen(true);
   };
 
   return (
@@ -64,7 +61,7 @@ export default function LpV6Short() {
           {/* Video thumbnail with play button */}
           <button
             type="button"
-            onClick={() => handleCTA("video_thumbnail")}
+            onClick={() => openForm("video_thumbnail")}
             className="group relative w-full max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden cursor-pointer"
             style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.12)" }}
           >
@@ -78,16 +75,16 @@ export default function LpV6Short() {
           </button>
 
           <p className="text-base sm:text-lg mb-8" style={{ color: "#555" }}>
-            Watch the free 28-min training — enter your info to get instant access.
+            This 28-min training shows the exact repositioning playbook. Free. No strings.
           </p>
 
           <button
             type="button"
-            onClick={() => handleCTA("cta_button")}
+            onClick={() => openForm("cta_button")}
             className="inline-flex items-center justify-center px-12 py-5 text-xl sm:text-2xl font-extrabold text-white rounded-xl transition-all duration-200 hover:opacity-90"
             style={{ backgroundColor: "#2563eb", minWidth: 280 }}
           >
-            Get Instant Access
+            Watch the Free Training
           </button>
 
           <p className="mt-5 text-sm" style={{ color: "#999" }}>
@@ -103,6 +100,12 @@ export default function LpV6Short() {
           <Link to="/terms" className="underline hover:opacity-70">Terms</Link>
         </p>
       </footer>
+
+      <LeadFormModal
+        open={formOpen}
+        onClose={() => setFormOpen(false)}
+        source="lp-v6-short"
+      />
     </div>
   );
 }

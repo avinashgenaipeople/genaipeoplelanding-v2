@@ -73,9 +73,8 @@ export function LeadFormModal({
     setSubmitted(true);
     setSubmitting(false);
 
-    setTimeout(() => {
-      window.location.href = TRAINING_URL;
-    }, 2000);
+    // Redirect immediately — webhook is fire-and-forget, no need to wait
+    window.location.href = TRAINING_URL;
   };
 
   return (

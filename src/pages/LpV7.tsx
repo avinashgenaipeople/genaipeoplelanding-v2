@@ -147,7 +147,7 @@ const secrets = [
   },
 ];
 
-const REDIRECT_DELAY = 4000;
+const REDIRECT_DELAY = 1500;
 
 /* ── Transition Screen (step 9) ──────────────────────────────────── */
 function TransitionScreen({ name }: { name: string }) {

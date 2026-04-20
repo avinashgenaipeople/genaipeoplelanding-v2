@@ -64,7 +64,7 @@ const ANSWER_LABELS: Record<string, Record<string, string>> = {
   7: { yes: "Yes", maybe: "Maybe" },
 };
 
-const REDIRECT_DELAY = 4000;
+const REDIRECT_DELAY = 1500;
 
 /* ── Transition Screen ──────────────────────────────────────────── */
 function TransitionScreen({ name }: { name: string }) {

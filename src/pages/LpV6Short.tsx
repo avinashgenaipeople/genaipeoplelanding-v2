@@ -24,16 +24,12 @@ export default function LpV6Short() {
         description="Tech Leads with 10+ years: AI is rewriting what leadership means. Learn how to lead AI-powered teams and stay indispensable."
       />
 
-      <div className="w-full py-4 text-center" style={{ backgroundColor: "#2563eb" }}>
-        <span className="text-white font-bold text-base sm:text-lg tracking-wide">GenAI People</span>
+      <div className="w-full py-3 text-center" style={{ backgroundColor: "#2563eb" }}>
+        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Tech Leads with 10+ Years — AI Changed Everything. Free Training →</span>
       </div>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
         <div className="max-w-3xl text-center">
-          <p className="text-sm sm:text-base font-bold tracking-wide uppercase mb-6" style={{ color: "#2563eb" }}>
-            Tech Leads with 10+ Years
-          </p>
-
           <h1 className="text-3xl sm:text-5xl md:text-[3.5rem] font-extrabold leading-[1.15] mb-6" style={{ color: "#1a1a1a" }}>
             AI Changed What "Leadership" Means.{" "}
             <span style={{ color: "#2563eb" }}>Have You?</span>

@@ -345,16 +345,12 @@ export default function LpV3Short() {
         description="AI is rewriting the rules for Java developers. Learn how to contribute through ideas, not just code — and stay ahead in the post-coding world."
       />
 
-      <div className="w-full py-4 text-center" style={{ backgroundColor: "#2563eb" }}>
-        <span className="text-white font-bold text-base sm:text-lg tracking-wide">GenAI People</span>
+      <div className="w-full py-3 text-center" style={{ backgroundColor: "#2563eb" }}>
+        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Senior Java Developers — Are You GenAI-Ready? Free Training →</span>
       </div>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
         <div className="max-w-3xl text-center">
-          <p className="text-lg sm:text-base font-bold tracking-wide uppercase mb-6" style={{ color: "#2563eb" }}>
-            Senior Java Developers
-          </p>
-
           <h1 className="text-3xl sm:text-5xl md:text-[3.5rem] font-extrabold leading-[1.15] mb-6" style={{ color: "#1a1a1a" }}>
             The Post-Coding Era Is Here.{" "}
             <span style={{ color: "#2563eb" }}>Are You GenAI-Ready?</span>

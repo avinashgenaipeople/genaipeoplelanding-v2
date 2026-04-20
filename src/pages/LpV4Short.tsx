@@ -24,16 +24,12 @@ export default function LpV4Short() {
         description="Backend Developers earning under 30 LPA: your skills are worth 30-70L in AI roles. Watch the free 28-min training to see how."
       />
 
-      <div className="w-full py-4 text-center" style={{ backgroundColor: "#2563eb" }}>
-        <span className="text-white font-bold text-base sm:text-lg tracking-wide">GenAI People</span>
+      <div className="w-full py-3 text-center" style={{ backgroundColor: "#2563eb" }}>
+        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Backend Developer Earning Under 30 LPA? This Training Is for You →</span>
       </div>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
         <div className="max-w-3xl text-center">
-          <p className="text-sm sm:text-base font-bold tracking-wide uppercase mb-6" style={{ color: "#2563eb" }}>
-            Backend Developer earning under 30 LPA?
-          </p>
-
           <h1 className="text-3xl sm:text-5xl md:text-[3.5rem] font-extrabold leading-[1.15] mb-6" style={{ color: "#1a1a1a" }}>
             Your Backend Skills Are Worth{" "}
             <span style={{ color: "#2563eb" }}>30–70L in AI.</span>{" "}

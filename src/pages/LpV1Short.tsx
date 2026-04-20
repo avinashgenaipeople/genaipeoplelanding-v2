@@ -24,16 +24,12 @@ export default function LpV1Short() {
         description="How Senior Java Devs are landing 30-70L AI jobs without starting over. Get instant access to the 28-min free training."
       />
 
-      <div className="w-full py-4 text-center" style={{ backgroundColor: "#2563eb" }}>
-        <span className="text-white font-bold text-base sm:text-lg tracking-wide">GenAI People</span>
+      <div className="w-full py-3 text-center" style={{ backgroundColor: "#2563eb" }}>
+        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Senior Java Developer? 10+ Years? This Free Training Is for You →</span>
       </div>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
         <div className="max-w-3xl text-center">
-          <p className="text-base sm:text-xl font-bold tracking-wide uppercase mb-6" style={{ color: "#2563eb" }}>
-            Senior Java Developer? 10+ Years?
-          </p>
-
           <h1 className="text-3xl sm:text-5xl md:text-[3.5rem] font-extrabold leading-[1.15] mb-6" style={{ color: "#1a1a1a" }}>
             Senior Java Developers — "Learn Python. Get Certified. Start Over."{" "}
             <span style={{ color: "#2563eb" }}>That's the Worst Advice You'll Hear in 2026.</span>

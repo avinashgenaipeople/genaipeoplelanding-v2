@@ -345,23 +345,35 @@ export default function LpV2Short() {
         description="Senior Java Developers: watch the 28-min free training that shows how experienced devs are landing 30-70L AI roles. No credit card. No strings."
       />
 
-      <div className="w-full py-4 text-center" style={{ backgroundColor: "#2563eb" }}>
-        <span className="text-white font-bold text-base sm:text-lg tracking-wide">GenAI People</span>
+      <div className="w-full py-3 text-center" style={{ backgroundColor: "#2563eb" }}>
+        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Senior Java Developer? 10+ Years? This Free Training Is for You →</span>
       </div>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
         <div className="max-w-3xl text-center">
-          <p className="text-sm sm:text-base font-bold tracking-wide uppercase mb-6" style={{ color: "#2563eb" }}>
-            For Senior Java Developers ONLY
-          </p>
-
           <h1 className="text-3xl sm:text-5xl md:text-[3.5rem] font-extrabold leading-[1.15] mb-6" style={{ color: "#1a1a1a" }}>
-            Land a <span style={{ color: "#2563eb" }}>30–70L AI Role</span> in 6 Months — Using the Skills You Already Have
+            Senior Java Developers — "Learn Python. Get Certified. Start Over."{" "}
+            <span style={{ color: "#2563eb" }}>That's the Worst Advice You'll Hear in 2026.</span>
           </h1>
 
-          <p className="text-lg sm:text-xl font-semibold mb-8 leading-relaxed" style={{ color: "#2563eb" }}>
-            Without starting over, collecting another certificate, or mass-applying to 100s of jobs
+          <p className="text-base sm:text-lg mb-6 leading-relaxed" style={{ color: "#444" }}>
+            The developers landing 30–70L AI roles didn't start over. They repositioned. Architecture, system design, production thinking — AI teams need exactly what you already know.
           </p>
+
+          <div className="text-left max-w-xl mx-auto mb-6 space-y-3">
+            {[
+              ["No new language required", " — your Java foundation IS the AI advantage"],
+              ["Certificates impress HR", " — system thinking impresses hiring managers paying 50L+"],
+              ["150+ devs proved it", " — same background, 2–3X salary jump"],
+            ].map(([bold, rest], i) => (
+              <div key={i} className="flex items-start gap-3">
+                <span className="text-lg mt-0.5" style={{ color: "#2563eb" }}>✓</span>
+                <p className="text-base sm:text-lg" style={{ color: "#444" }}>
+                  <span className="font-semibold" style={{ color: "#1a1a1a" }}>{bold}</span>{rest}
+                </p>
+              </div>
+            ))}
+          </div>
 
           {/* Video thumbnail with play button */}
           <button
@@ -387,7 +399,7 @@ export default function LpV2Short() {
           </button>
 
           <p className="text-base sm:text-lg mb-8" style={{ color: "#555" }}>
-            Quick quiz + free 28-min training to get your personalised roadmap.
+            This 28-min training shows the exact repositioning playbook. Free. No strings.
           </p>
 
           <button

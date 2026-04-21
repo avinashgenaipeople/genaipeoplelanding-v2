@@ -315,7 +315,7 @@ export default function LpV3Short() {
 
     const label = (q: number) => ANSWER_LABELS[q]?.[answers[q]] ?? answers[q] ?? "";
     const urlParams = getAllParams();
-    fetch(WEBHOOK_URL, {
+    fetch(WEBHOOK_URL, { keepalive: true,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

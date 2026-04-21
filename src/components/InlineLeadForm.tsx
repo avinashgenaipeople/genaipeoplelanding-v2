@@ -5,7 +5,7 @@ import { getAllParams } from "@/lib/utm";
 const WEBHOOK_URL =
   "https://services.leadconnectorhq.com/hooks/HADyq7BakZrOyu15lic7/webhook-trigger/e5a21b54-2012-479a-a948-233c0c543245";
 
-const TRAINING_URL = "https://learning.genaipeople.com/training-70";
+const TRAINING_URL = "/training";
 
 type InlineLeadFormProps = {
   source: string; // e.g. "lp-v1-short"

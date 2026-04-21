@@ -83,7 +83,7 @@ const QUIZ_QUESTIONS = [
 const WEBHOOK_URL =
   "https://services.leadconnectorhq.com/hooks/HADyq7BakZrOyu15lic7/webhook-trigger/e5a21b54-2012-479a-a948-233c0c543245";
 
-const TRAINING_URL = "https://learning.genaipeople.com/training-70";
+const TRAINING_URL = "/training";
 
 const ANSWER_LABELS: Record<string, Record<string, string>> = {
   1: {
@@ -147,7 +147,7 @@ const secrets = [
   },
 ];
 
-const REDIRECT_DELAY = 1500;
+const REDIRECT_DELAY = 0;
 
 /* ── Transition Screen (step 9) ──────────────────────────────────── */
 function TransitionScreen({ name }: { name: string }) {

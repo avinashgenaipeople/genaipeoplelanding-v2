@@ -30,7 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { password, days = 30, specificDate } = req.body ?? {};
+  const { password, days = 30, specificDate, startDate, endDate } = req.body ?? {};
 
   if (password !== process.env.ANALYTICS_PASSWORD) {
     return res.status(401).json({ error: "Invalid password" });
@@ -50,7 +50,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const [istYear, istMonth] = nowIST.split("-");
   const monthSinceStr = `${istYear}-${istMonth}-01`;
   const numDays = Number(days) || 30;
-  const adsetSinceStr = subtractDaysIST(nowIST, numDays - 1);
+  // Support date range: startDate/endDate override days
+  const adsetSinceStr = startDate ? String(startDate) : subtractDaysIST(nowIST, numDays - 1);
+  const adsetUntilStr = endDate ? String(endDate) : nowIST;
 
   async function metaGet(path: string, params: Record<string, string> = {}) {
     const url = new URL(`${BASE_URL}/${path}`);
@@ -68,9 +70,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    // Determine date range for specific date query
-    const eventDateSince = specificDate ? String(specificDate) : nowIST;
-    const eventDateUntil = specificDate ? String(specificDate) : nowIST;
+    // Determine date range for pixel events: specificDate > startDate/endDate > today
+    const eventDateSince = specificDate ? String(specificDate) : adsetSinceStr;
+    const eventDateUntil = specificDate ? String(specificDate) : adsetUntilStr;
 
     // Fetch account-level data and adset-level data concurrently
     const [accountResults, adsetResults, adsetTodayResults, dailySpendResults, pixelEventResults] = await Promise.all([
@@ -129,7 +131,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           const adsetInsights = await metaGet(`${actId}/insights`, {
             level: "adset",
             fields: "adset_id,adset_name,spend,impressions,clicks",
-            time_range: JSON.stringify({ since: adsetSinceStr, until: nowIST }),
+            time_range: JSON.stringify({ since: adsetSinceStr, until: adsetUntilStr }),
             limit: "100",
           });
           return (adsetInsights.data ?? []) as Array<{
@@ -161,7 +163,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         accountIds.map(async (actId) => {
           const dailyInsights = await metaGet(`${actId}/insights`, {
             fields: "spend",
-            time_range: JSON.stringify({ since: adsetSinceStr, until: nowIST }),
+            time_range: JSON.stringify({ since: adsetSinceStr, until: adsetUntilStr }),
             time_increment: "1",
             limit: "500",
           });

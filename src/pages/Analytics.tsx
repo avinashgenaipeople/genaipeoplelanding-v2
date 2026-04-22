@@ -135,6 +135,8 @@ export default function Analytics() {
   const [authed, setAuthed] = useState(false);
   const [days, setDays] = useState<number>(30);
   const [specificDate, setSpecificDate] = useState<string>("");
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -158,14 +160,22 @@ export default function Analytics() {
   daysRef.current = days;
   filtersRef.current = filters;
 
-  const fetchMetaData = useCallback(async (pw?: string, d?: number, date?: string) => {
+  const fetchMetaData = useCallback(async (pw?: string, d?: number, date?: string, sd?: string, ed?: string) => {
     setMetaLoading(true);
     setMetaError("");
+    const activeStart = sd ?? startDate;
+    const activeEnd = ed ?? endDate;
     try {
       const res = await fetch("/api/meta-ads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: pw ?? password, days: d ?? days, specificDate: date || specificDate || undefined }),
+        body: JSON.stringify({
+          password: pw ?? password,
+          days: d ?? days,
+          specificDate: date || specificDate || undefined,
+          ...(activeStart ? { startDate: activeStart } : {}),
+          ...(activeEnd ? { endDate: activeEnd } : {}),
+        }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -196,15 +206,16 @@ export default function Analytics() {
     return () => clearInterval(id);
   }, [authed]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  async function fetchData(pw?: string, d?: number, f?: Filters) {
+  async function fetchData(pw?: string, d?: number, f?: Filters, sd?: string, ed?: string) {
     setLoading(true);
     setError("");
     const activeFilters = f ?? filters;
-    // Only send non-empty filter values
     const filterPayload: Record<string, string> = {};
     for (const [k, v] of Object.entries(activeFilters)) {
       if (v) filterPayload[k] = v;
     }
+    const activeStart = sd ?? startDate;
+    const activeEnd = ed ?? endDate;
     try {
       const res = await fetch("/api/analytics", {
         method: "POST",
@@ -212,6 +223,8 @@ export default function Analytics() {
         body: JSON.stringify({
           password: pw ?? password,
           days: d ?? days,
+          ...(activeStart ? { startDate: activeStart } : {}),
+          ...(activeEnd ? { endDate: activeEnd } : {}),
           ...(Object.keys(filterPayload).length > 0 ? { filters: filterPayload } : {}),
         }),
       });
@@ -237,8 +250,10 @@ export default function Analytics() {
 
   function changeDays(d: number) {
     setDays(d);
-    fetchData(undefined, d, filters);
-    fetchMetaData(undefined, d);
+    setStartDate("");
+    setEndDate("");
+    fetchData(undefined, d, filters, "", "");
+    fetchMetaData(undefined, d, undefined, "", "");
   }
 
   function changeFilter(key: keyof Filters, value: string) {
@@ -327,19 +342,37 @@ export default function Analytics() {
                 {d === 1 ? "Today" : `${d}d`}
               </button>
             ))}
+            <span className="text-xs text-gray-500 ml-2">From</span>
             <input
               type="date"
-              value={specificDate}
+              value={startDate}
               onChange={(e) => {
-                setSpecificDate(e.target.value);
-                fetchMetaData(undefined, undefined, e.target.value);
+                setStartDate(e.target.value);
+                if (endDate) {
+                  fetchData(undefined, undefined, filters, e.target.value, endDate);
+                  fetchMetaData(undefined, undefined, undefined, e.target.value, endDate);
+                }
               }}
               className="px-3 py-1 rounded text-sm font-medium bg-white text-gray-700 border border-gray-300"
-              title="Select date for FB events (IST)"
+              title="Start date (IST)"
             />
-            {specificDate && (
+            <span className="text-xs text-gray-500">To</span>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => {
+                setEndDate(e.target.value);
+                if (startDate) {
+                  fetchData(undefined, undefined, filters, startDate, e.target.value);
+                  fetchMetaData(undefined, undefined, undefined, startDate, e.target.value);
+                }
+              }}
+              className="px-3 py-1 rounded text-sm font-medium bg-white text-gray-700 border border-gray-300"
+              title="End date (IST)"
+            />
+            {(startDate || endDate) && (
               <button
-                onClick={() => { setSpecificDate(""); fetchMetaData(undefined, undefined, ""); }}
+                onClick={() => { setStartDate(""); setEndDate(""); setSpecificDate(""); fetchData(undefined, days, filters, "", ""); fetchMetaData(undefined, days, undefined, "", ""); }}
                 className="px-2 py-1 rounded text-sm font-medium bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"
               >
                 Clear
@@ -443,10 +476,10 @@ export default function Analytics() {
         {/* FB Pixel Events for date */}
         <section className="bg-white rounded-lg shadow p-4 mb-8 overflow-x-auto">
           <h2 className="text-lg font-semibold text-gray-900 mb-1">
-            FB Pixel Events {metaEventDate ? `— ${metaEventDate}` : "— Today"} (IST)
+            FB Pixel Events {startDate && endDate ? `— ${startDate} to ${endDate}` : metaEventDate ? `— ${metaEventDate}` : "— Today"} (IST)
           </h2>
           <p className="text-xs text-gray-500 mb-3">
-            Spend: ₹{metaEventDateSpend.toFixed(2)} · Select a date above to change
+            Spend: ₹{metaEventDateSpend.toFixed(2)} · Use date range above to filter all sections
           </p>
           {Object.keys(metaPixelEvents).length === 0 ? (
             <p className="text-gray-500">No pixel events for this date.</p>

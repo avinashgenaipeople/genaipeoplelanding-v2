@@ -43,7 +43,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { password, days = 30, filters = {} } = req.body ?? {};
+  const { password, days = 30, filters = {}, startDate, endDate } = req.body ?? {};
   const {
     page: filterPage, source: filterSource, medium: filterMedium, campaign: filterCampaign,
     adname: filterAdname, adid: filterAdid, placement: filterPlacement, ad_account: filterAdAccount, utm_id: filterUtmId,
@@ -56,13 +56,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: "Invalid password" });
   }
 
-  const numDays = Number(days) || 30;
-  const sinceUTC = istDayStartUTC(subtractDaysIST(todayIST(), numDays - 1));
+  // Support both days-based and date-range-based queries
+  const now = todayIST();
+  let sinceUTC: string;
+  if (startDate) {
+    sinceUTC = istDayStartUTC(String(startDate));
+  } else {
+    const numDays = Number(days) || 30;
+    sinceUTC = istDayStartUTC(subtractDaysIST(now, numDays - 1));
+  }
+  // endDate is used to cap the query (default: today IST)
+  const untilUTC = endDate ? istDayStartUTC(subtractDaysIST(String(endDate), -1)) : undefined;
 
-  const { data: events, error } = await supabase
+  let query = supabase
     .from("analytics_events")
     .select("event_name, page_path, cta_section, cta_label, utm_source, utm_medium, utm_campaign, url_params, created_at")
-    .gte("created_at", sinceUTC)
+    .gte("created_at", sinceUTC);
+  if (untilUTC) query = query.lt("created_at", untilUTC);
+  const { data: events, error } = await query
     .order("created_at", { ascending: false })
     .limit(50_000);
 

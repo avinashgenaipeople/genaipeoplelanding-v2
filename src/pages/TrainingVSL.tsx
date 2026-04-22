@@ -71,6 +71,16 @@ export default function TrainingVSL() {
     };
   }, []);
 
+  // Load Synamate embed script when calendar unlocks
+  useEffect(() => {
+    if (!showStep2) return;
+    const script = document.createElement("script");
+    script.src = "https://share.synamate.com/js/embed.js";
+    script.type = "text/javascript";
+    document.body.appendChild(script);
+    return () => { document.body.removeChild(script); };
+  }, [showStep2]);
+
   const progressPercent = Math.min((watchedSeconds / CTA_SHOW_AFTER_SECONDS) * 100, 100);
 
   return (
@@ -181,11 +191,13 @@ export default function TrainingVSL() {
           </div>
 
           {showStep2 ? (
-            <div className="w-full" style={{ minHeight: 700 }}>
+            <div className="w-full px-4 sm:px-6 pb-6">
               <iframe
-                src={APPLY_URL}
+                src="https://share.synamate.com/widget/booking/1vdsmi8pGKXjPm2WP8dA"
                 className="w-full border-none"
-                style={{ height: 700 }}
+                style={{ minHeight: 650, overflow: "hidden" }}
+                scrolling="no"
+                id="msgsndr-calendar"
                 title="Book Your Strategy Call"
               />
             </div>

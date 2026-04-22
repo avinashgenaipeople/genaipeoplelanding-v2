@@ -8,7 +8,7 @@ const APPLY_URL = "https://learning.genaipeople.com/apply-70";
 const CTA_SHOW_AFTER_SECONDS = 120;
 
 export default function TrainingVSL() {
-  const [showStep2, setShowStep2] = useState(false);
+  const [showStep2, setShowStep2] = useState(true);
   const [watchedSeconds, setWatchedSeconds] = useState(0);
   const shownRef = useRef(false);
 

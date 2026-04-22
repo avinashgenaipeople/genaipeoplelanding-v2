@@ -6,6 +6,7 @@ import { Footer } from "@/components/sections/Footer";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { trackEvent } from "@/lib/analytics";
 import { getAllParams } from "@/lib/utm";
+import { scoreQuizLead, getTrainingRedirect } from "@/lib/lead-scoring";
 import { ArrowRight, ArrowLeft, X, CheckCircle2, Play } from "lucide-react";
 
 /* ── Quiz Questions ──────────────────────────────────────────────── */
@@ -150,7 +151,7 @@ const secrets = [
 const REDIRECT_DELAY = 0;
 
 /* ── Transition Screen (step 9) ──────────────────────────────────── */
-function TransitionScreen({ name }: { name: string }) {
+function TransitionScreen({ name, redirectUrl }: { name: string; redirectUrl: string }) {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
@@ -161,11 +162,11 @@ function TransitionScreen({ name }: { name: string }) {
     const t1 = setTimeout(() => setStep(1), 500);
     const t2 = setTimeout(() => setStep(2), 1500);
     const t3 = setTimeout(() => {
-      window.location.href = TRAINING_URL;
+      window.location.href = redirectUrl;
     }, REDIRECT_DELAY);
 
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, []);
+  }, [redirectUrl]);
 
   return (
     <div className="text-center">
@@ -221,7 +222,7 @@ function TransitionScreen({ name }: { name: string }) {
           />
         </div>
         <a
-          href={TRAINING_URL}
+          href={redirectUrl}
           className="inline-block mt-6 text-white/40 text-sm underline underline-offset-2 hover:text-white/70 transition-colors"
         >
           Click here if you're not redirected
@@ -238,6 +239,7 @@ function QuizOverlay({
   answers,
   contactInfo,
   isSubmitting,
+  redirectUrl,
   onSelectAnswer,
   onBack,
   onClose,
@@ -249,6 +251,7 @@ function QuizOverlay({
   answers: Record<number, string>;
   contactInfo: { name: string; email: string; phone: string };
   isSubmitting: boolean;
+  redirectUrl: string;
   onSelectAnswer: (questionId: number, value: string) => void;
   onBack: () => void;
   onClose: () => void;
@@ -356,10 +359,7 @@ function QuizOverlay({
 
         {/* Step 8: Name + Phone form */}
         {currentStep === 8 && (() => {
-          const isHotLead =
-            (answers[2] === "5_10" || answers[2] === "10_15" || answers[2] === "15_plus") &&
-            (answers[6] === "immediately" || answers[6] === "1_3_months") &&
-            answers[7] === "yes";
+          const leadScore = scoreQuizLead(answers);
           return (
           <div className="text-center">
             <div className="mb-8">
@@ -367,7 +367,7 @@ function QuizOverlay({
                 <CheckCircle2 className="w-8 h-8 text-primary" />
               </div>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-2">
-                {isHotLead ? "Great news — you're a strong fit!" : "Great — let's get you started!"}
+                {leadScore === "hot" ? "Great news — you're a strong fit!" : leadScore === "warm" ? "Great — let's get you started!" : "Here's your roadmap!"}
               </h2>
               <p className="text-white/60 text-lg">
                 Enter your details to get instant access to the 28-min video explaining the transition from Senior Dev into an AI Engineer.
@@ -424,7 +424,7 @@ function QuizOverlay({
 
         {/* Step 9: Transition screen → redirect to training video */}
         {currentStep === 9 && (
-          <TransitionScreen name={contactInfo.name} />
+          <TransitionScreen name={contactInfo.name} redirectUrl={redirectUrl} />
         )}
       </div>
 
@@ -725,6 +725,7 @@ const LpV7 = () => {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [contactInfo, setContactInfo] = useState({ name: "", email: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState(TRAINING_URL);
 
   useEffect(() => {
     trackEvent("page_view_lp_v7", { page_path: window.location.pathname });
@@ -806,10 +807,9 @@ const LpV7 = () => {
     }
 
     // FB: Contact — user submitted their details
-    const isHot =
-      (answers[2] === "5_10" || answers[2] === "10_15" || answers[2] === "15_plus") &&
-      (answers[6] === "immediately" || answers[6] === "1_3_months") &&
-      answers[7] === "yes";
+    const leadScore = scoreQuizLead(answers);
+    const isHot = leadScore === "hot";
+    setRedirectUrl(getTrainingRedirect(leadScore));
 
     if (typeof window.fbq === "function") {
       window.fbq("track", "Contact", { content_name: "LpV7 Quiz Funnel" });
@@ -837,7 +837,7 @@ const LpV7 = () => {
         quiz_readiness: label(6),
         quiz_call_interest: label(7),
         quiz_source: "lp-v7",
-        quiz_lead_score: isHot ? "hot" : "warm",
+        quiz_lead_score: leadScore,
         // URL/attribution params from landing — flattened for CRM field mapping
         utm_source: urlParams.utm_source ?? "",
         utm_medium: urlParams.utm_medium ?? "",
@@ -880,6 +880,7 @@ const LpV7 = () => {
         answers={answers}
         contactInfo={contactInfo}
         isSubmitting={isSubmitting}
+        redirectUrl={redirectUrl}
         onSelectAnswer={selectAnswer}
         onBack={goBack}
         onClose={closeQuiz}

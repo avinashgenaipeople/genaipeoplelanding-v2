@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { PageMeta } from "@/components/PageMeta";
 import { trackEvent } from "@/lib/analytics";
 import { getAllParams } from "@/lib/utm";
+import { scoreQuizLead, getTrainingRedirect } from "@/lib/lead-scoring";
 import { ArrowRight, ArrowLeft, X, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -67,7 +68,7 @@ const ANSWER_LABELS: Record<string, Record<string, string>> = {
 const REDIRECT_DELAY = 0;
 
 /* ── Transition Screen ──────────────────────────────────────────── */
-function TransitionScreen({ name }: { name: string }) {
+function TransitionScreen({ name, redirectUrl }: { name: string; redirectUrl: string }) {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
@@ -77,11 +78,11 @@ function TransitionScreen({ name }: { name: string }) {
     const t1 = setTimeout(() => setStep(1), 500);
     const t2 = setTimeout(() => setStep(2), 1500);
     const t3 = setTimeout(() => {
-      window.location.href = TRAINING_URL;
+      window.location.href = redirectUrl;
     }, REDIRECT_DELAY);
 
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, []);
+  }, [redirectUrl]);
 
   const firstName = name.split(" ")[0];
 
@@ -102,7 +103,7 @@ function TransitionScreen({ name }: { name: string }) {
           <div className="h-full bg-blue-600 rounded-full animate-pulse" style={{ width: "60%" }} />
         </div>
         <p className="text-gray-400 text-sm mt-3">Taking you to the video now...</p>
-        <a href={TRAINING_URL} className="inline-block mt-6 text-gray-400 text-sm underline underline-offset-2 hover:text-white/70 transition-colors">
+        <a href={redirectUrl} className="inline-block mt-6 text-gray-400 text-sm underline underline-offset-2 hover:text-white/70 transition-colors">
           Click here if you're not redirected
         </a>
       </div>
@@ -112,11 +113,11 @@ function TransitionScreen({ name }: { name: string }) {
 
 /* ── Quiz Overlay ───────────────────────────────────────────────── */
 function QuizOverlay({
-  isOpen, currentStep, answers, contactInfo, isSubmitting,
+  isOpen, currentStep, answers, contactInfo, isSubmitting, redirectUrl,
   onSelectAnswer, onBack, onClose, onContactChange, onSubmit,
 }: {
   isOpen: boolean; currentStep: number; answers: Record<number, string>;
-  contactInfo: { name: string; email: string; phone: string }; isSubmitting: boolean;
+  contactInfo: { name: string; email: string; phone: string }; isSubmitting: boolean; redirectUrl: string;
   onSelectAnswer: (qId: number, value: string) => void;
   onBack: () => void; onClose: () => void;
   onContactChange: (field: "name" | "email" | "phone", value: string) => void;
@@ -183,10 +184,7 @@ function QuizOverlay({
         )}
 
         {currentStep === 8 && (() => {
-          const isHotLead =
-            (answers[2] === "5_10" || answers[2] === "10_15" || answers[2] === "15_plus") &&
-            (answers[6] === "immediately" || answers[6] === "1_3_months") &&
-            answers[7] === "yes";
+          const leadScore = scoreQuizLead(answers);
           return (
           <div className="text-center">
             <div className="mb-8">
@@ -194,7 +192,7 @@ function QuizOverlay({
                 <CheckCircle2 className="w-8 h-8 text-blue-500" />
               </div>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-2">
-                {isHotLead ? "Great news — you're a strong fit!" : "Great — let's get you started!"}
+                {leadScore === "hot" ? "Great news — you're a strong fit!" : leadScore === "warm" ? "Great — let's get you started!" : "Here's your roadmap!"}
               </h2>
               <p className="text-gray-500 text-lg">
                 Enter your details to get instant access to the 28-min video explaining the transition from Senior Dev into an AI Engineer.
@@ -224,7 +222,7 @@ function QuizOverlay({
           );
         })()}
 
-        {currentStep === 9 && <TransitionScreen name={contactInfo.name} />}
+        {currentStep === 9 && <TransitionScreen name={contactInfo.name} redirectUrl={redirectUrl} />}
       </div>
     </div>
   );
@@ -237,6 +235,7 @@ export default function LpV3Short() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [contactInfo, setContactInfo] = useState({ name: "", email: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState(TRAINING_URL);
 
   useEffect(() => {
     trackEvent("page_view_lp_v3_short", { page_path: window.location.pathname });
@@ -300,10 +299,9 @@ export default function LpV3Short() {
       window.gtag("event", "generate_lead", { currency: "INR", value: 1 });
     }
 
-    const isHot =
-      (answers[2] === "5_10" || answers[2] === "10_15" || answers[2] === "15_plus") &&
-      (answers[6] === "immediately" || answers[6] === "1_3_months") &&
-      answers[7] === "yes";
+    const leadScore = scoreQuizLead(answers);
+    const isHot = leadScore === "hot";
+    setRedirectUrl(getTrainingRedirect(leadScore));
 
     if (typeof window.fbq === "function") {
       window.fbq("track", "Contact", { content_name: "LpV3Short Quiz Funnel" });
@@ -323,7 +321,7 @@ export default function LpV3Short() {
         quiz_current_role: label(1), quiz_experience: label(2), quiz_language: label(3),
         quiz_ai_usage: label(4), quiz_concern: label(5), quiz_readiness: label(6),
         quiz_call_interest: label(7), quiz_source: "lp-v3-short",
-        quiz_lead_score: isHot ? "hot" : "warm",
+        quiz_lead_score: leadScore,
         utm_source: urlParams.utm_source ?? "", utm_medium: urlParams.utm_medium ?? "",
         utm_campaign: urlParams.utm_campaign ?? "", utm_term: urlParams.utm_term ?? "",
         utm_content: urlParams.utm_content ?? "", utm_adname: urlParams.utm_adname ?? "",
@@ -418,7 +416,7 @@ export default function LpV3Short() {
 
       <QuizOverlay
         isOpen={quizOpen} currentStep={currentStep} answers={answers}
-        contactInfo={contactInfo} isSubmitting={isSubmitting}
+        contactInfo={contactInfo} isSubmitting={isSubmitting} redirectUrl={redirectUrl}
         onSelectAnswer={selectAnswer} onBack={goBack} onClose={closeQuiz}
         onContactChange={handleContactChange} onSubmit={handleSubmit}
       />

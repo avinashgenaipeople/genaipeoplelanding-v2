@@ -238,6 +238,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
         break;
       }
+      case "quiz_completed": {
+        // Fallback: extract q1-q7 from quiz_completed events
+        for (let i = 1; i <= 7; i++) {
+          const val = up[`q${i}`] ? String(up[`q${i}`]) : null;
+          if (val) {
+            const key = String(i);
+            if (!quizAnswers[key]) quizAnswers[key] = {};
+            quizAnswers[key][val] = (quizAnswers[key][val] ?? 0) + 1;
+          }
+        }
+        break;
+      }
     }
   }
 

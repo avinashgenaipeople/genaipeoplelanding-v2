@@ -25,7 +25,7 @@ export default function LpV6Short() {
       />
 
       <div className="w-full py-3 text-center" style={{ backgroundColor: "#2563eb" }}>
-        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Tech Leads with 10+ Years — AI Changed Everything. Free Training →</span>
+        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Tech Leads Earning 15L+ — AI Changed Everything. Free Training →</span>
       </div>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">

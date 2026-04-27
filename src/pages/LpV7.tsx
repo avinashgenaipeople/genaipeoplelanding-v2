@@ -79,6 +79,18 @@ const QUIZ_QUESTIONS = [
       { label: "Maybe — I'd like to learn more first", value: "maybe" },
     ],
   },
+  {
+    id: 8,
+    question: "What is your current annual compensation?",
+    options: [
+      { label: "0–10 Lakhs", value: "0_10" },
+      { label: "10–15 Lakhs", value: "10_15" },
+      { label: "15–20 Lakhs", value: "15_20" },
+      { label: "20–30 Lakhs", value: "20_30" },
+      { label: "30–45 Lakhs", value: "30_45" },
+      { label: "45+ Lakhs", value: "45_plus" },
+    ],
+  },
 ];
 
 const WEBHOOK_URL =
@@ -126,6 +138,14 @@ const ANSWER_LABELS: Record<string, Record<string, string>> = {
   7: {
     yes: "Yes",
     maybe: "Maybe",
+  },
+  8: {
+    "0_10": "0-10 Lakhs",
+    "10_15": "10-15 Lakhs",
+    "15_20": "15-20 Lakhs",
+    "20_30": "20-30 Lakhs",
+    "30_45": "30-45 Lakhs",
+    "45_plus": "45+ Lakhs",
   },
 };
 
@@ -276,8 +296,8 @@ function QuizOverlay({
 
   if (!isOpen) return null;
 
-  const question = currentStep >= 1 && currentStep <= 7 ? QUIZ_QUESTIONS[currentStep - 1] : null;
-  const progressPercent = currentStep <= 7 ? (currentStep / 7) * 100 : 100;
+  const question = currentStep >= 1 && currentStep <= 8 ? QUIZ_QUESTIONS[currentStep - 1] : null;
+  const progressPercent = currentStep <= 8 ? (currentStep / 8) * 100 : 100;
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center">
@@ -295,7 +315,7 @@ function QuizOverlay({
       </button>
 
       {/* Progress bar (steps 1-7 only) */}
-      {currentStep <= 7 && (
+      {currentStep <= 8 && (
         <div className="absolute top-0 left-0 right-0 h-1 bg-white/10">
           <div
             className="h-full bg-primary transition-all duration-300"
@@ -316,13 +336,13 @@ function QuizOverlay({
                   60-Second Career Quiz
                 </p>
                 <p className="text-white/60 text-base leading-relaxed max-w-md mx-auto">
-                  Answer 7 quick questions to find out if you qualify for a 30–70L AI role — and get your personalised roadmap.
+                  Answer 8 quick questions to find out if you qualify for a 30–70L AI role — and get your personalised roadmap.
                 </p>
               </div>
             )}
             {currentStep > 1 && (
               <p className="text-white/50 text-sm mb-6 font-medium">
-                Question {currentStep} of 7
+                Question {currentStep} of 8
               </p>
             )}
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-8">
@@ -357,8 +377,8 @@ function QuizOverlay({
           </div>
         )}
 
-        {/* Step 8: Name + Phone form */}
-        {currentStep === 8 && (() => {
+        {/* Step 9: Name + Phone form */}
+        {currentStep === 9 && (() => {
           const leadScore = scoreQuizLead(answers);
           return (
           <div className="text-center">
@@ -422,8 +442,8 @@ function QuizOverlay({
           );
         })()}
 
-        {/* Step 9: Transition screen → redirect to training video */}
-        {currentStep === 9 && (
+        {/* Step 10: Transition screen → redirect to training video */}
+        {currentStep === 10 && (
           <TransitionScreen name={contactInfo.name} redirectUrl={redirectUrl} />
         )}
       </div>
@@ -689,7 +709,7 @@ function V7FinalCTASection({ openQuiz }: { openQuiz: () => void }) {
             Ready to <span className="text-primary">land a 30–70L AI role</span>? Take the quiz, then get your roadmap.
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground">
-            7 quick questions to see if you're a fit. Then get instant access to the 28-min training.
+            8 quick questions to see if you're a fit. Then get instant access to the 28-min training.
           </p>
         </div>
 
@@ -745,7 +765,7 @@ const LpV7 = () => {
   }, []);
 
   const closeQuiz = useCallback(() => {
-    if (currentStep < 9) {
+    if (currentStep < 10) {
       trackEvent("quiz_close", { last_step: currentStep, page_path: window.location.pathname });
     }
     setQuizOpen(false);
@@ -757,7 +777,7 @@ const LpV7 = () => {
     // Auto-advance
     setTimeout(() => {
       setCurrentStep((prev) => prev + 1);
-      if (questionId === 7) {
+      if (questionId === 8) {
         trackEvent("quiz_completed", {
           page_path: window.location.pathname,
           q1: answers[1] || "",
@@ -766,7 +786,8 @@ const LpV7 = () => {
           q4: answers[4] || "",
           q5: answers[5] || "",
           q6: answers[6] || "",
-          q7: value,
+          q7: answers[7] || "",
+          q8: value,
         });
         // CompleteRegistration moved to handleSubmit — only fires for hot leads
       }
@@ -836,6 +857,7 @@ const LpV7 = () => {
         quiz_concern: label(5),
         quiz_readiness: label(6),
         quiz_call_interest: label(7),
+        quiz_salary: label(8),
         quiz_source: "lp-v7",
         quiz_lead_score: leadScore,
         // URL/attribution params from landing — flattened for CRM field mapping
@@ -857,7 +879,7 @@ const LpV7 = () => {
     }).catch(() => {});
 
     // Move to transition screen
-    setCurrentStep(9);
+    setCurrentStep(10);
     setIsSubmitting(false);
   }, [contactInfo, answers]);
 

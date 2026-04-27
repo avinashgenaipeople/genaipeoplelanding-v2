@@ -25,7 +25,7 @@ export default function LpV5Short() {
       />
 
       <div className="w-full py-3 text-center" style={{ backgroundColor: "#2563eb" }}>
-        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Senior Backend Developer Stuck in Maintenance? Watch This →</span>
+        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Software Professional Earning 15L+ Stuck in Maintenance? Watch This →</span>
       </div>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">

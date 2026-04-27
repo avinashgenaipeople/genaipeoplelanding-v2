@@ -121,6 +121,14 @@ const QUIZ_META: { id: number; question: string; options: { value: string; label
     { value: "yes", label: "Yes, let's do it" },
     { value: "maybe", label: "Maybe — learn more first" },
   ]},
+  { id: 8, question: "Current annual compensation?", options: [
+    { value: "0_10", label: "0-10 Lakhs" },
+    { value: "10_15", label: "10-15 Lakhs" },
+    { value: "15_20", label: "15-20 Lakhs" },
+    { value: "20_30", label: "20-30 Lakhs" },
+    { value: "30_45", label: "30-45 Lakhs" },
+    { value: "45_plus", label: "45+ Lakhs" },
+  ]},
 ];
 
 const DAYS_OPTIONS = [1, 7, 14, 30, 90] as const;

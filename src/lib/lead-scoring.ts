@@ -1,15 +1,16 @@
 /**
  * 3-tier lead scoring based on quiz answers.
  *
- * Hot: experienced (5+ years) + urgent (immediately/1-3mo) + interested (yes)
- * Cold: junior (<3 years), or laid off + junior, or exploring + maybe
- * Warm: everyone else (has some signal but not fully qualified)
+ * Hot: experienced (5+ years) + salary >15L + urgent + interested
+ * Cold: junior (<3 years), or salary <10L, or laid off + junior, or exploring + maybe
+ * Warm: everyone else
  */
 export function scoreQuizLead(answers: Record<number, string>): "hot" | "warm" | "cold" {
-  const experience = answers[2]; // lt_3, 3_5, 5_10, 10_15, 15_plus
   const currentRole = answers[1]; // yes_fulltime, yes_looking, no_laid_off, no_different
+  const experience = answers[2]; // lt_3, 3_5, 5_10, 10_15, 15_plus
   const readiness = answers[6]; // immediately, 1_3_months, exploring
   const callInterest = answers[7]; // yes, maybe
+  const salary = answers[8]; // 0_10, 10_15, 15_20, 20_30, 30_45, 45_plus
 
   const isSenior = experience === "5_10" || experience === "10_15" || experience === "15_plus";
   const isMid = experience === "3_5";
@@ -19,21 +20,23 @@ export function scoreQuizLead(answers: Record<number, string>): "hot" | "warm" |
   const isExploring = readiness === "exploring";
   const isMaybe = callInterest === "maybe";
   const isNotWorking = currentRole === "no_laid_off" || currentRole === "no_different";
+  const salaryAbove15 = salary === "15_20" || salary === "20_30" || salary === "30_45" || salary === "45_plus";
+  const salaryBelow10 = salary === "0_10";
 
-  // Hot: senior + urgent + interested
-  if (isSenior && isUrgent && isInterested) return "hot";
+  // Hot: senior + salary >15L + urgent + interested + currently working
+  if (isSenior && salaryAbove15 && isUrgent && isInterested && !isNotWorking) return "hot";
 
   // Cold: junior always
   if (isJunior) return "cold";
+
+  // Cold: salary below 10L
+  if (salaryBelow10) return "cold";
 
   // Cold: not working + under 5 years
   if (isNotWorking && (isJunior || isMid)) return "cold";
 
   // Cold: exploring + maybe (zero urgency signals)
   if (isExploring && isMaybe) return "cold";
-
-  // Cold: mid-level + exploring + maybe
-  if (isMid && isExploring && isMaybe) return "cold";
 
   // Everything else is warm
   return "warm";

@@ -48,6 +48,14 @@ const QUIZ_QUESTIONS = [
     { label: "Yes, show me", value: "yes" },
     { label: "Maybe — I'd like to learn more first", value: "maybe" },
   ]},
+  { id: 8, question: "What is your current annual compensation?", options: [
+    { label: "0–10 Lakhs", value: "0_10" },
+    { label: "10–15 Lakhs", value: "10_15" },
+    { label: "15–20 Lakhs", value: "15_20" },
+    { label: "20–30 Lakhs", value: "20_30" },
+    { label: "30–45 Lakhs", value: "30_45" },
+    { label: "45+ Lakhs", value: "45_plus" },
+  ]},
 ];
 
 const WEBHOOK_URL =
@@ -63,6 +71,7 @@ const ANSWER_LABELS: Record<string, Record<string, string>> = {
   5: { automated: "My role could be automated or eliminated", falling_behind: "I'm falling behind developers who use AI", no_path: "I dont know how to transition", want_growth: "I'm not concerned — I just want to grow" },
   6: { immediately: "Immediately", "1_3_months": "Within the next 1-3 months", exploring: "I'm just exploring for now" },
   7: { yes: "Yes", maybe: "Maybe" },
+  8: { "0_10": "0-10 Lakhs", "10_15": "10-15 Lakhs", "15_20": "15-20 Lakhs", "20_30": "20-30 Lakhs", "30_45": "30-45 Lakhs", "45_plus": "45+ Lakhs" },
 };
 
 const REDIRECT_DELAY = 0;
@@ -135,8 +144,8 @@ function QuizOverlay({
 
   if (!isOpen) return null;
 
-  const question = currentStep >= 1 && currentStep <= 7 ? QUIZ_QUESTIONS[currentStep - 1] : null;
-  const progressPercent = currentStep <= 7 ? (currentStep / 7) * 100 : 100;
+  const question = currentStep >= 1 && currentStep <= 8 ? QUIZ_QUESTIONS[currentStep - 1] : null;
+  const progressPercent = currentStep <= 8 ? (currentStep / 8) * 100 : 100;
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center">
@@ -144,7 +153,7 @@ function QuizOverlay({
       <button type="button" onClick={onClose} className="absolute top-4 right-4 z-10 text-gray-400 hover:text-gray-700 transition-colors" aria-label="Close quiz">
         <X className="w-8 h-8" />
       </button>
-      {currentStep <= 7 && (
+      {currentStep <= 8 && (
         <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200">
           <div className="h-full bg-blue-600 transition-all duration-300" style={{ width: `${progressPercent}%` }} />
         </div>
@@ -156,11 +165,11 @@ function QuizOverlay({
               <div className="mb-6">
                 <p className="text-blue-500 text-sm font-semibold tracking-wide uppercase mb-2">Frontend → AI Readiness Check</p>
                 <p className="text-white/60 text-base leading-relaxed max-w-md mx-auto">
-                  Answer 7 quick questions to see where you stand — then get instant access to the 28-min repositioning training.
+                  Answer 8 quick questions to see where you stand — then get instant access to the 28-min repositioning training.
                 </p>
               </div>
             ) : (
-              <p className="text-gray-400 text-sm mb-6 font-medium">Question {currentStep} of 7</p>
+              <p className="text-gray-400 text-sm mb-6 font-medium">Question {currentStep} of 8</p>
             )}
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-8">{question.question}</h2>
             <div className="space-y-3">
@@ -183,7 +192,7 @@ function QuizOverlay({
           </div>
         )}
 
-        {currentStep === 8 && (() => {
+        {currentStep === 9 && (() => {
           const leadScore = scoreQuizLead(answers);
           return (
           <div className="text-center">
@@ -222,7 +231,7 @@ function QuizOverlay({
           );
         })()}
 
-        {currentStep === 9 && <TransitionScreen name={contactInfo.name} redirectUrl={redirectUrl} />}
+        {currentStep === 10 && <TransitionScreen name={contactInfo.name} redirectUrl={redirectUrl} />}
       </div>
     </div>
   );
@@ -254,7 +263,7 @@ export default function LpV7Short() {
   }, []);
 
   const closeQuiz = useCallback(() => {
-    if (currentStep < 9) trackEvent("quiz_close", { last_step: currentStep, page_path: window.location.pathname });
+    if (currentStep < 10) trackEvent("quiz_close", { last_step: currentStep, page_path: window.location.pathname });
     setQuizOpen(false);
   }, [currentStep]);
 
@@ -263,11 +272,12 @@ export default function LpV7Short() {
     trackEvent("quiz_answer", { question_id: questionId, answer: value, step: questionId, page_path: window.location.pathname });
     setTimeout(() => {
       setCurrentStep((prev) => prev + 1);
-      if (questionId === 7) {
+      if (questionId === 8) {
         trackEvent("quiz_completed", {
           page_path: window.location.pathname,
           q1: answers[1] || "", q2: answers[2] || "", q3: answers[3] || "",
-          q4: answers[4] || "", q5: answers[5] || "", q6: answers[6] || "", q7: value,
+          q4: answers[4] || "", q5: answers[5] || "", q6: answers[6] || "",
+          q7: answers[7] || "", q8: value,
         });
       }
     }, 200);
@@ -320,7 +330,7 @@ export default function LpV7Short() {
         name: contactInfo.name, email: contactInfo.email, phone: contactInfo.phone,
         quiz_current_role: label(1), quiz_experience: label(2), quiz_language: label(3),
         quiz_ai_usage: label(4), quiz_concern: label(5), quiz_readiness: label(6),
-        quiz_call_interest: label(7), quiz_source: "lp-v7-short",
+        quiz_call_interest: label(7), quiz_salary: label(8), quiz_source: "lp-v7-short",
         quiz_lead_score: leadScore,
         utm_source: urlParams.utm_source ?? "", utm_medium: urlParams.utm_medium ?? "",
         utm_campaign: urlParams.utm_campaign ?? "", utm_term: urlParams.utm_term ?? "",
@@ -332,7 +342,7 @@ export default function LpV7Short() {
       }),
     }).catch(() => {});
 
-    setCurrentStep(9);
+    setCurrentStep(10);
     setIsSubmitting(false);
   }, [contactInfo, answers]);
 
@@ -344,7 +354,7 @@ export default function LpV7Short() {
       />
 
       <div className="w-full py-3 text-center" style={{ backgroundColor: "#2563eb" }}>
-        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Frontend Devs with 10+ Years — AI Generates UIs Now. Free Training →</span>
+        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Frontend Devs Earning 15L+ — AI Generates UIs Now. Free Training →</span>
       </div>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">

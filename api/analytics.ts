@@ -240,8 +240,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         break;
       }
       case "quiz_completed": {
-        // Fallback: extract q1-q7 from quiz_completed events
-        for (let i = 1; i <= 7; i++) {
+        // Fallback: extract q1-q8 from quiz_completed events
+        for (let i = 1; i <= 8; i++) {
           const val = up[`q${i}`] ? String(up[`q${i}`]) : null;
           if (val) {
             const key = String(i);

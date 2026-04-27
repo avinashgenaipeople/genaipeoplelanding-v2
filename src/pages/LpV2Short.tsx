@@ -74,7 +74,7 @@ const ANSWER_LABELS: Record<string, Record<string, string>> = {
   8: { "0_10": "0-10 Lakhs", "10_15": "10-15 Lakhs", "15_20": "15-20 Lakhs", "20_30": "20-30 Lakhs", "30_45": "30-45 Lakhs", "45_plus": "45+ Lakhs" },
 };
 
-const REDIRECT_DELAY = 0;
+const REDIRECT_DELAY = 1500;
 
 /* ── Transition Screen ──────────────────────────────────────────── */
 function TransitionScreen({ name, redirectUrl }: { name: string; redirectUrl: string }) {
@@ -171,7 +171,11 @@ function QuizOverlay({
             ) : (
               <p className="text-gray-400 text-sm mb-6 font-medium">Question {currentStep} of 8</p>
             )}
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-8">{question.question}</h2>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-3">{question.question}</h2>
+            {currentStep === 8 && (
+              <p className="text-gray-400 text-sm mb-6">This helps us personalise your AI transition roadmap to your experience level.</p>
+            )}
+            {currentStep !== 8 && <div className="mb-5" />}
             <div className="space-y-3">
               {question.options.map((opt) => (
                 <button key={opt.value} type="button" onClick={() => onSelectAnswer(question.id, opt.value)}

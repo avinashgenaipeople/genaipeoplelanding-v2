@@ -1,4 +1,3 @@
-import { supabase } from "./supabase";
 import { getUtmParams, getAllParams } from "./utm";
 
 type EventParams = Record<string, string | number | boolean | undefined>;
@@ -9,6 +8,9 @@ declare global {
     fbq?: (...args: unknown[]) => void;
   }
 }
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
 export function trackEvent(eventName: string, params: EventParams = {}) {
   if (typeof window === "undefined") return;
@@ -26,17 +28,24 @@ export function trackEvent(eventName: string, params: EventParams = {}) {
     window.fbq("trackCustom", eventName, params);
   }
 
-  // Fire-and-forget Supabase INSERT (no await, no blocking)
-  if (supabase) {
+  // Raw fetch with keepalive: true so the insert survives page navigation.
+  // The Supabase JS client uses regular fetch internally which gets aborted
+  // when window.location changes — this ensures analytics events are never lost.
+  if (SUPABASE_URL && SUPABASE_ANON_KEY) {
     const utm = getUtmParams();
     const urlParams = getAllParams();
-    // Merge event params (excluding ones already stored in dedicated columns)
-    // into url_params so quiz answers and other custom fields persist.
     const { page_path: _p, cta_section: _s, cta_label: _l, ...extraParams } = params;
     const mergedParams = { ...urlParams, ...extraParams };
-    supabase
-      .from("analytics_events")
-      .insert({
+    fetch(`${SUPABASE_URL}/rest/v1/analytics_events`, {
+      method: "POST",
+      keepalive: true,
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Prefer": "return=minimal",
+      },
+      body: JSON.stringify({
         event_name: eventName,
         page_path: String(params.page_path ?? window.location.pathname),
         cta_section: params.cta_section ? String(params.cta_section) : null,
@@ -47,11 +56,7 @@ export function trackEvent(eventName: string, params: EventParams = {}) {
         utm_term: utm.utm_term ?? null,
         utm_content: utm.utm_content ?? null,
         url_params: Object.keys(mergedParams).length > 0 ? mergedParams : {},
-      })
-      .then(({ error }) => {
-        if (error && import.meta.env.DEV) {
-          console.warn("[Supabase] insert failed:", error.message);
-        }
-      });
+      }),
+    }).catch(() => {});
   }
 }

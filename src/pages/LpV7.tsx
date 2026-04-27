@@ -168,7 +168,7 @@ const secrets = [
   },
 ];
 
-const REDIRECT_DELAY = 0;
+const REDIRECT_DELAY = 1500;
 
 /* ── Transition Screen (step 9) ──────────────────────────────────── */
 function TransitionScreen({ name, redirectUrl }: { name: string; redirectUrl: string }) {
@@ -345,9 +345,13 @@ function QuizOverlay({
                 Question {currentStep} of 8
               </p>
             )}
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-8">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-3">
               {question.question}
             </h2>
+            {currentStep === 8 && (
+              <p className="text-white/50 text-sm mb-6">This helps us personalise your AI transition roadmap to your experience level.</p>
+            )}
+            {currentStep !== 8 && <div className="mb-5" />}
             <div className="space-y-3">
               {question.options.map((option) => (
                 <button

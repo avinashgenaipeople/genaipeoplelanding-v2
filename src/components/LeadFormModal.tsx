@@ -73,8 +73,11 @@ export function LeadFormModal({
     setSubmitted(true);
     setSubmitting(false);
 
-    // Redirect immediately — webhook is fire-and-forget, no need to wait
-    window.location.href = TRAINING_URL;
+    // Short delay so fbq/gtag pixels and Supabase analytics have time to fire
+    // before navigation. Webhook uses keepalive so it survives regardless.
+    setTimeout(() => {
+      window.location.href = TRAINING_URL;
+    }, 1500);
   };
 
   return (

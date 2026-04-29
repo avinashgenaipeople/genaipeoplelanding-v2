@@ -158,7 +158,7 @@ const QUESTIONS: QuestionDef[] = [
     type: "single",
     key: "salary",
     question: "What's your current annual compensation?",
-    subtitle: "We use this to calibrate your AI Career Risk Score — never shared externally.",
+    subtitle: "Helps us tailor the roadmap to your level — never shared externally.",
     options: [
       { label: "0–10 Lakhs", value: "0_10" },
       { label: "10–15 Lakhs", value: "10_15" },
@@ -265,7 +265,7 @@ function DiagnosisScreen({
       </div>
 
       <p className="text-gray-500 text-sm mb-5 max-w-md mx-auto">
-        Your personalised playbook is ready. Enter your details to claim it and watch the 28-min training.
+        Your personalised Frontend → AI roadmap is ready. Enter your details on the next step to watch the 28-min training.
       </p>
 
       <button
@@ -274,7 +274,7 @@ function DiagnosisScreen({
         className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-white text-lg font-bold transition-all duration-200 hover:opacity-90 gap-2"
         style={{ backgroundColor: "#2563eb" }}
       >
-        Get My Playbook
+        Watch the Roadmap
         <ArrowRight className="w-5 h-5" />
       </button>
     </div>
@@ -334,7 +334,7 @@ function TransitionScreen({ name, redirectUrl }: { name: string; redirectUrl: st
       </div>
       <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-2"
           style={{ opacity: step >= 0 ? 1 : 0, transition: "opacity 0.5s" }}>
-        Loading Your Playbook{firstName ? `, ${firstName}` : ""}…
+        Loading Your Roadmap{firstName ? `, ${firstName}` : ""}…
       </h2>
       <p className="text-gray-500 text-lg mb-6" style={{ opacity: step >= 1 ? 1 : 0, transition: "opacity 0.5s" }}>
         28-minute video on how senior devs transition into AI
@@ -401,9 +401,9 @@ function QuizOverlay({
           <div className="text-center">
             {currentStep === 1 ? (
               <div className="mb-6">
-                <p className="text-blue-500 text-sm font-semibold tracking-wide uppercase mb-2">AI Career Risk Score</p>
+                <p className="text-blue-500 text-sm font-semibold tracking-wide uppercase mb-2">Frontend → AI Readiness Check</p>
                 <p className="text-gray-500 text-base leading-relaxed max-w-md mx-auto">
-                  60-second diagnostic. Get a personalised report on where you stand, what's at risk, and the fastest path forward.
+                  Answer a few quick questions to see where you stand — then watch the 28-min repositioning roadmap.
                 </p>
               </div>
             ) : (
@@ -506,10 +506,10 @@ function QuizOverlay({
                 <CheckCircle2 className="w-8 h-8 text-blue-500" />
               </div>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-2">
-                Where should we send your playbook?
+                Where should we send your roadmap?
               </h2>
               <p className="text-gray-500 text-base">
-                Instant access to the 28-min training + your personalised AI Career Risk Report.
+                Instant access to the 28-min Frontend → AI repositioning roadmap.
               </p>
             </div>
             <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4 max-w-sm mx-auto">
@@ -525,7 +525,7 @@ function QuizOverlay({
               <button type="submit" disabled={isSubmitting}
                 className="w-full px-6 py-4 rounded-xl text-white text-lg font-bold transition-all duration-200 disabled:opacity-50 inline-flex items-center justify-center gap-2 hover:opacity-90"
                 style={{ backgroundColor: "#2563eb" }}>
-                {isSubmitting ? "Submitting…" : "Send My Playbook"}
+                {isSubmitting ? "Submitting…" : "Watch the Roadmap"}
                 {!isSubmitting && <ArrowRight className="w-5 h-5" />}
               </button>
             </form>
@@ -715,40 +715,39 @@ export default function LpV7ShortImproved() {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#f5f0eb" }}>
       <PageMeta
-        title="GenAI People | What's Your AI Career Risk Score?"
-        description="60-second diagnostic for senior developers. Get a personalised AI Career Risk Report — see where you stand, what's at risk, and the fastest path forward."
+        title="GenAI People | Frontend Devs: AI Is Rewriting Your Role"
+        description="Frontend developers with 10+ years: AI generates UI faster than you code it. Learn how to stay indispensable. Free 28-min training."
       />
 
       <button
         type="button"
         onClick={() => {
-          trackEvent("cta_click", { cta_label: "What's Your AI Career Risk Score?", cta_section: "sumo_bar", quiz_variant: "v7-short-improved", page_path: window.location.pathname });
+          trackEvent("cta_click", { cta_label: "Get the Frontend → AI Roadmap", cta_section: "sumo_bar", quiz_variant: "v7-short-improved", page_path: window.location.pathname });
           openQuiz("sumo_bar");
         }}
         className="w-full py-3 text-center cursor-pointer hover:opacity-95 transition-opacity"
         style={{ backgroundColor: "#2563eb" }}
-        aria-label="Take the 60-second AI Career Risk diagnostic"
+        aria-label="Get the Frontend to AI Roadmap"
       >
-        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Take the 60-Second AI Career Risk Diagnostic →</span>
+        <span className="text-white font-bold text-sm sm:text-base tracking-wide">Frontend Devs Earning 15L+ — Free AI Training →</span>
       </button>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
         <div className="max-w-3xl text-center">
-          <p className="text-blue-600 text-sm font-bold tracking-widest uppercase mb-3">For senior developers earning 10L+</p>
           <h1 className="text-3xl sm:text-5xl md:text-[3.5rem] font-extrabold leading-[1.15] mb-6" style={{ color: "#1a1a1a" }}>
-            What's Your{" "}
-            <span style={{ color: "#2563eb" }}>AI Career Risk Score?</span>
+            AI Generates UI in Seconds.{" "}
+            <span style={{ color: "#2563eb" }}>What's Your Edge Now?</span>
           </h1>
 
           <p className="text-base sm:text-lg mb-6 leading-relaxed" style={{ color: "#444" }}>
-            A 60-second diagnostic for senior developers. Find out where you stand vs the engineers landing 30–70L AI roles — and exactly which gap to close first.
+            Pixels and components aren't your moat anymore. Product thinking is. Your 10+ years of user empathy and system design is exactly what AI product teams pay 30–70L for.
           </p>
 
           <div className="text-left max-w-xl mx-auto mb-6 space-y-3">
             {[
-              ["Personalised AI Career Risk Score", " — score, type, and severity level"],
-              ["Time-to-pivot estimate", " — months, based on your profile"],
-              ["Your biggest risk factor identified", " — and how to close it"],
+              ["Move from building UIs", " to designing AI-powered experiences"],
+              ["User empathy + system thinking", " — exactly what AI product teams need"],
+              ["150+ senior devs repositioned", " — same skills, without starting over"],
             ].map(([bold, rest], i) => (
               <div key={i} className="flex items-start gap-3">
                 <span className="text-lg mt-0.5" style={{ color: "#2563eb" }}>✓</span>
@@ -763,7 +762,7 @@ export default function LpV7ShortImproved() {
           <button
             type="button"
             onClick={() => {
-              trackEvent("cta_click", { cta_label: "What's Your AI Career Risk Score?", cta_section: "video_thumbnail", quiz_variant: "v7-short-improved", page_path: window.location.pathname });
+              trackEvent("cta_click", { cta_label: "Get the Frontend → AI Roadmap", cta_section: "video_thumbnail", quiz_variant: "v7-short-improved", page_path: window.location.pathname });
               openQuiz("video_thumbnail");
             }}
             className="group relative w-full max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden cursor-pointer"
@@ -771,7 +770,7 @@ export default function LpV7ShortImproved() {
           >
             <img
               src="/video-thumbnail.webp"
-              alt="AI Career Risk Diagnostic — for senior developers"
+              alt="Gen AI Roadmap for Senior Devs — Free 28-min Training"
               className="w-full aspect-video object-cover"
             />
             <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors flex items-center justify-center">
@@ -783,23 +782,23 @@ export default function LpV7ShortImproved() {
           </button>
 
           <p className="text-base sm:text-lg mb-8" style={{ color: "#555" }}>
-            10 questions. Personalised report. Free. No credit card.
+            This 28-min training shows the exact repositioning playbook. Free. No strings.
           </p>
 
           <button
             type="button"
             onClick={() => {
-              trackEvent("cta_click", { cta_label: "Get My AI Career Risk Score", cta_section: "cta_button", quiz_variant: "v7-short-improved", page_path: window.location.pathname });
+              trackEvent("cta_click", { cta_label: "Get the Frontend → AI Roadmap", cta_section: "cta_button", quiz_variant: "v7-short-improved", page_path: window.location.pathname });
               openQuiz("cta_button");
             }}
             className="inline-flex items-center justify-center px-12 py-5 text-xl sm:text-2xl font-extrabold text-white rounded-xl transition-all duration-200 hover:opacity-90"
             style={{ backgroundColor: "#2563eb", minWidth: 280 }}
           >
-            Get My AI Career Risk Score
+            Get the Frontend → AI Roadmap
           </button>
 
           <p className="mt-5 text-sm" style={{ color: "#999" }}>
-            Built for senior developers (5+ yrs) earning 10L+. Free. No credit card.
+            No credit card. No strings.
           </p>
         </div>
       </main>

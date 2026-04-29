@@ -249,20 +249,22 @@ export default function LpV2Short() {
   const [contactInfo, setContactInfo] = useState({ name: "", email: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState(TRAINING_URL);
+  const [quizOpenedFrom, setQuizOpenedFrom] = useState<string>("");
 
   useEffect(() => {
     trackEvent("page_view_lp_v2_short", { page_path: window.location.pathname });
   }, []);
 
-  const openQuiz = useCallback(() => {
+  const openQuiz = useCallback((source: string = "unknown") => {
     setQuizOpen(true);
     setCurrentStep(1);
     setAnswers({});
     setContactInfo({ name: "", email: "", phone: "" });
     setIsSubmitting(false);
-    trackEvent("quiz_open", { page_path: window.location.pathname });
+    setQuizOpenedFrom(source);
+    trackEvent("quiz_open", { cta_section: source, page_path: window.location.pathname });
     if (typeof window.fbq === "function") {
-      window.fbq("track", "ViewContent", { content_name: "LpV2Short Quiz" });
+      window.fbq("track", "ViewContent", { content_name: "LpV2Short Quiz", source });
     }
   }, []);
 
@@ -303,6 +305,7 @@ export default function LpV2Short() {
     trackEvent("quiz_form_submit", {
       name: contactInfo.name, email: contactInfo.email, phone: contactInfo.phone,
       page_path: window.location.pathname,
+      quiz_opened_from: quizOpenedFrom,
       ...Object.fromEntries(Object.entries(answers).map(([k, v]) => [`q${k}`, v])),
     });
     trackEvent("lead_form_submit", {
@@ -335,7 +338,7 @@ export default function LpV2Short() {
         quiz_current_role: label(1), quiz_experience: label(2), quiz_language: label(3),
         quiz_ai_usage: label(4), quiz_concern: label(5), quiz_readiness: label(6),
         quiz_call_interest: label(7), quiz_salary: label(8), quiz_source: "lp-v2-short",
-        quiz_lead_score: leadScore,
+        quiz_lead_score: leadScore, quiz_opened_from: quizOpenedFrom,
         utm_source: urlParams.utm_source ?? "", utm_medium: urlParams.utm_medium ?? "",
         utm_campaign: urlParams.utm_campaign ?? "", utm_term: urlParams.utm_term ?? "",
         utm_content: urlParams.utm_content ?? "", utm_adname: urlParams.utm_adname ?? "",
@@ -348,7 +351,7 @@ export default function LpV2Short() {
 
     setCurrentStep(10);
     setIsSubmitting(false);
-  }, [contactInfo, answers]);
+  }, [contactInfo, answers, quizOpenedFrom]);
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#f5f0eb" }}>
@@ -357,9 +360,18 @@ export default function LpV2Short() {
         description="Senior Java Developers: watch the 28-min free training that shows how experienced devs are landing 30-70L AI roles. No credit card. No strings."
       />
 
-      <div className="w-full py-3 text-center" style={{ backgroundColor: "#2563eb" }}>
+      <button
+        type="button"
+        onClick={() => {
+          trackEvent("cta_click", { cta_label: "Get Your AI Career Roadmap", cta_section: "sumo_bar", page_path: window.location.pathname });
+          openQuiz("sumo_bar");
+        }}
+        className="w-full py-3 text-center cursor-pointer hover:opacity-95 transition-opacity"
+        style={{ backgroundColor: "#2563eb" }}
+        aria-label="Take the 60-second quiz"
+      >
         <span className="text-white font-bold text-sm sm:text-base tracking-wide">Senior Java Devs Earning 15L+ — Free AI Training →</span>
-      </div>
+      </button>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
         <div className="max-w-3xl text-center">
@@ -392,7 +404,7 @@ export default function LpV2Short() {
             type="button"
             onClick={() => {
               trackEvent("cta_click", { cta_label: "Get Your AI Career Roadmap", cta_section: "video_thumbnail", page_path: window.location.pathname });
-              openQuiz();
+              openQuiz("video_thumbnail");
             }}
             className="group relative w-full max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden cursor-pointer"
             style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.12)" }}
@@ -418,7 +430,7 @@ export default function LpV2Short() {
             type="button"
             onClick={() => {
               trackEvent("cta_click", { cta_label: "Get Your AI Career Roadmap", cta_section: "cta_button", page_path: window.location.pathname });
-              openQuiz();
+              openQuiz("cta_button");
             }}
             className="inline-flex items-center justify-center px-12 py-5 text-xl sm:text-2xl font-extrabold text-white rounded-xl transition-all duration-200 hover:opacity-90"
             style={{ backgroundColor: "#2563eb", minWidth: 280 }}

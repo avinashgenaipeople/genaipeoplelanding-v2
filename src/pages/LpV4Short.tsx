@@ -24,9 +24,15 @@ export default function LpV4Short() {
         description="Backend Developers earning under 30 LPA: your skills are worth 30-70L in AI roles. Watch the free 28-min training to see how."
       />
 
-      <div className="w-full py-3 text-center" style={{ backgroundColor: "#2563eb" }}>
+      <button
+        type="button"
+        onClick={() => openForm("sumo_bar")}
+        className="w-full py-3 text-center cursor-pointer hover:opacity-95 transition-opacity"
+        style={{ backgroundColor: "#2563eb" }}
+        aria-label="Watch the free training"
+      >
         <span className="text-white font-bold text-sm sm:text-base tracking-wide">Backend Devs Earning 15L+ — Free AI Training →</span>
-      </div>
+      </button>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
         <div className="max-w-3xl text-center">

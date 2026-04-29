@@ -24,9 +24,15 @@ export default function LpV6Short() {
         description="Tech Leads with 10+ years: AI is rewriting what leadership means. Learn how to lead AI-powered teams and stay indispensable."
       />
 
-      <div className="w-full py-3 text-center" style={{ backgroundColor: "#2563eb" }}>
+      <button
+        type="button"
+        onClick={() => openForm("sumo_bar")}
+        className="w-full py-3 text-center cursor-pointer hover:opacity-95 transition-opacity"
+        style={{ backgroundColor: "#2563eb" }}
+        aria-label="Watch the free training"
+      >
         <span className="text-white font-bold text-sm sm:text-base tracking-wide">Tech Leads Earning 15L+ — Free AI Training →</span>
-      </div>
+      </button>
 
       <main className="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
         <div className="max-w-3xl text-center">

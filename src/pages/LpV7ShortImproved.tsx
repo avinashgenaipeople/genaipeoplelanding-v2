@@ -739,25 +739,6 @@ export default function LpV7ShortImproved() {
             <span style={{ color: "#2563eb" }}>What's Your Edge Now?</span>
           </h1>
 
-          <p className="text-base sm:text-lg mb-6 leading-relaxed" style={{ color: "#444" }}>
-            Pixels and components aren't your moat anymore. Product thinking is. Your 10+ years of user empathy and system design is exactly what AI product teams pay 30–70L for.
-          </p>
-
-          <div className="text-left max-w-xl mx-auto mb-6 space-y-3">
-            {[
-              ["Move from building UIs", " to designing AI-powered experiences"],
-              ["User empathy + system thinking", " — exactly what AI product teams need"],
-              ["150+ senior devs repositioned", " — same skills, without starting over"],
-            ].map(([bold, rest], i) => (
-              <div key={i} className="flex items-start gap-3">
-                <span className="text-lg mt-0.5" style={{ color: "#2563eb" }}>✓</span>
-                <p className="text-base sm:text-lg" style={{ color: "#444" }}>
-                  <span className="font-semibold" style={{ color: "#1a1a1a" }}>{bold}</span>{rest}
-                </p>
-              </div>
-            ))}
-          </div>
-
           {/* Video thumbnail with play button */}
           <button
             type="button"
@@ -780,6 +761,25 @@ export default function LpV7ShortImproved() {
               </svg>
             </div>
           </button>
+
+          <p className="text-base sm:text-lg mb-6 leading-relaxed" style={{ color: "#444" }}>
+            Pixels and components aren't your moat anymore. Product thinking is. Your 10+ years of user empathy and system design is exactly what AI product teams pay 30–70L for.
+          </p>
+
+          <div className="text-left max-w-xl mx-auto mb-6 space-y-3">
+            {[
+              ["Move from building UIs", " to designing AI-powered experiences"],
+              ["User empathy + system thinking", " — exactly what AI product teams need"],
+              ["150+ senior devs repositioned", " — same skills, without starting over"],
+            ].map(([bold, rest], i) => (
+              <div key={i} className="flex items-start gap-3">
+                <span className="text-lg mt-0.5" style={{ color: "#2563eb" }}>✓</span>
+                <p className="text-base sm:text-lg" style={{ color: "#444" }}>
+                  <span className="font-semibold" style={{ color: "#1a1a1a" }}>{bold}</span>{rest}
+                </p>
+              </div>
+            ))}
+          </div>
 
           <p className="text-base sm:text-lg mb-8" style={{ color: "#555" }}>
             This 28-min training shows the exact repositioning playbook. Free. No strings.

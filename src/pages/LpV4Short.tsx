@@ -42,10 +42,6 @@ export default function LpV4Short() {
             You're Just Positioned Wrong.
           </h1>
 
-          <p className="text-lg sm:text-xl font-semibold mb-6 leading-relaxed" style={{ color: "#2563eb" }}>
-            Same architecture skills. Same system design thinking. Same 10+ years. Different positioning = 2–3X salary.
-          </p>
-
           {/* Video thumbnail with play button */}
           <button
             type="button"
@@ -61,6 +57,10 @@ export default function LpV4Short() {
               </svg>
             </div>
           </button>
+
+          <p className="text-lg sm:text-xl font-semibold mb-6 leading-relaxed" style={{ color: "#2563eb" }}>
+            Same architecture skills. Same system design thinking. Same 10+ years. Different positioning = 2–3X salary.
+          </p>
 
           <p className="text-base sm:text-lg mb-8" style={{ color: "#555" }}>
             This 28-min training shows the exact repositioning playbook. Free. No strings.

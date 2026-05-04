@@ -380,25 +380,6 @@ export default function LpV2Short() {
             <span style={{ color: "#2563eb" }}>That's the Worst Advice You'll Hear in 2026.</span>
           </h1>
 
-          <p className="text-base sm:text-lg mb-6 leading-relaxed" style={{ color: "#444" }}>
-            The developers landing 30–70L AI roles didn't start over. They repositioned. Architecture, system design, production thinking — AI teams need exactly what you already know.
-          </p>
-
-          <div className="text-left max-w-xl mx-auto mb-6 space-y-3">
-            {[
-              ["No new language required", " — your Java foundation IS the AI advantage"],
-              ["Certificates impress HR", " — system thinking impresses hiring managers paying 50L+"],
-              ["150+ devs proved it", " — same background, 2–3X salary jump"],
-            ].map(([bold, rest], i) => (
-              <div key={i} className="flex items-start gap-3">
-                <span className="text-lg mt-0.5" style={{ color: "#2563eb" }}>✓</span>
-                <p className="text-base sm:text-lg" style={{ color: "#444" }}>
-                  <span className="font-semibold" style={{ color: "#1a1a1a" }}>{bold}</span>{rest}
-                </p>
-              </div>
-            ))}
-          </div>
-
           {/* Video thumbnail with play button */}
           <button
             type="button"
@@ -421,6 +402,25 @@ export default function LpV2Short() {
               </svg>
             </div>
           </button>
+
+          <p className="text-base sm:text-lg mb-6 leading-relaxed" style={{ color: "#444" }}>
+            The developers landing 30–70L AI roles didn't start over. They repositioned. Architecture, system design, production thinking — AI teams need exactly what you already know.
+          </p>
+
+          <div className="text-left max-w-xl mx-auto mb-6 space-y-3">
+            {[
+              ["No new language required", " — your Java foundation IS the AI advantage"],
+              ["Certificates impress HR", " — system thinking impresses hiring managers paying 50L+"],
+              ["150+ devs proved it", " — same background, 2–3X salary jump"],
+            ].map(([bold, rest], i) => (
+              <div key={i} className="flex items-start gap-3">
+                <span className="text-lg mt-0.5" style={{ color: "#2563eb" }}>✓</span>
+                <p className="text-base sm:text-lg" style={{ color: "#444" }}>
+                  <span className="font-semibold" style={{ color: "#1a1a1a" }}>{bold}</span>{rest}
+                </p>
+              </div>
+            ))}
+          </div>
 
           <p className="text-base sm:text-lg mb-8" style={{ color: "#555" }}>
             This 28-min training shows the exact repositioning playbook. Free. No strings.

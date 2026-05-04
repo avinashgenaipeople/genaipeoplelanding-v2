@@ -379,10 +379,6 @@ export default function LpV5Short() {
             <span style={{ color: "#2563eb" }}>Start Building the Future.</span>
           </h1>
 
-          <p className="text-lg sm:text-xl font-semibold mb-6 leading-relaxed" style={{ color: "#2563eb" }}>
-            Your architecture and system design skills are worth 30–70L in AI roles — not 15L patching someone else's monolith.
-          </p>
-
           {/* Video thumbnail with play button */}
           <button
             type="button"
@@ -401,6 +397,10 @@ export default function LpV5Short() {
               </svg>
             </div>
           </button>
+
+          <p className="text-lg sm:text-xl font-semibold mb-6 leading-relaxed" style={{ color: "#2563eb" }}>
+            Your architecture and system design skills are worth 30–70L in AI roles — not 15L patching someone else's monolith.
+          </p>
 
           <p className="text-base sm:text-lg mb-8" style={{ color: "#555" }}>
             This 28-min training shows the exact repositioning playbook. Free. No strings.

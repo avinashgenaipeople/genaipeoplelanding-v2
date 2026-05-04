@@ -380,6 +380,21 @@ export default function LpV3Short() {
             <span style={{ color: "#2563eb" }}>Are You GenAI-Ready?</span>
           </h1>
 
+          <button
+            type="button"
+            onClick={() => { trackEvent("cta_click", { cta_label: "Get the GenAI Readiness Roadmap", cta_section: "video_thumbnail", page_path: window.location.pathname }); openQuiz("video_thumbnail"); }}
+            className="group relative w-full max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden cursor-pointer"
+            style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.12)" }}
+          >
+            <img src="/video-thumbnail.webp" alt="Gen AI Roadmap for Senior Devs — Free 28-min Training" className="w-full aspect-video object-cover" />
+            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+              <svg className="w-16 h-12 sm:w-20 sm:h-14 group-hover:scale-110 transition-transform" viewBox="0 0 68 48">
+                <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#FF0000"/>
+                <path d="M45 24L27 14v20" fill="white"/>
+              </svg>
+            </div>
+          </button>
+
           <p className="text-lg sm:text-xl font-semibold mb-8 leading-relaxed" style={{ color: "#2563eb" }}>
             AI isn't replacing Java developers — it's replacing the ones who only write code.
           </p>
@@ -398,21 +413,6 @@ export default function LpV3Short() {
               </div>
             ))}
           </div>
-
-          <button
-            type="button"
-            onClick={() => { trackEvent("cta_click", { cta_label: "Get the GenAI Readiness Roadmap", cta_section: "video_thumbnail", page_path: window.location.pathname }); openQuiz("video_thumbnail"); }}
-            className="group relative w-full max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden cursor-pointer"
-            style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.12)" }}
-          >
-            <img src="/video-thumbnail.webp" alt="Gen AI Roadmap for Senior Devs — Free 28-min Training" className="w-full aspect-video object-cover" />
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-              <svg className="w-16 h-12 sm:w-20 sm:h-14 group-hover:scale-110 transition-transform" viewBox="0 0 68 48">
-                <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#FF0000"/>
-                <path d="M45 24L27 14v20" fill="white"/>
-              </svg>
-            </div>
-          </button>
 
           <button
             type="button"
